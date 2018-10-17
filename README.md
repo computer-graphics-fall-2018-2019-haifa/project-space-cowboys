@@ -19,7 +19,7 @@ Office Hours: By appointment.
 ### Assistant
 *Roy Velich*
 
-[nzelzer@campus.haifa.ac.il](mailto:rvelich@campus.haifa.ac.il)
+[rvelich@campus.haifa.ac.il](mailto:rvelich@campus.haifa.ac.il)
 
 Office Hours: By appointment.
 
