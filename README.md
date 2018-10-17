@@ -54,7 +54,7 @@ Interactive Computer Graphics: A Top-Down Approach with Shader-Based OpenGL ,6th
 ## General Instructions
 
 ### Installing Git and CMAKE
-Before we can begin, you must install Git, a version control system which you need for handing in your assignments, and for keeping track of your progress. We refer you to the online [Pro Git book](https://git-scm.com/book/en/v2) for more information. There you will also find [instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git]) on how to to install it. We recommend using [SourceTree](https://www.sourcetreeapp.com/) as a GUI for Git.
+Before we can begin, you must install Git, a version control system which you need for handing in your assignments, and for keeping track of your progress. We refer you to the online [Pro Git book](https://git-scm.com/book/en/v2) for more information. There you will also find [instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git]) on how to to install it. We recommend using [SourceTree](https://www.sourcetreeapp.com/) or [GitHub Desktop](https://desktop.github.com/) as a GUI for Git.
 
 We use CMake for cross-platform builds. On Windows you can download it from: [https://cmake.org/download/](https://cmake.org/download/). If you are using Linux or macOS, we recommend installing it with a package manager instead of the CMake download page. E.g. on Debian/Ubuntu:
 ```
@@ -92,10 +92,10 @@ git push
 **Never push large files to the remote repository! You should almost always only push code. Never push executables or build data**
 
 Please refer to the git book for an explanation on the differences between those steps.
-You should be able to see your name online on your private repository: https://github.com/HaifaGraphics/computergraphics2018-'Your_Team_Name'.git
+You should be able to see your name online on your private repository: https://github.com/computer-graphics-fall-2018-2019-haifa/project-'Team_Name'.git
 
 ### Building the code
-Use the CMAKE gui as explained in class to create a visual studio solution, or use your compiler/IDE of choice. For a better workflow, we recommend placing a build/ folder inside your code folder, where all the build information will be generates.
+Use the CMAKE gui as explained in class to create a visual studio solution, or use your compiler/IDE of choice. For a better workflow, we recommend placing a /build folder inside your code folder, where all the build information will be generates.
 **Never push the build folder to the remote repository!**
 
 Once the solution has been generated, open it with visual studio. Check that it compiles and runs.
