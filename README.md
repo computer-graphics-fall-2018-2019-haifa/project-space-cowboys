@@ -65,6 +65,9 @@ or with MacPorts on macOS:
 sudo port install cmake.
 ```
 
+### Visual Studio
+For those of you who work on Microsoft Windows, we recommand to use Visual Studio 2017 as your IDE. You can download Visual Studio 2017 Community Edition from here [https://visualstudio.microsoft.com/vs/community/](https://visualstudio.microsoft.com/vs/community/).
+
 ### Cloning the Assignment Repository
 Before you can clone your private assignment repository, you need to have an active [Github](https://github.com/) account. You can then create your own private repository or join and existing one by following the link we sent you via moodle. The name of the repository will always have the form "computergraphics2018-'Team_name'", where 'Team_name' is replace by the name you chose.
 
