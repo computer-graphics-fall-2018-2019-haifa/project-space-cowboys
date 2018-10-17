@@ -53,6 +53,14 @@ Interactive Computer Graphics: A Top-Down Approach with Shader-Based OpenGL ,6th
 
 ## General Instructions
 
+### Companion Video
+All of the instructions below are demonstrated in the two following videos:
+
+* [Setup Environment](https://youtu.be/irAP4DGwvPM)
+* [Generate Project with CMake](https://youtu.be/84wIbGCKYgA)
+
+The videos were made using a Windows system and Visual Studio 2017. CMake also supports project generation for other environments and IDEs, such as CodeBlocks and Eclipse - You should use one of those if you're not running a Windows system.
+
 ### Installing Git and CMAKE
 Before we can begin, you must install Git, a version control system which you need for handing in your assignments, and for keeping track of your progress. We refer you to the online [Pro Git book](https://git-scm.com/book/en/v2) for more information. There you will also find [instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git]) on how to to install it. We recommend using [SourceTree](https://www.sourcetreeapp.com/) or [GitHub Desktop](https://desktop.github.com/) as a GUI for Git.
 
@@ -93,6 +101,8 @@ git commit -m "Adjust README.md"
 git push
 ```
 **Never push large files to the remote repository! You should almost always only push code. Never push executables or build data**
+
+Note: This is how you commit changes manually from the command line. You can also commit changes using a dedicated graphical interface, such as GitHub Desktop. You can see how to do it in the videos linked above.
 
 Please refer to the git book for an explanation on the differences between those steps.
 You should be able to see your name online on your private repository: https://github.com/computer-graphics-fall-2018-2019-haifa/project-'Team_Name'.git
