@@ -1,4 +1,4 @@
-# Computer Graphics 203.3710, Summer 2018
+# Computer Graphics 203.3710, Winter 2018/2019
 ## Students Team data
 
 Name: 'Your real name'  
@@ -17,18 +17,16 @@ URL: [https://www.inf.ethz.ch/personal/poranner/](https://www.inf.ethz.ch/person
 Office Hours: By appointment.
 
 ### Assistant
-*Nave Zelzer*
+*Roy Velich*
 
-[nzelzer@campus.haifa.ac.il](mailto:nzelzer@campus.haifa.ac.il)
+[nzelzer@campus.haifa.ac.il](mailto:rvelich@campus.haifa.ac.il)
 
 Office Hours: By appointment.
 
 ### Lectures:
-Tuesdays at 12:00pm - 16:00pm
+Sundays at 16:00pm - 20:00pm
 
-Thursdays at 8:00am - 12:00pm
-
-Rabin Building 6002, 6th Floor
+Main Building, Room 713
 
 ## Course Description
 
@@ -44,17 +42,6 @@ By the end of the course, you will be able to:
 
 *Textbook*:
 Interactive Computer Graphics: A Top-Down Approach with Shader-Based OpenGL ,6th Edition
-
-## Schedule and Course Notes:
-
-The course schedule is tentative and *will* be adjusted along the way.
-
-* 10/7/2018: [01 - Introduction, 2D and 3D graphics ]
-* 12/7/2018: [02 - Rasterization, Transformations ]
-
-[*Assignment 1: Wireframe Viewer*](Assignment1/homework1.pdf)
-
-[*Breakdown of the assignment to small tasks, you can use it as a starting point*](Assignment1/homework1Breakdown.pdf)
 
 ## Assignments
 
