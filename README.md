@@ -53,7 +53,7 @@ Interactive Computer Graphics: A Top-Down Approach with Shader-Based OpenGL ,6th
 
 ## General Instructions
 
-### Companion Video
+### Companion Videos
 All of the instructions below are demonstrated in the two following videos:
 
 * [Setup Environment](https://youtu.be/irAP4DGwvPM)
