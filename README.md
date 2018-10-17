@@ -54,7 +54,7 @@ Interactive Computer Graphics: A Top-Down Approach with Shader-Based OpenGL ,6th
 ## General Instructions
 
 ### Installing Git and CMAKE
-Before we can begin, you must install Git, a version control system which you need for handing in your assignments, and for keeping track of your progress. We refer you to the online [Pro Git book](https://git-scm.com/book/en/v2) for more information. There you will also find [instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git]) on how to to install it. We recommend using [SourceTree](https://www.sourcetreeapp.com/) for as a GUI for Git.
+Before we can begin, you must install Git, a version control system which you need for handing in your assignments, and for keeping track of your progress. We refer you to the online [Pro Git book](https://git-scm.com/book/en/v2) for more information. There you will also find [instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git]) on how to to install it. We recommend using [SourceTree](https://www.sourcetreeapp.com/) as a GUI for Git.
 
 We use CMake for cross-platform builds. On Windows you can download it from: [https://cmake.org/download/](https://cmake.org/download/). If you are using Linux or macOS, we recommend installing it with a package manager instead of the CMake download page. E.g. on Debian/Ubuntu:
 ```
@@ -70,14 +70,14 @@ Before you can clone your private assignment repository, you need to have an act
 
 Next, you will need to clone it to your computer, either by using SourceTree, or by typing the following in command line.
 ```
-git clone --recursive https://github.com/HaifaGraphics/computergraphics2018-'Team_Name'.git
+git clone --recursive https://github.com/computer-graphics-fall-2018-2019-haifa/project-'Team_Name'.git
 ```
 This can take several minutes.
 
 Next, go into the newly created folder, and add the base assignment repository as a remote (pay attention to capital letters):
 ```
-cd computergraphics2018-'Team_Name'
-git remote add base https://github.com/HaifaGraphics/ComputerGraphics2018.git
+cd project-'Team_Name'
+git remote add base https://github.com/computer-graphics-fall-2018-2019-haifa/project.git
 ```
 
 Note: You only have to do this once. This will allow you to recieve updates to the repository from us.
