@@ -1,8 +1,8 @@
 # Computer Graphics 203.3710, Winter 2018/2019
 ## Students Team data
 
-Name: 'Your real name'  
-Student Number: 'Your student number'
+Name: 'Tal katz'  
+Student Number: '0547881605'
 
 Name: 'Your real name'  
 Student Number: 'Your student number'
