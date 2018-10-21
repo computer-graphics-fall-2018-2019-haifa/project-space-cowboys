@@ -4,8 +4,8 @@
 Name: 'Tal katz'  
 Student Number: '0547881605'
 
-Name: 'Your real name'  
-Student Number: 'Your student number'
+Name: 'Elad Avron'  
+Student Number: '039453840'
 
 ### Lecturer
 *Roi Poranne*
