@@ -2,6 +2,8 @@
 #include "MeshModel.h"
 #include <string>
 
+using namespace std;
+
 Scene::Scene() :
 	activeCameraIndex(0),
 	activeModelIndex(0)
@@ -55,4 +57,9 @@ void Scene::SetActiveModelIndex(int index)
 const int Scene::GetActiveModelIndex() const
 {
 	return activeModelIndex;
+}
+
+const std::vector<std::shared_ptr<MeshModel>>& Scene::GetAllModels() const
+{
+	return models;
 }

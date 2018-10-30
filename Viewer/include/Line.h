@@ -10,4 +10,6 @@ private:
 public:
 	Line(glm::vec2 a, glm::vec2 b);
 	Line(glm::vec2 a, float m);
+	glm::vec2 GetPoint() const;
+	float GetInclination() const;
 };

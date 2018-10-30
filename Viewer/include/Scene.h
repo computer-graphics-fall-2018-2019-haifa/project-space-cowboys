@@ -7,6 +7,8 @@
 #include <memory>
 #include "MeshModel.h"
 #include "Camera.h"
+#include <tuple>
+#include "Global.h"
 
 /*
  * Scene class.
@@ -35,5 +37,5 @@ public:
 	void SetActiveModelIndex(int index);
 	const int GetActiveModelIndex() const;
 
-	// Add more methods as needed...
+	const std::vector<std::shared_ptr<MeshModel>>& GetAllModels() const;
 };

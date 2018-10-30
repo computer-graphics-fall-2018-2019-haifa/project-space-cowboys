@@ -87,6 +87,15 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 					}
 
 				}
+				if (ImGui::MenuItem("Add Camera", "CTRL+A"))
+				{
+					glm::vec4 eye = glm::vec4(0, 0, 0, 0);
+					glm::vec4 at = glm::vec4(0, 0, 0, 0);
+					glm::vec4 up = glm::vec4(0, 0, 0, 0);
+					Camera camera = Camera(eye, at, up);
+					scene.AddCamera(camera);
+					scene.SetActiveCameraIndex(0);
+				}
 				ImGui::EndMenu();
 			}
 			ImGui::EndMainMenuBar();

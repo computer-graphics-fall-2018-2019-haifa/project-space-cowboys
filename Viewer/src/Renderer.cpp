@@ -34,6 +34,8 @@ void Renderer::putPixel(int i, int j, const glm::vec3& color)
 	colorBuffer[INDEX(viewportWidth, i, j, 2)] = color.z;
 }
 
+/*void Renderer::DrawLine()*/
+
 void Renderer::createBuffers(int viewportWidth, int viewportHeight)
 {
 	if (colorBuffer)
@@ -74,31 +76,19 @@ void Renderer::SetViewport(int viewportWidth, int viewportHeight, int viewportX,
 
 void Renderer::Render(const Scene& scene)
 {
-	//#############################################
-	//## You should override this implementation ##
-	//## Here you should render the scene.       ##
-	//#############################################
-
-	// Draw a chess board in the middle of the screen
-	for (int i = 100; i < viewportWidth - 100; i++)
+	auto models = scene.GetAllModels();
+	for (auto model : models)
 	{
-		for (int j = 100; j < viewportHeight - 100; j++)
+		for (auto face : model->GetAllFaces())
 		{
-			int mod_i = i / 50;
-			int mod_j = j / 50;
-
-			int odd = (mod_i + mod_j) % 2;
-			if (odd)
-			{
-				putPixel(i, j, glm::vec3(0, 1, 0));
-			}
-			else
-			{
-				putPixel(i, j, glm::vec3(1, 0, 0));
-			}
+			std::vector<int> vertex = face.GetVertexIndices();
+			//DrawLine(vertex[0], vertex[1]);
+			putPixel(vertex[0], vertex[1], model->GetColor());
 		}
 	}
 }
+
+
 
 //##############################
 //##OpenGL stuff. Don't touch.##

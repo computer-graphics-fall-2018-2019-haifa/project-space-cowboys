@@ -31,5 +31,8 @@ public:
 
 	const std::string& GetModelName();
 
-	// Add more methods/functionality as needed...
+	const std::vector<Face> GetAllFaces() const;
+	const std::vector<glm::vec3> GetVertices() const;
+	const std::vector<glm::vec3> GetNormals() const;
+
 };

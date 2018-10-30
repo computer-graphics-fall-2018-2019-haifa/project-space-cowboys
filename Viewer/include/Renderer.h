@@ -1,5 +1,7 @@
 #pragma once
 #include "Scene.h"
+#include "Global.h"
+#include "Line.h"
 #include <vector>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -37,5 +39,5 @@ public:
 	void ClearColorBuffer(const glm::vec3& color);
 	void SetViewport(int viewportWidth, int viewportHeight, int viewportX = 0, int viewportY = 0);
 
-	// Add more methods/functionality as needed...
+	void DrawLine(Line line);
 };

@@ -56,3 +56,20 @@ const int Face::GetTextureIndex(int index)
 {
 	return textureIndices[index];
 }
+
+const std::vector<int> Face::GetVertexIndices() const
+{
+	return this->vertexIndices;
+}
+
+const std::vector<int> Face::GetNormalIndices() const
+{
+	return this->normalIndices;
+}
+
+const std::vector<int> Face::GetTextureIndices() const
+{
+	return this->textureIndices;
+}
+
+

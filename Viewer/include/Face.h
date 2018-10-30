@@ -17,4 +17,8 @@ public:
 	const int Face::GetVertexIndex(int index);
 	const int Face::GetNormalIndex(int index);
 	const int Face::GetTextureIndex(int index);
+
+	const std::vector<int> GetVertexIndices() const;
+	const std::vector<int> GetNormalIndices() const;
+	const std::vector<int> GetTextureIndices() const;
 };
