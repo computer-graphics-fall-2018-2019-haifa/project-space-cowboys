@@ -15,6 +15,7 @@
 
 bool showDemoWindow = false;
 bool showAnotherWindow = false;
+bool showCameraPropWindow = false;
 
 glm::vec4 clearColor = glm::vec4(0.8f, 0.8f, 0.8f, 1.00f);
 
@@ -89,7 +90,23 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				}
 				if (ImGui::MenuItem("Add Camera", "CTRL+A"))
 				{
-					glm::vec4 eye = glm::vec4(0, 0, 0, 0);
+					ImGui::Begin("camera", &showCameraPropWindow);
+					ImGui::Text("please select the new camera properties");
+					static float eyeInput[4] = { 0, 0, 0, 0 };
+					static float atInput[4] = { 0, 0, 0, 0 };
+					static float upInput[4] = { 0, 0, 0, 0 };
+
+					if (ImGui::Button("Close Me"))
+					{
+						
+					
+						showAnotherWindow = false;
+					}
+					ImGui::InputFloat3("camera position", eyeInput);
+					
+					ImGui::End();
+					
+					glm::vec4 eye = glm::vec4(eyeInput[0], eyeInput[1], eyeInput[2], 0);
 					glm::vec4 at = glm::vec4(0, 0, 0, 0);
 					glm::vec4 up = glm::vec4(0, 0, 0, 0);
 					Camera camera = Camera(eye, at, up);

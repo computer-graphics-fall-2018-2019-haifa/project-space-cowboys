@@ -18,6 +18,7 @@ private:
 	glm::mat4x4 worldTransform;
 	glm::vec4 color;
 	std::string modelName;
+	glm::vec4 centerPoint = glm::vec4(0, 0, 0, 0);
 
 public:
 	MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, const std::string& modelName = "");
@@ -35,4 +36,6 @@ public:
 	const std::vector<glm::vec3> GetVertices() const;
 	const std::vector<glm::vec3> GetNormals() const;
 
+	void SetCenterPoint();
+	const glm::vec4& GetCenterPoint() const;
 };
