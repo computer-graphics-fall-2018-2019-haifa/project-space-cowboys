@@ -39,5 +39,5 @@ public:
 	void ClearColorBuffer(const glm::vec3& color);
 	void SetViewport(int viewportWidth, int viewportHeight, int viewportX = 0, int viewportY = 0);
 
-	void DrawLine(Line line);
+	void Renderer::DrawLine(const Line& line, const glm::vec3& color);
 };

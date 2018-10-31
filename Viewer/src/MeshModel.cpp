@@ -57,6 +57,11 @@ const std::vector<glm::vec3> MeshModel::GetVertices() const
 	return this->vertices;
 }
 
+const glm::vec3 MeshModel::GetVertex(int index) const
+{
+	return this->vertices[index - 1];
+}
+
 const std::vector<glm::vec3> MeshModel::GetNormals() const
 {
 	return this->normals;
