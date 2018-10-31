@@ -124,37 +124,28 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				}
 				if (ImGui::MenuItem("Add Camera", "CTRL+A"))
 				{
-					showCameraPropWindow = true;
-				}
-				ImGui::EndMenu();
-			}
-			
-			if (ImGui::BeginMenu("Objects"))
-			{
-				if (ImGui::BeginMenu("Models"))
-				{
-					std::vector<char*> names(scene.getModelsNames());
-					int size = scene.GetModelCount();
-					float sz = ImGui::GetTextLineHeight();
-					for (int i = 0; i < size; i++)
-					{
-						const char* name = ImGui::GetStyleColorName((ImGuiCol)i);
-						ImVec2 p = ImGui::GetCursorScreenPos();
-						ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), ImGui::GetColorU32((ImGuiCol)i));
-						ImGui::Dummy(ImVec2(sz, sz));
-						ImGui::SameLine();
-						if (ImGui::MenuItem(names[i])) 
-						{
-							scene.SetActiveModelIndex(i);
-						}
-					}
-					ImGui::EndMenu();
-					
-				}
+					ImGui::Begin("camera", &showCameraPropWindow);
+					ImGui::Text("please select the new camera properties");
+					static float eyeInput[4] = { 0, 0, 0, 0 };
+					static float atInput[4] = { 0, 0, 0, 0 };
+					static float upInput[4] = { 0, 0, 0, 0 };
 
-				if (ImGui::BeginMenu("Cameras"))
-				{
-					ImGui::EndMenu();
+					if (ImGui::Button("Close Me"))
+					{
+						
+					
+						showAnotherWindow = false;
+					}
+					ImGui::InputFloat3("camera position", eyeInput);
+					
+					ImGui::End();
+					
+					glm::vec4 eye = glm::vec4(eyeInput[0], eyeInput[1], eyeInput[2], 0);
+					glm::vec4 at = glm::vec4(0, 0, 0, 0);
+					glm::vec4 up = glm::vec4(0, 0, 0, 0);
+					Camera camera = Camera(eye, at, up);
+					scene.AddCamera(camera);
+					scene.SetActiveCameraIndex(0);
 				}
 				ImGui::EndMenu();
 			}
