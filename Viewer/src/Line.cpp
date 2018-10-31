@@ -2,19 +2,19 @@
 
 Line::Line(glm::vec2 a, glm::vec2 b)
 {
-	_point = a;
+	_pointA = a;
+	_pointB = b;
 	_inclination = (b[1] - a[1]) / (b[0] - a[0]);
 }
 
-Line::Line(glm::vec2 a, float m)
+glm::vec2 Line::GetPointA() const
 {
-	_point = a;
-	_inclination = m;
+	return _pointA;
 }
 
-glm::vec2 Line::GetPoint() const
+glm::vec2 Line::GetPointB() const
 {
-	return _point;
+	return _pointB;
 }
 
 float Line::GetInclination() const
