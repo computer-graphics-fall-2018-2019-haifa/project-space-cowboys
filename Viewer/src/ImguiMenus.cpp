@@ -18,10 +18,27 @@ bool showAnotherWindow = false;
 bool showCameraPropWindow = false;
 
 glm::vec4 clearColor = glm::vec4(0.8f, 0.8f, 0.8f, 1.00f);
+glm::vec2 offset = glm::vec2(0, 0);
+float scalar = 1;
 
 const glm::vec4& GetClearColor()
 {
 	return clearColor;
+}
+
+const float& GetOffsetX()
+{
+	return offset[0];
+}
+
+const float& GetOffsetY()
+{
+	return offset[1];
+}
+
+const float& GetScalar()
+{
+	return scalar * 10;
 }
 
 void DrawImguiMenus(ImGuiIO& io, Scene& scene)
@@ -33,18 +50,19 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 	}
 
 	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-	{
-		static float f = 0.0f;
+	{	
 		static int counter = 0;
 
-		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+		ImGui::Begin("Viewport Settings");                          // Create a window called "Hello, world!" and append into it.
 
-		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-		ImGui::Checkbox("Demo Window", &showDemoWindow);      // Edit bools storing our window open/close state
-		ImGui::Checkbox("Another Window", &showAnotherWindow);
+		//ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+		
 
-		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-		ImGui::ColorEdit3("clear color", (float*)&clearColor); // Edit 3 floats representing a color
+		ImGui::ColorEdit3("clear color", (float*)&clearColor); // Edit 3 floats representing a color		
+
+		ImGui::SliderFloat("Scale", &scalar, -500.0f, 500.0f);
+		ImGui::SliderFloat("Offset X", &offset[0], -500, 500.0f);
+		ImGui::SliderFloat("Offset Y", &offset[1], -500.0f, 500.0f);
 
 		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
 			counter++;

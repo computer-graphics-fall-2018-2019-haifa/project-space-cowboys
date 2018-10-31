@@ -39,13 +39,12 @@ void Renderer::putPixel(int i, int j, const glm::vec3& color)
  */
 void Renderer::DrawLine(const Line& line, const glm::vec3& color)
 {
-	float ax = line.GetPointA()[0];
-	float ay = line.GetPointA()[1];
-	float bx = line.GetPointB()[0];
-	float by = line.GetPointB()[1];
-
-	// Bresenham's line algorithm
-	const bool steep = (fabs(by - ay) > fabs(bx - ax));
+	float ax = line.GetPointA()[0] * GetScalar();
+	float ay = line.GetPointA()[1] * GetScalar();
+	float bx = line.GetPointB()[0] * GetScalar();
+	float by = line.GetPointB()[1] * GetScalar();
+	
+	const bool steep = line.GetInclination() > 1;
 	if (steep)
 	{
 		std::swap(ax, ay);
@@ -62,7 +61,7 @@ void Renderer::DrawLine(const Line& line, const glm::vec3& color)
 	const float dy = fabs(by - ay);
 
 	float error = dx / 2.0f;
-	const int ystep = (ay < by) ? 1 : -1;
+	const int ydir = (ay < by) ? 1 : -1;
 	int y = (int)ay;
 
 	const int maxX = (int)bx;
@@ -71,17 +70,17 @@ void Renderer::DrawLine(const Line& line, const glm::vec3& color)
 	{
 		if (steep)
 		{
-			putPixel(y, x, color);
+			putPixel(y + GetOffsetX(), x + GetOffsetY(), color);
 		}
 		else
 		{
-			putPixel(x, y, color);
+			putPixel(x + GetOffsetX(), y + GetOffsetY(), color);
 		}
 
 		error -= dy;
 		if (error < 0)
 		{
-			y += ystep;
+			y += ydir;
 			error += dx;
 		}
 	}

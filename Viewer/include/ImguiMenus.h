@@ -4,3 +4,6 @@
 
 void DrawImguiMenus(ImGuiIO& io, Scene& scene);
 const glm::vec4& GetClearColor();
+const float& GetOffsetX();
+const float& GetOffsetY();
+const float& GetScalar();

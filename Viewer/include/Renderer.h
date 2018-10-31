@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 #include <GLFW/glfw3.h>
 #include <imgui/imgui.h>
+#include "ImguiMenus.h"
 
 /*
  * Renderer class.
@@ -38,6 +39,5 @@ public:
 	void SwapBuffers();
 	void ClearColorBuffer(const glm::vec3& color);
 	void SetViewport(int viewportWidth, int viewportHeight, int viewportX = 0, int viewportY = 0);
-
 	void Renderer::DrawLine(const Line& line, const glm::vec3& color);
 };
