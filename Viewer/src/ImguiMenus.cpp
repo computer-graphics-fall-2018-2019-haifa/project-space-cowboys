@@ -25,21 +25,6 @@ const glm::vec4& GetClearColor()
 	return clearColor;
 }
 
-const float& GetOffsetX()
-{
-	return offset[0];
-}
-
-const float& GetOffsetY()
-{
-	return offset[1];
-}
-
-const float& GetScalar()
-{
-	return scalar * 10;
-}
-
 void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 {
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
@@ -58,10 +43,6 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		
 
 		ImGui::ColorEdit3("clear color", (float*)&clearColor); // Edit 3 floats representing a color		
-
-		ImGui::SliderFloat("Scale", &scalar, -500.0f, 500.0f);
-		ImGui::SliderFloat("Offset X", &offset[0], -500, 500.0f);
-		ImGui::SliderFloat("Offset Y", &offset[1], -500.0f, 500.0f);
 
 		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
 			counter++;
