@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "InitShader.h"
 #include "MeshModel.h"
+#include "Utils.h"
 #include <imgui/imgui.h>
 #include <vector>
 #include <cmath>
@@ -39,51 +40,71 @@ void Renderer::putPixel(int i, int j, const glm::vec3& color)
  */
 void Renderer::DrawLine(const Line& line, const glm::vec3& color)
 {
-	float ax = line.GetPointA()[0] * GetScalar();
-	float ay = line.GetPointA()[1] * GetScalar();
-	float bx = line.GetPointB()[0] * GetScalar();
-	float by = line.GetPointB()[1] * GetScalar();
+	float ax = line.GetPointA()[0];
+	float ay = line.GetPointA()[1];
+	float bx = line.GetPointB()[0];
+	float by = line.GetPointB()[1];
 	
-	const bool steep = line.GetInclination() > 1;
-	if (steep)
+	bool aOver1 = line.GetInclination() > 1;
+	if (aOver1)
 	{
-		std::swap(ax, ay);
-		std::swap(bx, by);
+		float tmp = ax;
+		ax = ay;
+		ay = tmp;
+
+		tmp = bx;
+		bx = by;
+		by = tmp;
 	}
 
 	if (ax > bx)
 	{
-		std::swap(ax, bx);
-		std::swap(ay, by);
+		float tmp = ax;
+		ax = bx;
+		bx = tmp;
+
+		tmp = ay;
+		ay = by;
+		by = tmp;
 	}
 
-	const float dx = bx - ax;
-	const float dy = fabs(by - ay);
+	//Calculate distance from line
+	float dp = bx - ax;
+	float dq = abs(by - ay);
 
-	float error = dx / 2.0f;
-	const int ydir = (ay < by) ? 1 : -1;
-	int y = (int)ay;
+	float error = dp / 2.0f;
+	
+	int updown = (ay < by) ? 1 : -1;
+	int y = ay;
 
-	const int maxX = (int)bx;
-
-	for (int x = (int)ax; x < maxX; x++)
+	for (int x = ax; x < bx; x++)
 	{
-		if (steep)
+		if (aOver1)
 		{
-			putPixel(y + GetOffsetX(), x + GetOffsetY(), color);
+			putPixel(y, x, color);
 		}
 		else
 		{
-			putPixel(x + GetOffsetX(), y + GetOffsetY(), color);
+			putPixel(x, y, color);
 		}
 
-		error -= dy;
+		error -= dq;
 		if (error < 0)
 		{
-			y += ydir;
-			error += dx;
+			y += updown;
+			error += dp;
 		}
 	}
+}
+
+void Renderer::DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color)
+{
+	Line line1 = Line::Line(vertices[0], vertices[1]);
+	Line line2 = Line::Line(vertices[1], vertices[2]);
+	Line line3 = Line::Line(vertices[2], vertices[0]);
+	DrawLine(line1, color);
+	DrawLine(line2, color);
+	DrawLine(line3, color);
 }
 
 void Renderer::createBuffers(int viewportWidth, int viewportHeight)
@@ -126,19 +147,14 @@ void Renderer::SetViewport(int viewportWidth, int viewportHeight, int viewportX,
 
 void Renderer::Render(const Scene& scene)
 {
-	
+	Camera activeCamera = scene.GetActiveCamera();
 	auto models = scene.GetAllModels();
 	for (auto model : models)
 	{
 		for (auto face : model->GetAllFaces())
 		{
-			std::vector<int> vertices = face.GetVertexIndices();
-			Line line1 = Line::Line(model->GetVertex(vertices[0]), model->GetVertex((vertices[1])));
-			Line line2 = Line::Line(model->GetVertex(vertices[1]), model->GetVertex((vertices[2])));
-			Line line3 = Line::Line(model->GetVertex(vertices[2]), model->GetVertex((vertices[0])));
-			DrawLine(line1, model->GetColor());
-			DrawLine(line2, model->GetColor());
-			DrawLine(line3, model->GetColor());
+			std::vector<int> vertices = face.GetVertexIndices();			
+			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, *model), model->GetColor());
 		}
 	}
 }

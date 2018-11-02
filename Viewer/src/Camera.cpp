@@ -14,7 +14,14 @@ Camera::~Camera()
 {
 }
 
-void Camera::SetCameraLookAt(const glm::vec3& eye, const glm::vec3& at, const glm::vec3& up)
+void SetTransformation(const glm::mat4x4& transform)
+{
+
+}
+
+void Camera::SetCameraLookAt(const glm::vec3& eye,
+	const glm::vec3& at,
+	const glm::vec3& up)
 {
 
 }
@@ -31,6 +38,15 @@ void Camera::SetOrthographicProjection(
 void Camera::SetPerspectiveProjection(
 	const float fovy,
 	const float aspectRatio,
+	const float near,
+	const float far)
+{
+
+}
+
+void Camera::SetFrustumProjection(
+	const float fovy,
+	const float aspect,
 	const float near,
 	const float far)
 {

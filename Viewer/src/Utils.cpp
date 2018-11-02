@@ -69,6 +69,18 @@ MeshModel Utils::LoadMeshModel(const std::string& filePath)
 	return MeshModel(faces, vertices, normals, Utils::GetFileName(filePath));
 }
 
+std::vector<glm::vec3> Utils::TriangleFromVertexIndices(const std::vector<int>& vertices, MeshModel& model)
+{
+	glm::vec3 a = model.GetVertex(vertices[0]);
+	glm::vec3 b = model.GetVertex(vertices[1]);
+	glm::vec3 c = model.GetVertex(vertices[2]);
+	std::vector<glm::vec3> triangle = std::vector<glm::vec3>();
+	triangle.push_back(a);
+	triangle.push_back(b);
+	triangle.push_back(c);
+	return triangle;
+}
+
 std::string Utils::GetFileName(const std::string& filePath)
 {
 	if (filePath.empty()) {
