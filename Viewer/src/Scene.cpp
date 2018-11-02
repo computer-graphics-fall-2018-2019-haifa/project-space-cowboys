@@ -66,7 +66,7 @@ const Camera Scene::GetCamera(int index) const
 	return cameras[index];
 }
 
-const Camera Scene::GetActiveCamera() const
+Camera& Scene::GetActiveCamera()
 {
 	if (cameras.size() > activeCameraIndex)
 		return cameras[activeCameraIndex];

@@ -15,6 +15,18 @@ public:
 	static glm::vec2 Vec2fFromStream(std::istream& issLine);
 	static MeshModel LoadMeshModel(const std::string& filePath);	
 	static std::vector<glm::vec3> TriangleFromVertexIndices(const std::vector<int>& vertices, MeshModel& model);
+	
+	/************************************************************************/
+	/* Conversions                                                         */
+	/************************************************************************/
+	static glm::vec4 Homogeneous3to4(const glm::vec3 source);
+	static glm::vec3 Homogeneous4to3(const glm::vec4 source);
+
+	/************************************************************************/
+	/* Matrices                                                           */
+	/************************************************************************/
+
+	static glm::mat4x4 TranslationMatrix(const glm::vec3 translation);
 
 private:
 	static std::string GetFileName(const std::string& filePath);

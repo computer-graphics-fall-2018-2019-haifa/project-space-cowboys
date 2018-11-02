@@ -2,6 +2,7 @@
 #include <memory>
 #include <glm/glm.hpp>
 #include "MeshModel.h"
+#include "Global.h"
 
 /*
  * Camera class. This class takes care of all the camera transformations and manipulations.
@@ -23,7 +24,7 @@ public:
 	~Camera();
 
 	void SetTransformation(const glm::mat4x4& transform);
-
+	const glm::mat4x4 GetTransformation() const;
 
 	void SetCameraLookAt(
 		const glm::vec3& eye,
@@ -50,5 +51,7 @@ public:
 	
 	void SetZoom(const float zoom);
 
-	
+	const float getZoom();
+
+	void Translate(glm::vec3 translation);
 };
