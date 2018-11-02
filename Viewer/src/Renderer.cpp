@@ -97,14 +97,14 @@ void Renderer::DrawLine(const Line& line, const glm::vec3& color)
 	}
 }
 
-void Renderer::DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color)
+void Renderer::DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color, Camera & camera)
 {
-	Line line1 = Line::Line(vertices[0], vertices[1]);
-	Line line2 = Line::Line(vertices[1], vertices[2]);
-	Line line3 = Line::Line(vertices[2], vertices[0]);
-	DrawLine(line1, color);
-	DrawLine(line2, color);
-	DrawLine(line3, color);
+	Line line1 = Line::Line(vertices[0] * camera.getZoom(), vertices[1] * camera.getZoom());
+	Line line2 = Line::Line(vertices[1] * camera.getZoom(), vertices[2] * camera.getZoom());
+	Line line3 = Line::Line(vertices[2] * camera.getZoom(), vertices[0] * camera.getZoom());
+	DrawLine(line1.fromCamera(camera), color);
+	DrawLine(line2.fromCamera(camera), color);
+	DrawLine(line3.fromCamera(camera), color);
 }
 
 void Renderer::createBuffers(int viewportWidth, int viewportHeight)
@@ -145,7 +145,7 @@ void Renderer::SetViewport(int viewportWidth, int viewportHeight, int viewportX,
 	createOpenGLBuffer();
 }
 
-void Renderer::Render(const Scene& scene)
+void Renderer::Render(Scene & scene)
 {
 	Camera activeCamera = scene.GetActiveCamera();
 	auto models = scene.GetAllModels();
@@ -153,8 +153,8 @@ void Renderer::Render(const Scene& scene)
 	{
 		for (auto face : model->GetAllFaces())
 		{
-			std::vector<int> vertices = face.GetVertexIndices();			
-			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, *model), model->GetColor());
+			std::vector<int> vertices = face.GetVertexIndices();
+			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, *model), model->GetColor(), activeCamera);
 		}
 	}
 }
