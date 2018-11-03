@@ -35,4 +35,5 @@ public:
 	const std::vector<glm::vec3> GetVertices() const;
 	const std::vector<glm::vec3> GetNormals() const;
 
+	const glm::vec3 GetVertex(int index) const;
 };

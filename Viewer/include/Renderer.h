@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 #include <GLFW/glfw3.h>
 #include <imgui/imgui.h>
+#include "ImguiMenus.h"
 
 /*
  * Renderer class.
@@ -34,10 +35,10 @@ public:
 	Renderer(int viewportWidth, int viewportHeight, int viewportX = 0, int viewportY = 0);
 	~Renderer();
 
-	void Render(const Scene& scene);
+	void Render(Scene & scene);	
 	void SwapBuffers();
 	void ClearColorBuffer(const glm::vec3& color);
 	void SetViewport(int viewportWidth, int viewportHeight, int viewportX = 0, int viewportY = 0);
-
-	void DrawLine(Line line);
+	void DrawLine(const Line& line, const glm::vec3& color);
+	void DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color, Camera & camera);
 };

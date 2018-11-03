@@ -1,15 +1,19 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "Camera.h"
+#include "Global.h"
 
 class Line
 {
 private:
-	glm::vec2 _point;	//	(x,y)
+	glm::vec3 _pointA;	//	(x,y)
+	glm::vec3 _pointB;	//	(x,y)
 	float _inclination;	//	a
 
 public:
-	Line(glm::vec2 a, glm::vec2 b);
-	Line(glm::vec2 a, float m);
-	glm::vec2 GetPoint() const;
-	float GetInclination() const;
+	Line(glm::vec3 a, glm::vec3 b);
+	Line fromCamera(Camera& camera);
+	glm::vec3 GetPointA() const;
+	glm::vec3 GetPointB() const;
+	float GetInclination() const;	
 };
