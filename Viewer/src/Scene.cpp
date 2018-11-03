@@ -14,10 +14,13 @@ Scene::Scene() :
 void Scene::AddModel(const std::shared_ptr<MeshModel>& model)
 {
 	models.push_back(model);
-	
 	char *name = new char[model->GetModelName().length() + 1];
 	strcpy(name, model->GetModelName().c_str());
 	modelsNames.push_back(name);
+	int i = GetActiveModelIndex();
+	models[i]->SetColor({ 0,0,0,0 });
+	activeModelIndex = models.size()-1;
+	models[activeModelIndex]->SetColor({ 1,1,0,0 });
 	
 }
 
@@ -56,6 +59,8 @@ void Scene::SetActiveModelIndex(int index)
 	// implementation suggestion...
 	if (index >= 0 && index < models.size())
 	{
+		int i = GetActiveModelIndex();
+		models[i]->SetColor({ 0,0,0,0 });
 		activeModelIndex = index;
 		models[index]->SetColor({ 1,1,0,0 });
 	}

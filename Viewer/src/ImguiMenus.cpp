@@ -101,17 +101,21 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				{
 					std::vector<char*> names(scene.getModelsNames());
 					int size = scene.GetModelCount();
+					float sz = ImGui::GetTextLineHeight();
 					for (int i = 0; i < size; i++)
 					{
-						if (ImGui::MenuItem(names[i]))
+						const char* name = ImGui::GetStyleColorName((ImGuiCol)i);
+						ImVec2 p = ImGui::GetCursorScreenPos();
+						ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), ImGui::GetColorU32((ImGuiCol)i));
+						ImGui::Dummy(ImVec2(sz, sz));
+						ImGui::SameLine();
+						if (ImGui::MenuItem(names[i])) 
 						{
 							scene.SetActiveModelIndex(i);
-							ImGui::EndMenu();
 						}
-						
 					}
-					
 					ImGui::EndMenu();
+					
 				}
 
 				if (ImGui::BeginMenu("Cameras"))
