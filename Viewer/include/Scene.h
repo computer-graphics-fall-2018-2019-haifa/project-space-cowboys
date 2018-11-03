@@ -38,4 +38,5 @@ public:
 	const int GetActiveModelIndex() const;
 
 	const std::vector<std::shared_ptr<MeshModel>>& GetAllModels() const;
+	const const std::vector<std::string> getModelsNames() const;
 };

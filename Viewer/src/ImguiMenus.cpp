@@ -90,32 +90,62 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				}
 				if (ImGui::MenuItem("Add Camera", "CTRL+A"))
 				{
-					ImGui::Begin("camera", &showCameraPropWindow);
-					ImGui::Text("please select the new camera properties");
-					static float eyeInput[4] = { 0, 0, 0, 0 };
-					static float atInput[4] = { 0, 0, 0, 0 };
-					static float upInput[4] = { 0, 0, 0, 0 };
-
-					if (ImGui::Button("Close Me"))
+					showCameraPropWindow = true;
+				}
+				ImGui::EndMenu();
+			}
+			
+			if (ImGui::BeginMenu("Objects"))
+			{
+				if (ImGui::BeginMenu("Models"))
+				{
+					for (size_t i = 0; i < scene.GetCameraCount; i++)
 					{
-						
-					
-						showAnotherWindow = false;
+						if (ImGui::MenuItem(scene.GetAllModels)) {
+
+						}
 					}
-					ImGui::InputFloat3("camera position", eyeInput);
 					
-					ImGui::End();
-					
-					glm::vec4 eye = glm::vec4(eyeInput[0], eyeInput[1], eyeInput[2], 0);
-					glm::vec4 at = glm::vec4(0, 0, 0, 0);
-					glm::vec4 up = glm::vec4(0, 0, 0, 0);
-					Camera camera = Camera(eye, at, up);
-					scene.AddCamera(camera);
-					scene.SetActiveCameraIndex(0);
+					ImGui::EndMenu();
+				}
+
+				if (ImGui::BeginMenu("Cameras"))
+				{
+					ImGui::EndMenu();
 				}
 				ImGui::EndMenu();
 			}
 			ImGui::EndMainMenuBar();
 		}
+	}
+	// 4. camera prop window.
+
+	if (showCameraPropWindow)
+	{
+		ImGui::Begin("Camera Properties", &showCameraPropWindow);
+		ImGui::Text("please select the new camera properties");
+		static float eyeInput[4] = { 0, 0, 0, 0 };
+		static float atInput[4] = { 0, 0, 0, 0 };
+		static float upInput[4] = { 0, 0, 0, 0 };
+
+		ImGui::InputFloat3("Camera Position", eyeInput);
+
+		glm::vec4 eye = glm::vec4(eyeInput[0], eyeInput[1], eyeInput[2], 0);
+		glm::vec4 at = glm::vec4(0, 0, 0, 0);
+		glm::vec4 up = glm::vec4(0, 0, 0, 0);
+
+		Camera camera = Camera(eye, at, up);
+		scene.AddCamera(camera);
+		
+
+		if (ImGui::Button("create"))
+		{
+
+
+			showCameraPropWindow = false;
+		}
+
+
+		ImGui::End();
 	}
 }

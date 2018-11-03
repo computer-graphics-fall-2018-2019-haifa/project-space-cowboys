@@ -63,3 +63,14 @@ const std::vector<std::shared_ptr<MeshModel>>& Scene::GetAllModels() const
 {
 	return models;
 }
+
+const std::vector<std::string> Scene::getModelsNames() const
+{
+	 std::vector<std::string> names;
+	for (size_t i = 0; i < models.size; i++)
+	{
+		names.push_back(models[i]->GetModelName());
+	}
+
+	return names;
+}
