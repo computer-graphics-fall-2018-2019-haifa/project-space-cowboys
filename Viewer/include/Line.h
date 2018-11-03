@@ -12,7 +12,6 @@ private:
 
 public:
 	Line(glm::vec3 a, glm::vec3 b);
-	Line fromCamera(Camera& camera);
 	glm::vec3 GetPointA() const;
 	glm::vec3 GetPointB() const;
 	float GetInclination() const;	

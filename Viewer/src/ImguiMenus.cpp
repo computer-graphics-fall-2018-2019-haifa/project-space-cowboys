@@ -38,11 +38,17 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		static int counter = 0;
 		static int sensitivity = 50;
 		static float zoom = 1.0f;
+		static bool boundingBox = false;
+		scene.settings.showBoundingBox = boundingBox;
 
 		ImGui::Begin("Viewport Settings");                          // Create a window called "Hello, world!" and append into it.
 
 		//ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
 		
+		if (ImGui::Checkbox("Show Bounding Box", &boundingBox))
+		{
+			scene.settings.showBoundingBox = boundingBox;
+		}
 
 		ImGui::ColorEdit3("clear color", (float*)&clearColor); // Edit 3 floats representing a color		
 
@@ -53,16 +59,15 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			scene.GetActiveCamera().Translate(glm::vec3(0, sensitivity, 0));
 		}
 
-		if (ImGui::Button("Right"))
+		if (ImGui::Button("Left"))
 		{
 			scene.GetActiveCamera().Translate(glm::vec3(-sensitivity, 0, 0));
 		}
-
 		ImGui::SameLine();
-		if (ImGui::Button("Left"))
+		if (ImGui::Button("Right"))
 		{
 			scene.GetActiveCamera().Translate(glm::vec3(sensitivity, 0, 0));
-		}		
+		}
 
 		if (ImGui::Button("Down"))
 		{

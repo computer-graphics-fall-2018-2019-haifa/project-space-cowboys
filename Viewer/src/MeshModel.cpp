@@ -13,7 +13,22 @@ MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3
 	this->faces = std::vector<Face>(faces);
 	this->vertices = std::vector<glm::vec3>(vertices);
 	this->normals = std::vector<glm::vec3>(normals);
-	this->modelName = modelName;		
+	this->modelName = modelName;			
+	
+	for (glm::vec3 vertex : vertices)
+	{
+		minX = std::fmin(minX, vertex.x);
+		maxX = std::fmax(maxX, vertex.x);
+
+		minY = std::fmin(minY, vertex.y);
+		maxY = std::fmax(maxY, vertex.y);
+
+		minZ = std::fmin(minZ, vertex.z);
+		maxZ = std::fmin(maxZ, vertex.z);
+	}
+
+	minimums = glm::vec3(minX, minY, minZ);
+	maximums = glm::vec3(maxX, maxY, maxZ);
 }
 
 MeshModel::~MeshModel()
@@ -64,4 +79,34 @@ const glm::vec3 MeshModel::GetVertex(int index) const
 const std::vector<glm::vec3> MeshModel::GetNormals() const
 {
 	return this->normals;
+}
+
+const float MeshModel::MinX()
+{
+	return minX;
+}
+
+const float MeshModel::MaxX()
+{
+	return maxX;
+}
+
+const float MeshModel::MinY()
+{
+	return minY;
+}
+
+const float MeshModel::MaxY()
+{
+	return maxY;
+}
+
+const float MeshModel::MinZ()
+{
+	return minZ;
+}
+
+const float MeshModel::MaxZ()
+{
+	return maxZ;
 }
