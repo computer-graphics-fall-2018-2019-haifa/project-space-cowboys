@@ -14,6 +14,11 @@ Scene::Scene() :
 void Scene::AddModel(const std::shared_ptr<MeshModel>& model)
 {
 	models.push_back(model);
+	
+	char *name = new char[model->GetModelName().length() + 1];
+	strcpy(name, model->GetModelName().c_str());
+	modelsNames.push_back(name);
+	
 }
 
 const int Scene::GetModelCount() const
@@ -37,6 +42,7 @@ void Scene::SetActiveCameraIndex(int index)
 	if (index >= 0 && index < cameras.size())
 	{
 		activeCameraIndex = index;
+		
 	}
 }
 
@@ -51,6 +57,7 @@ void Scene::SetActiveModelIndex(int index)
 	if (index >= 0 && index < models.size())
 	{
 		activeModelIndex = index;
+		models[index]->SetColor({ 1,1,0,0 });
 	}
 }
 
@@ -64,13 +71,10 @@ const std::vector<std::shared_ptr<MeshModel>>& Scene::GetAllModels() const
 	return models;
 }
 
-const std::vector<std::string> Scene::getModelsNames() const
-{
-	 std::vector<std::string> names;
-	for (size_t i = 0; i < models.size; i++)
-	{
-		names.push_back(models[i]->GetModelName());
-	}
 
-	return names;
+const std::vector<char *> Scene::getModelsNames() const
+{
+	return modelsNames;
 }
+
+

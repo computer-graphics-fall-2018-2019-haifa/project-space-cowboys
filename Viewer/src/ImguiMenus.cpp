@@ -99,11 +99,16 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			{
 				if (ImGui::BeginMenu("Models"))
 				{
-					for (size_t i = 0; i < scene.GetCameraCount; i++)
+					std::vector<char*> names(scene.getModelsNames());
+					int size = scene.GetModelCount();
+					for (int i = 0; i < size; i++)
 					{
-						if (ImGui::MenuItem(scene.GetAllModels)) {
-
+						if (ImGui::MenuItem(names[i]))
+						{
+							scene.SetActiveModelIndex(i);
+							ImGui::EndMenu();
 						}
+						
 					}
 					
 					ImGui::EndMenu();

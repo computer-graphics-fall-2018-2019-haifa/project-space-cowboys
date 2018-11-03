@@ -18,6 +18,7 @@ class Scene {
 private:
 	std::vector<std::shared_ptr<MeshModel>> models;
 	std::vector<Camera> cameras;
+	std::vector<char *> modelsNames;
 
 	int activeCameraIndex;
 	int activeModelIndex;
@@ -38,5 +39,6 @@ public:
 	const int GetActiveModelIndex() const;
 
 	const std::vector<std::shared_ptr<MeshModel>>& GetAllModels() const;
-	const const std::vector<std::string> getModelsNames() const;
+	const std::vector<char *> getModelsNames() const;
+	
 };
