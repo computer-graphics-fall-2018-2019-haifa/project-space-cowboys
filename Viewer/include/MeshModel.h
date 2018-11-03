@@ -19,6 +19,14 @@ private:
 	glm::vec4 color;
 	std::string modelName;
 	glm::vec4 centerPoint = glm::vec4(0, 0, 0, 0);
+	glm::vec3 minimums;
+	glm::vec3 maximums;
+	float minX = std::numeric_limits<float>::max();
+	float minY = std::numeric_limits<float>::max();
+	float minZ = std::numeric_limits<float>::max();
+	float maxX = std::numeric_limits<float>::min();
+	float maxY = std::numeric_limits<float>::min();
+	float maxZ = std::numeric_limits<float>::min();
 
 public:
 	MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, const std::string& modelName = "");
@@ -35,6 +43,15 @@ public:
 	const std::vector<Face> GetAllFaces() const;
 	const std::vector<glm::vec3> GetVertices() const;
 	const std::vector<glm::vec3> GetNormals() const;
+
+	const float MinX();
+	const float MaxX();
+
+	const float MinY();
+	const float MaxY();
+
+	const float MinZ();
+	const float MaxZ();
 
 	const glm::vec3 GetVertex(int index) const;
 

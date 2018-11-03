@@ -26,6 +26,10 @@ private:
 public:
 	Scene();
 
+	struct {
+		bool showBoundingBox;
+	} settings;
+
 	void AddModel(const std::shared_ptr<MeshModel>& model);
 	const int GetModelCount() const;
 
