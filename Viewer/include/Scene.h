@@ -34,7 +34,7 @@ public:
 	void SetActiveCameraIndex(int index);
 	const int GetActiveCameraIndex() const;
 	const Camera GetCamera(int index) const;
-	const Camera GetActiveCamera() const;
+	Camera& GetActiveCamera();
 	const Camera GetDefaultCamera() const;
 
 	void SetActiveModelIndex(int index);

@@ -81,6 +81,25 @@ std::vector<glm::vec3> Utils::TriangleFromVertexIndices(const std::vector<int>& 
 	return triangle;
 }
 
+glm::vec4 Utils::Homogeneous3to4(const glm::vec3 source)
+{
+	return glm::vec4(source[0], source[1], source[2], 1.0f);
+}
+
+glm::vec3 Utils::Homogeneous4to3(const glm::vec4 source)
+{
+	return glm::vec3(source[0] / source[3], source[1] / source[3], source[2] / source[3]);
+}
+
+glm::mat4x4 Utils::TranslationMatrix(const glm::vec3 translation)
+{
+	return glm::mat4x4(
+		1.0f, 0, 0, translation.x,
+		0, 1.0f, 0, translation.y,
+		0, 0, 1.0f, translation.z,
+		0, 0, 0, 1.0f);
+}
+
 std::string Utils::GetFileName(const std::string& filePath)
 {
 	if (filePath.empty()) {

@@ -7,6 +7,7 @@
 Camera::Camera(const glm::vec4& eye, const glm::vec4& at, const glm::vec4& up) :
 	zoom(1.0)
 {
+	SetTransformation(glm::mat4x4(1.0f));
 	SetCameraLookAt(eye, at, up);
 }
 
@@ -14,16 +15,25 @@ Camera::~Camera()
 {
 }
 
-void SetTransformation(const glm::mat4x4& transform)
+void Camera::SetTransformation(const glm::mat4x4 & transform)
 {
+	viewTransformation = glm::mat4x4(transform);
+}
 
+const glm::mat4x4 Camera::GetTransformation() const
+{
+	return viewTransformation;
 }
 
 void Camera::SetCameraLookAt(const glm::vec3& eye,
 	const glm::vec3& at,
 	const glm::vec3& up)
 {
-
+	auto z = glm::normalize(eye - at);
+	auto x = glm::normalize(cross(up, z));
+	auto y = glm::normalize(cross(x, z));
+	glm::mat4x4 t = Utils::TranslationMatrix(eye);
+	this->SetTransformation(t);
 }
 
 void Camera::SetOrthographicProjection(
@@ -55,5 +65,16 @@ void Camera::SetFrustumProjection(
 
 void Camera::SetZoom(const float zoom)
 {
+	this->zoom = zoom;
+}
 
+const float Camera::getZoom()
+{
+	return zoom;
+}
+
+void Camera::Translate(glm::vec3 translation)
+{	
+	glm::mat4x4 transmat = Utils::TranslationMatrix(translation);
+	SetTransformation(GetTransformation() * transmat);	
 }

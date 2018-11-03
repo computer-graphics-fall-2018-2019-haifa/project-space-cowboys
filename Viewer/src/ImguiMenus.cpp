@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #define _USE_MATH_DEFINES
 
 #include "ImguiMenus.h"
@@ -36,6 +36,8 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
 	{	
 		static int counter = 0;
+		static int sensitivity = 50;
+		static float zoom = 1.0f;
 
 		ImGui::Begin("Viewport Settings");                          // Create a window called "Hello, world!" and append into it.
 
@@ -44,6 +46,34 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 		ImGui::ColorEdit3("clear color", (float*)&clearColor); // Edit 3 floats representing a color		
 
+		ImGui::SliderInt("Sensitivity", &sensitivity, 10, 1000);
+
+		if (ImGui::Button("Up"))
+		{
+			scene.GetActiveCamera().Translate(glm::vec3(0, sensitivity, 0));
+		}
+
+		if (ImGui::Button("Right"))
+		{
+			scene.GetActiveCamera().Translate(glm::vec3(-sensitivity, 0, 0));
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("Left"))
+		{
+			scene.GetActiveCamera().Translate(glm::vec3(sensitivity, 0, 0));
+		}		
+
+		if (ImGui::Button("Down"))
+		{
+			scene.GetActiveCamera().Translate(glm::vec3(0, -sensitivity, 0));
+		}
+
+		if (ImGui::SliderFloat("Zoom", &zoom, -1000, 1000))
+		{
+			scene.GetActiveCamera().SetZoom(zoom);
+		}
+		
 		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
 			counter++;
 		ImGui::SameLine();
@@ -86,15 +116,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 					}
 
 				}
-				if (ImGui::MenuItem("Add Camera", "CTRL+A"))
-				{
-					glm::vec4 eye = glm::vec4(0, 0, 0, 0);
-					glm::vec4 at = glm::vec4(0, 0, 0, 0);
-					glm::vec4 up = glm::vec4(0, 0, 0, 0);
-					Camera camera = Camera(eye, at, up);
-					scene.AddCamera(camera);
-					scene.SetActiveCameraIndex(0);
-				}
+		
 				ImGui::EndMenu();
 			}
 			ImGui::EndMainMenuBar();
