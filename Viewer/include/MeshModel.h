@@ -44,8 +44,6 @@ public:
 	const std::vector<glm::vec3> GetVertices() const;
 	const std::vector<glm::vec3> GetNormals() const;
 
-	void SetCenterPoint();
-
 	const float MinX();
 	const float MaxX();
 
@@ -56,7 +54,7 @@ public:
 	const float MaxZ();
 
 	const glm::vec3 GetVertex(int index) const;
+	const glm::vec4& GetCenterPoint() const;
 
 	void SetCenterPoint();
-	const glm::vec4& GetCenterPoint() const;
 };

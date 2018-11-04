@@ -37,7 +37,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
 	{	
 		static int counter = 0;
-		static int sensitivity = 50;
+		static int sensitivity = 1;
 		static float zoom = 1.0f;
 		static bool boundingBox = false;
 		scene.settings.showBoundingBox = boundingBox;
@@ -53,7 +53,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 		ImGui::ColorEdit3("clear color", (float*)&clearColor); // Edit 3 floats representing a color		
 
-		ImGui::SliderInt("Sensitivity", &sensitivity, 10, 1000);
+		ImGui::SliderInt("Sensitivity", &sensitivity, 0, 100);
 
 		if (ImGui::Button("Up"))
 		{
@@ -75,7 +75,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			scene.GetActiveCamera().Translate(glm::vec3(0, -sensitivity, 0));
 		}
 
-		if (ImGui::SliderFloat("Zoom", &zoom, -1000, 1000))
+		if (ImGui::SliderFloat("Zoom", &zoom, 0, 500))
 		{
 			scene.GetActiveCamera().SetZoom(zoom);
 		}
@@ -124,31 +124,41 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				}
 				if (ImGui::MenuItem("Add Camera", "CTRL+A"))
 				{
-					ImGui::Begin("camera", &showCameraPropWindow);
-					ImGui::Text("please select the new camera properties");
-					static float eyeInput[4] = { 0, 0, 0, 0 };
-					static float atInput[4] = { 0, 0, 0, 0 };
-					static float upInput[4] = { 0, 0, 0, 0 };
-
-					if (ImGui::Button("Close Me"))
-					{
-						
-					
-						showAnotherWindow = false;
-					}
-					ImGui::InputFloat3("camera position", eyeInput);
-					
-					ImGui::End();
-					
-					glm::vec4 eye = glm::vec4(eyeInput[0], eyeInput[1], eyeInput[2], 0);
-					glm::vec4 at = glm::vec4(0, 0, 0, 0);
-					glm::vec4 up = glm::vec4(0, 0, 0, 0);
-					Camera camera = Camera(eye, at, up);
-					scene.AddCamera(camera);
-					scene.SetActiveCameraIndex(0);
+					showCameraPropWindow = true;
 				}
 				ImGui::EndMenu();
 			}
+		
+			if (ImGui::BeginMenu("Objects"))
+			{
+				if (ImGui::BeginMenu("Models"))
+				{
+					std::vector<char*> names(scene.getModelsNames());
+					int size = scene.GetModelCount();
+					float sz = ImGui::GetTextLineHeight();
+					for (int i = 0; i < size; i++)
+					{
+						const char* name = ImGui::GetStyleColorName((ImGuiCol)i);
+						ImVec2 p = ImGui::GetCursorScreenPos();
+						ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), ImGui::GetColorU32((ImGuiCol)i));
+						ImGui::Dummy(ImVec2(sz, sz));
+						ImGui::SameLine();
+						if (ImGui::MenuItem(names[i]))
+						{
+							scene.SetActiveModelIndex(i);
+						}
+					}
+					ImGui::EndMenu();
+
+				}
+
+				if (ImGui::BeginMenu("Cameras"))
+				{
+					ImGui::EndMenu();
+				}
+				ImGui::EndMenu();
+			}
+			
 			ImGui::EndMainMenuBar();
 		}
 	}
