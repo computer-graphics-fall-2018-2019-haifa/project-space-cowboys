@@ -39,6 +39,12 @@ const int Scene::GetModelCount() const
 void Scene::AddCamera(const Camera& camera)
 {
 	cameras.push_back(camera);
+	
+	/*char *name = new char[camera->GetModelName().length() + 2];
+	strcpy(name, camera->GetModelName().c_str());
+	camerasNames.push_back(name);*/
+	
+
 }
 
 const int Scene::GetCameraCount() const
@@ -52,7 +58,10 @@ void Scene::SetActiveCameraIndex(int index)
 	if (index >= 0 && index < cameras.size())
 	{
 		activeCameraIndex = index;
-		
+		/*int i = GetActiveCameraIndex();
+		cameras[i]->SetColor({ 1,0,0,0 });
+		activeModelIndex = index;
+		cameras[index]->SetColor({ 0,1,0,0 });*/
 	}
 }
 
@@ -103,6 +112,11 @@ const std::vector<std::shared_ptr<MeshModel>>& Scene::GetAllModels() const
 const std::vector<char *> Scene::getModelsNames() const
 {
 	return modelsNames;
+}
+
+const std::vector<char*> Scene::getcamerasNames() const
+{
+	return camerasNames;
 }
 
 

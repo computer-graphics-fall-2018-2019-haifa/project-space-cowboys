@@ -13,6 +13,7 @@ Camera::Camera(const glm::vec4& eye, const glm::vec4& at, const glm::vec4& up) :
 
 Camera::~Camera()
 {
+
 }
 
 void Camera::SetTransformation(const glm::mat4x4 & transform)

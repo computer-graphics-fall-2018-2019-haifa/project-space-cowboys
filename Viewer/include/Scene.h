@@ -19,6 +19,7 @@ private:
 	std::vector<std::shared_ptr<MeshModel>> models;
 	std::vector<Camera> cameras;
 	std::vector<char *> modelsNames;
+	std::vector<char *> camerasNames;
 
 	int activeCameraIndex;
 	int activeModelIndex;
@@ -47,5 +48,6 @@ public:
 
 	const std::vector<std::shared_ptr<MeshModel>>& GetAllModels() const;
 	const std::vector<char *> getModelsNames() const;
+	const std::vector<char *> getcamerasNames() const;
 	
 };
