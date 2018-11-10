@@ -17,12 +17,14 @@ Scene::Scene() :
 		)
 	);
 }
-
+/* adding a model to the sence and adding the name to the name vec without the .obj*/
 void Scene::AddModel(const std::shared_ptr<MeshModel>& model)
 {
 	models.push_back(model);
 	char *name = new char[model->GetModelName().length() + 1];
 	strcpy(name, model->GetModelName().c_str());
+	char * end = strstr(name, ".obj");
+	*end = '\0';
 	modelsNames.push_back(name);
 	int i = GetActiveModelIndex();
 	models[i]->SetColor({ 0,0,0,0 });
@@ -30,7 +32,12 @@ void Scene::AddModel(const std::shared_ptr<MeshModel>& model)
 	models[activeModelIndex]->SetColor({ 1,1,0,0 });
 	
 }
-
+/*removing a model from the scene*/
+void Scene::RemoveModel(int index) 
+{
+	models.erase(models.begin() + index);
+	modelsNames.erase(modelsNames.begin() + index);
+}
 const int Scene::GetModelCount() const
 {
 	return models.size();

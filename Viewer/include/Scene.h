@@ -32,6 +32,7 @@ public:
 	} settings;
 
 	void AddModel(const std::shared_ptr<MeshModel>& model);
+	void RemoveModel(int index);
 	const int GetModelCount() const;
 
 	void AddCamera(const Camera& camera);

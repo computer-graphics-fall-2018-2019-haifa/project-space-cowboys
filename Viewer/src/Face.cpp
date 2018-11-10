@@ -5,7 +5,7 @@ Face::Face(std::istream& issLine)
 	vertexIndices =  { 0, 0, 0 };
 	normalIndices =  { 0, 0, 0 };
 	textureIndices = { 0, 0, 0 };
-
+	 
 	char c;
 	for (int i = 0; i < 3; i++)
 	{
