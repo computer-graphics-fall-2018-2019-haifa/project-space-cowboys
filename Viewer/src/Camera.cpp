@@ -4,7 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-Camera::Camera(const glm::vec4& eye, const glm::vec4& at, const glm::vec4& up) : MeshModel(Utils::LoadMeshModel("/camera.obj"))
+Camera::Camera(const glm::vec4& eye, const glm::vec4& at, const glm::vec4& up) : MeshModel(Utils::LoadMeshModel("C:\\Users\\Yanshul\\Documents\\GitHub\\project-space-cowboys\\Data\\camera.obj"))
 {
 	zoom = 1.0;
 	SetTransformation(glm::mat4x4(1.0f));

@@ -156,8 +156,8 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				}
 
 				if (ImGui::BeginMenu("Cameras"))
-				{// need to fix
-					/*int size = scene.GetCameraCount();
+				{
+					int size = scene.GetCameraCount();
 					if (size != 0) {
 						std::vector<char*> cNames(scene.getcamerasNames());
 
@@ -174,7 +174,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 								scene.SetActiveCameraIndex(i);
 							}
 						}
-					}*/
+					}
 					ImGui::EndMenu();
 				}
 				ImGui::EndMenu();

@@ -35,7 +35,7 @@ public:
 	void RemoveModel(int index);
 	const int GetModelCount() const;
 
-	void AddCamera(const Camera& camera);
+	void AddCamera(Camera camera);
 	const int GetCameraCount() const;
 
 	void SetActiveCameraIndex(int index);
