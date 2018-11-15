@@ -47,8 +47,12 @@ void Scene::AddCamera( Camera camera)
 {
 	cameras.push_back(camera);
 	
-	char *name = new char[(camera.GetModelName()).length() + 2];
+	char *name = new char[(camera.GetModelName()).length() + 1];
 	strcpy(name, (camera.GetModelName()).c_str());
+	char * end = strstr(name, "obj");
+	*end = '\0';
+	std::string cameraNum = std::to_string(cameras.size());
+	strcat(name, cameraNum.c_str());
 	camerasNames.push_back(name);
 	SetActiveCameraIndex(cameras.size() - 1);
 
@@ -115,6 +119,10 @@ const std::vector<std::shared_ptr<MeshModel>>& Scene::GetAllModels() const
 	return models;
 }
 
+const std::vector<Camera> Scene::GetAllCameras() const
+{
+	return cameras;
+}
 
 const std::vector<char *> Scene::getModelsNames() const
 {

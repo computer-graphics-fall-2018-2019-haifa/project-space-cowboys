@@ -159,6 +159,16 @@ void Renderer::Render(Scene & scene)
 			DrawBoundingBox(*model, activeCamera);
 		}
 	}
+	auto cameras = scene.GetAllCameras();
+	for (auto camera : cameras)
+	{
+		for (auto face : camera.GetAllFaces())
+		{
+			std::vector<int> vertices = face.GetVertexIndices();
+			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, camera), camera.GetColor(), activeCamera);
+		}
+		
+	}
 }
 
 void Renderer::DrawBoundingBox(MeshModel& model, Camera& camera)

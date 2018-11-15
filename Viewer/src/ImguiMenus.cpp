@@ -199,14 +199,14 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		glm::vec4 at = glm::vec4(0, 0, 0, 0);
 		glm::vec4 up = glm::vec4(0, 0, 0, 0);
 
-		Camera camera = Camera(eye, at, up);
-		scene.AddCamera(camera);
+		
 		
 
 		if (ImGui::Button("create"))
 		{
 
-
+			Camera camera = Camera(eye, at, up);
+			scene.AddCamera(camera);
 			showCameraPropWindow = false;
 		}
 
