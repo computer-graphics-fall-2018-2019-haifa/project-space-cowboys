@@ -12,7 +12,7 @@
  * Make the Camera class be a subclass of MeshModel, so you can easily and elegantly render 
  * the cameras you have added to the scene.
  */
-class Camera //:public MeshModel
+class Camera :public MeshModel
 {
 private:
 	glm::mat4x4 viewTransformation;

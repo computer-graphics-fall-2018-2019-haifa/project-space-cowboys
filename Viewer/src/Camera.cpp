@@ -4,9 +4,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-Camera::Camera(const glm::vec4& eye, const glm::vec4& at, const glm::vec4& up) :
-	zoom(1.0)
+Camera::Camera(const glm::vec4& eye, const glm::vec4& at, const glm::vec4& up) : MeshModel(Utils::LoadMeshModel("/camera.obj"))
 {
+	zoom = 1.0;
 	SetTransformation(glm::mat4x4(1.0f));
 	SetCameraLookAt(eye, at, up);
 }

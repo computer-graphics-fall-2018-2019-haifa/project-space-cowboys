@@ -30,6 +30,24 @@ MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3
 	minimums = glm::vec3(minX, minY, minZ);
 	maximums = glm::vec3(maxX, maxY, maxZ);
 }
+MeshModel::MeshModel(const MeshModel &copy)
+{
+	this->faces = copy.faces;
+	this->vertices = copy.vertices;
+	this->normals = copy.normals;
+	this->worldTransform = copy.worldTransform;
+	this->color = copy.color;
+	this->modelName = copy.modelName;
+	this->centerPoint = copy.centerPoint;
+	this->minimums = copy.minimums;
+	this->maximums = copy.maximums;
+	this->minX = copy.minX;
+	this->minY = copy.minY;
+	this->minZ = copy.minZ;
+	this->maxX = copy.maxX;
+	this->maxY = copy.maxY;
+	this->maxZ = copy.maxZ;
+}
 
 MeshModel::~MeshModel()
 {
