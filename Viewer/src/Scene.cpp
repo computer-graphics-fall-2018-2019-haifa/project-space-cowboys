@@ -134,4 +134,9 @@ const std::vector<char*> Scene::getcamerasNames() const
 	return camerasNames;
 }
 
+ char* Scene::getActiveCameraName() 
+{
+	return camerasNames[activeCameraIndex];
+}
+
 

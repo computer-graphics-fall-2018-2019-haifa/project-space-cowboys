@@ -16,7 +16,7 @@
 bool showDemoWindow = true;
 bool showAnotherWindow = false;
 bool showCameraPropWindow = false;
-
+bool showActiveCamera = true;
 glm::vec4 clearColor = glm::vec4(0.8f, 0.8f, 0.8f, 1.00f);
 glm::vec2 offset = glm::vec2(0, 0);
 float scalar = 1;
@@ -213,4 +213,18 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 		ImGui::End();
 	}
+	
+	Camera cam = scene.GetActiveCamera();
+	char* name;
+	name = (char*)malloc(sizeof(char) *12);
+	strcpy(name, scene.getActiveCameraName());
+	strcat(name, " Properties");
+
+	if (showActiveCamera)
+	{
+		ImGui::Begin(name, NULL);
+		ImGui::Text("tt");
+		ImGui::End();
+	}
+	free(name);
 }

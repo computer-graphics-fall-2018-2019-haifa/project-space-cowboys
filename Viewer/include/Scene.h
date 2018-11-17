@@ -51,5 +51,7 @@ public:
 	const std::vector<Camera> GetAllCameras() const;
 	const std::vector<char *> getModelsNames() const;
 	const std::vector<char *> getcamerasNames() const;
+
+	char * getActiveCameraName();
 	
 };
