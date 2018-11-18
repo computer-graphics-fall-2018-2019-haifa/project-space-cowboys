@@ -35,7 +35,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 	}
 
 	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-	{	
+	{
 		static int counter = 0;
 		static int sensitivity = 1;
 		static float zoom = 1.0f;
@@ -46,7 +46,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::Begin("Viewport Settings");                          // Create a window called "Hello, world!" and append into it.
 
 		//ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-		
+
 		if (ImGui::Checkbox("Show Bounding Box", &boundingBox))
 		{
 			scene.settings.showBoundingBox = boundingBox;
@@ -83,7 +83,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		{
 			scene.GetActiveCamera().SetZoom(zoom);
 		}
-		
+
 		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
 			counter++;
 		ImGui::SameLine();
@@ -117,7 +117,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 					nfdchar_t *outPath = NULL;
 					nfdresult_t result = NFD_OpenDialog("obj;png,jpg", NULL, &outPath);
 					if (result == NFD_OKAY) {
-						scene.AddModel(std::make_shared<MeshModel>(Utils::LoadMeshModel(outPath)));
+						scene.AddModel(std::make_shared<MeshModel>(Utils::LoadMeshModel(outPath, false)));
 						free(outPath);
 					}
 					else if (result == NFD_CANCEL) {
@@ -132,13 +132,13 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				}
 				ImGui::EndMenu();
 			}
-		
+
 			if (ImGui::BeginMenu("Objects"))
 			{
 				if (ImGui::BeginMenu("Models"))
 				{
 					int size = scene.GetModelCount();
-					if (size!= 0) {
+					if (size != 0) {
 						std::vector<char*> names(scene.getModelsNames());
 						int size = scene.GetModelCount();
 						float sz = ImGui::GetTextLineHeight();
@@ -183,7 +183,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				}
 				ImGui::EndMenu();
 			}
-			
+
 			ImGui::EndMainMenuBar();
 		}
 	}
@@ -203,8 +203,8 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		glm::vec4 at = glm::vec4(0, 0, 0, 0);
 		glm::vec4 up = glm::vec4(0, 0, 0, 0);
 
-		
-		
+
+
 
 		if (ImGui::Button("create"))
 		{
@@ -217,4 +217,23 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 		ImGui::End();
 	}
+
+
+
+
+	Camera cam = scene.GetActiveCamera();
+	char* name;
+	name = (char*)malloc(sizeof(char) * 12);
+	strcpy(name, scene.getActiveCameraName());
+	strcat(name, " Properties");
+
+	if (showActiveCamera)
+	{
+		ImGui::Begin(name, NULL);
+		ImGui::Text("tt");
+		ImGui::End();
+	}
+	
+		free(name);
+	
 }
