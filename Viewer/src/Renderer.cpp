@@ -104,7 +104,10 @@ void Renderer::DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& c
 	DrawLine(Line::Line(vertices[1], vertices[2]), camera, color);
 	DrawLine(Line::Line(vertices[2], vertices[0]), camera, color);	
 }
-
+void Renderer::DrawNormals(glm::vec3& faceCenter,glm::vec3& normal, const glm::vec4& color, Camera & camera)
+{
+	DrawLine(Line::Line(faceCenter, normal), camera, color);
+}
 void Renderer::createBuffers(int viewportWidth, int viewportHeight)
 {
 	if (colorBuffer)
@@ -146,6 +149,7 @@ void Renderer::SetViewport(int viewportWidth, int viewportHeight, int viewportX,
 void Renderer::Render(Scene & scene)
 {
 	Camera activeCamera = scene.GetActiveCamera();
+	MeshModel activMod = scene.getActiveModel();
 	auto models = scene.GetAllModels();
 	for (auto model : models)
 	{
@@ -158,6 +162,13 @@ void Renderer::Render(Scene & scene)
 		{
 			DrawBoundingBox(*model, activeCamera);
 		}
+		
+		
+	}
+	if (scene.settings.showNormals)
+	{
+		for(auto face : activMod.GetAllFaces())
+		DrawNormals( activeCamera);
 	}
 	auto cameras = scene.GetAllCameras();
 	for (auto camera : cameras)

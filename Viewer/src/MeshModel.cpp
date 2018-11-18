@@ -15,6 +15,7 @@ MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3
 	this->normals = std::vector<glm::vec3>(normals);
 	this->modelName = modelName;		
 	SetCenterPoint();
+
 	for (glm::vec3 vertex : vertices)
 	{
 		minX = std::fmin(minX, vertex.x);
