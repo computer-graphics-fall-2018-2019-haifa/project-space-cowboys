@@ -104,7 +104,7 @@ void Renderer::DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& c
 	DrawLine(Line::Line(vertices[1], vertices[2]), camera, color);
 	DrawLine(Line::Line(vertices[2], vertices[0]), camera, color);	
 }
-void Renderer::DrawNormals(glm::vec3& faceCenter,glm::vec3& normal, const glm::vec4& color, Camera & camera)
+void Renderer::DrawNormals(const glm::vec3& faceCenter, const glm::vec3& normal, const glm::vec4& color, Camera & camera)
 {
 	DrawLine(Line::Line(faceCenter, normal), camera, color);
 }
@@ -168,7 +168,7 @@ void Renderer::Render(Scene & scene)
 	if (scene.settings.showNormals)
 	{
 		for(auto face : activMod.GetAllFaces())
-		DrawNormals( activeCamera);
+			DrawNormals(face.getCenter(),face.getNorm(), activMod.GetNormColor(), activeCamera);
 	}
 	auto cameras = scene.GetAllCameras();
 	for (auto camera : cameras)

@@ -17,6 +17,8 @@ private:
 	std::vector<glm::vec3> normals;
 	glm::mat4x4 worldTransform;
 	glm::vec4 color;
+	glm::vec4 normColor;
+	glm::vec4 boxColor;
 	std::string modelName;
 	glm::vec4 centerPoint = glm::vec4(0, 0, 0, 0);
 	glm::vec3 minimums;
@@ -29,6 +31,7 @@ private:
 	float maxZ = std::numeric_limits<float>::min();
 
 public:
+
 	MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, const std::string& modelName = "");
 	MeshModel(const MeshModel &copy);
 	virtual ~MeshModel();
@@ -57,5 +60,16 @@ public:
 	const glm::vec3 GetVertex(int index) const;
 	const glm::vec4& GetCenterPoint() const;
 
+	void calcNormals();
+
+	void SetBoxColor(const glm::vec4 & color);
+
+	void SetNormColor(const glm::vec4 & color);
+
+	const glm::vec4 & GetNormColor() const;
+
+	const glm::vec4 & GetBoxColor() const;
+
 	void SetCenterPoint();
+
 };

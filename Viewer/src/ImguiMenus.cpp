@@ -40,8 +40,9 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		static int sensitivity = 1;
 		static float zoom = 1.0f;
 		static bool boundingBox = false;
+		static bool normals = false;
 		scene.settings.showBoundingBox = boundingBox;
-
+		scene.settings.showNormals = normals;
 		ImGui::Begin("Viewport Settings");                          // Create a window called "Hello, world!" and append into it.
 
 		//ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
@@ -50,7 +51,10 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		{
 			scene.settings.showBoundingBox = boundingBox;
 		}
-
+		if (ImGui::Checkbox("Show normals", &normals))
+		{
+			scene.settings.showNormals = normals;
+		}
 		ImGui::ColorEdit3("clear color", (float*)&clearColor); // Edit 3 floats representing a color		
 
 		ImGui::SliderInt("Sensitivity", &sensitivity, 0, 100);

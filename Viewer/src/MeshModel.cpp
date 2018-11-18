@@ -6,14 +6,22 @@
 #include <fstream>
 #include <sstream>
 
+
 MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, const std::string& modelName) :
 	modelName(modelName),
 	worldTransform(glm::mat4x4(1))
 {
 	this->faces = std::vector<Face>(faces);
 	this->vertices = std::vector<glm::vec3>(vertices);
-	this->normals = std::vector<glm::vec3>(normals);
+	
+	if (!normals.empty())
+		this->normals = std::vector<glm::vec3>(normals);
+	else
+		calcNormals();
+
 	this->modelName = modelName;		
+	this->boxColor = { 0,0,0,0 };
+	this->normColor = { 0,0,1,0 };
 	SetCenterPoint();
 
 	for (glm::vec3 vertex : vertices)
@@ -54,6 +62,7 @@ MeshModel::~MeshModel()
 {
 
 }
+
 
 void MeshModel::SetWorldTransformation(const glm::mat4x4& worldTransform)
 {
@@ -150,4 +159,43 @@ void MeshModel::SetCenterPoint()
 const glm::vec4 & MeshModel::GetCenterPoint() const
 {
 	return this->centerPoint;
+}
+
+void MeshModel::calcNormals() 
+{
+	
+	for (auto face : faces)
+	{
+
+		int ver0Index = face.GetVertexIndex(0);
+		int ver1Index = face.GetVertexIndex(1);
+		int ver2Index = face.GetVertexIndex(2);
+
+		glm::vec3 v0 = vertices[ver0Index];
+		glm::vec3 v1 = vertices[ver1Index];
+		glm::vec3 v2 = vertices[ver2Index];
+		glm::vec3 center = v0 + v1 + v2;
+		center.x /= 3;
+		center.y /= 3;
+		center.z /= 3;
+		//glm::vec3 normalEnd = glm::normalize(glm::cross((v0 - v1), (v0 - v2)));
+		face.setNorm(glm::normalize(glm::cross((v0 - v1), (v0 - v2))));
+		face.setCenter(center);
+	}
+}
+void MeshModel::SetBoxColor(const glm::vec4& color)
+{
+	this->boxColor = color;
+}
+void MeshModel::SetNormColor(const glm::vec4& color)
+{
+	this->normColor = color;
+}
+const glm::vec4& MeshModel::GetNormColor() const
+{
+	return this->normColor;
+}
+const glm::vec4& MeshModel::GetBoxColor() const
+{
+	return this->boxColor;
 }
