@@ -13,7 +13,7 @@
 #include <nfd.h>
 #include <random>
 
-bool showDemoWindow = true;
+bool showDemoWindow = false;
 bool showAnotherWindow = false;
 bool showCameraPropWindow = false;
 bool showActiveCamera = true;
@@ -132,7 +132,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				ImGui::EndMenu();
 			}
 
-			if (ImGui::BeginMenu("Objects"))
+			if (ImGui::BeginMenu("Add Stuff"))
 			{
 				if (ImGui::BeginMenu("Models"))
 				{
@@ -182,6 +182,15 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				}
 				ImGui::EndMenu();
 			}
+			if (ImGui::BeginMenu("help"))
+			{
+				if (ImGui::MenuItem("Demo imgui","F1"))
+				{
+					showDemoWindow = true;
+				}
+				ImGui::EndMenu();
+			}
+			
 
 			ImGui::EndMainMenuBar();
 		}
@@ -222,7 +231,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 	Camera cam = scene.GetActiveCamera();
 	char* name;
-	name = (char*)malloc(sizeof(char) * 12);
+	name = (char*)malloc(sizeof(char) * 25);
 	strcpy(name, scene.getActiveCameraName());
 	strcat(name, " Properties");
 
@@ -233,6 +242,6 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::End();
 	}
 	
-	//free(name);
+	free(name);
 	
 }
