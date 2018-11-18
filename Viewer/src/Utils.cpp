@@ -19,8 +19,9 @@ glm::vec2 Utils::Vec2fFromStream(std::istream& issLine)
 	return glm::vec2(x, y);
 }
 
-MeshModel Utils::LoadMeshModel(const std::string& filePath)
+MeshModel Utils::LoadMeshModel(const std::string& filePath, bool camera)
 {
+	
 	std::vector<Face> faces;
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec3> normals;
@@ -66,7 +67,7 @@ MeshModel Utils::LoadMeshModel(const std::string& filePath)
 		}
 	}
 
-	return MeshModel(faces, vertices, normals, Utils::GetFileName(filePath));
+	return MeshModel(faces, vertices, normals,camera, Utils::GetFileName(filePath));
 }
 
 std::vector<glm::vec3> Utils::TriangleFromVertexIndices(const std::vector<int>& vertices, MeshModel& model)

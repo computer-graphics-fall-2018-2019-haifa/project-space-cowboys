@@ -7,17 +7,18 @@
 #include <sstream>
 
 
-MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, const std::string& modelName) :
+MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals,  bool camera ,const std::string& modelName) :
 	modelName(modelName),
 	worldTransform(glm::mat4x4(1))
 {
 	this->faces = std::vector<Face>(faces);
 	this->vertices = std::vector<glm::vec3>(vertices);
 	
-	if (!normals.empty())
+	isCamera = camera;
+	if (!normals.empty()|| isCamera)
 		this->normals = std::vector<glm::vec3>(normals);
-	else
-		calcNormals();
+	//else
+	//	calcNormals();
 
 	this->modelName = modelName;		
 	this->boxColor = { 0,0,0,0 };
@@ -41,6 +42,7 @@ MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3
 }
 MeshModel::MeshModel(const MeshModel &copy)
 {
+	this->isCamera = copy.isCamera;
 	this->faces = copy.faces;
 	this->vertices = copy.vertices;
 	this->normals = copy.normals;
@@ -163,10 +165,10 @@ const glm::vec4 & MeshModel::GetCenterPoint() const
 
 void MeshModel::calcNormals() 
 {
-	
+	int i = 0;
 	for (auto face : faces)
 	{
-
+		
 		int ver0Index = face.GetVertexIndex(0);
 		int ver1Index = face.GetVertexIndex(1);
 		int ver2Index = face.GetVertexIndex(2);
@@ -181,6 +183,7 @@ void MeshModel::calcNormals()
 		//glm::vec3 normalEnd = glm::normalize(glm::cross((v0 - v1), (v0 - v2)));
 		face.setNorm(glm::normalize(glm::cross((v0 - v1), (v0 - v2))));
 		face.setCenter(center);
+		i++;
 	}
 }
 void MeshModel::SetBoxColor(const glm::vec4& color)
