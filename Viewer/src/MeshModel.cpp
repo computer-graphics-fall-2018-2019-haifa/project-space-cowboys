@@ -165,7 +165,7 @@ const glm::vec4 & MeshModel::GetCenterPoint() const
 
 void MeshModel::calcNormals() 
 {
-	int i = 0;
+	
 	for (auto face : faces)
 	{
 		
@@ -183,7 +183,7 @@ void MeshModel::calcNormals()
 		//glm::vec3 normalEnd = glm::normalize(glm::cross((v0 - v1), (v0 - v2)));
 		face.setNorm(glm::normalize(glm::cross((v0 - v1), (v0 - v2))));
 		face.setCenter(center);
-		i++;
+		
 	}
 }
 void MeshModel::SetBoxColor(const glm::vec4& color)

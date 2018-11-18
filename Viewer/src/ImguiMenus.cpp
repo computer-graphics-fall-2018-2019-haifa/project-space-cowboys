@@ -16,6 +16,7 @@
 bool showDemoWindow = true;
 bool showAnotherWindow = false;
 bool showCameraPropWindow = false;
+bool showActiveCamera = true;
 
 glm::vec4 clearColor = glm::vec4(0.8f, 0.8f, 0.8f, 1.00f);
 glm::vec2 offset = glm::vec2(0, 0);
@@ -44,8 +45,6 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		scene.settings.showBoundingBox = boundingBox;
 		scene.settings.showNormals = normals;
 		ImGui::Begin("Viewport Settings");                          // Create a window called "Hello, world!" and append into it.
-
-		//ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
 
 		if (ImGui::Checkbox("Show Bounding Box", &boundingBox))
 		{
@@ -234,6 +233,6 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::End();
 	}
 	
-		free(name);
+	//free(name);
 	
 }

@@ -114,10 +114,10 @@ const int Scene::GetActiveModelIndex() const
 	return activeModelIndex;
 }
 
-const MeshModel Scene::getActiveModel()
-{
-	return *models[activeModelIndex];
-}
+//const MeshModel Scene::getActiveModel()
+//{
+//	return *models[activeModelIndex];
+//}
 
 const std::vector<std::shared_ptr<MeshModel>>& Scene::GetAllModels() const
 {
@@ -139,7 +139,7 @@ const std::vector<char*> Scene::getcamerasNames() const
 	return camerasNames;
 }
 
-char* Scene::getActiveCameraName()
+ char* Scene::getActiveCameraName() 
 {
 	return camerasNames[activeCameraIndex];
 }

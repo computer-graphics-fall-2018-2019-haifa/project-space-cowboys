@@ -149,8 +149,9 @@ void Renderer::SetViewport(int viewportWidth, int viewportHeight, int viewportX,
 void Renderer::Render(Scene & scene)
 {
 	Camera activeCamera = scene.GetActiveCamera();
-	MeshModel activMod = scene.getActiveModel();
+	
 	auto models = scene.GetAllModels();
+	
 	for (auto model : models)
 	{
 		for (auto face : model->GetAllFaces())
@@ -167,8 +168,8 @@ void Renderer::Render(Scene & scene)
 	}
 	if (scene.settings.showNormals)
 	{
-		for(auto face : activMod.GetAllFaces())
-			DrawNormals(face.getCenter(),face.getNorm(), activMod.GetNormColor(), activeCamera);
+		for(auto face : models[scene.GetActiveModelIndex()]->GetAllFaces())
+			DrawNormals(face.getCenter(),face.getNorm(), models[scene.GetActiveModelIndex()]->GetNormColor(), activeCamera);
 	}
 	auto cameras = scene.GetAllCameras();
 	for (auto camera : cameras)

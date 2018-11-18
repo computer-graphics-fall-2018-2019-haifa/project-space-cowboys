@@ -47,7 +47,7 @@ public:
 
 	void SetActiveModelIndex(int index);
 	const int GetActiveModelIndex() const;
-	const MeshModel getActiveModel();
+	//const MeshModel getActiveModel();
 	const std::vector<std::shared_ptr<MeshModel>>& GetAllModels() const;
 	const std::vector<Camera> GetAllCameras() const;
 	const std::vector<char *> getModelsNames() const;
