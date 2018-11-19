@@ -101,6 +101,20 @@ glm::mat4x4 Utils::TranslationMatrix(const glm::vec3 translation)
 		0, 0, 0, 1.0f);
 }
 
+glm::mat4 scaleMat(glm::vec3 scale)
+{
+	return glm::mat4(scale.x, 0, 0, 0,
+		0, scale.y, 0, 0,
+		0, 0, scale.y, 0,
+		0, 0, 0, 1
+	);
+
+}
+glm::mat4 rotateMat(glm::vec3 rotations)
+{
+
+}
+
 std::string Utils::GetFileName(const std::string& filePath)
 {
 	if (filePath.empty()) {
@@ -136,3 +150,4 @@ std::string Utils::GetFileName(const std::string& filePath)
 
 	return filePath.substr(index + 1, len - index);
 }
+

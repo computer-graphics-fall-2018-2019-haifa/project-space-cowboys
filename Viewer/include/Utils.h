@@ -27,7 +27,10 @@ public:
 	/************************************************************************/
 
 	static glm::mat4x4 TranslationMatrix(const glm::vec3 translation);
-
+	static glm::mat4 scaleMat(glm::vec3 scale);
+	static glm::mat4 rotateMat(glm::vec3 rotations);
 private:
 	static std::string GetFileName(const std::string& filePath);
 };
+
+
