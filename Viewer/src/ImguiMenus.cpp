@@ -17,6 +17,7 @@ bool showDemoWindow = false;
 bool showAnotherWindow = false;
 bool showCameraPropWindow = false;
 bool showActiveCamera = true;
+bool showActiveModel = false;
 
 glm::vec4 clearColor = glm::vec4(0.8f, 0.8f, 0.8f, 1.00f);
 glm::vec2 offset = glm::vec2(0, 0);
@@ -118,6 +119,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 					if (result == NFD_OKAY) {
 						scene.AddModel(std::make_shared<MeshModel>(Utils::LoadMeshModel(outPath, false)));
 						free(outPath);
+						showActiveModel = true;
 					}
 					else if (result == NFD_CANCEL) {
 					}
@@ -132,7 +134,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				ImGui::EndMenu();
 			}
 
-			if (ImGui::BeginMenu("Add Stuff"))
+			if (ImGui::BeginMenu("What on screen"))
 			{
 				if (ImGui::BeginMenu("Models"))
 				{
@@ -244,4 +246,38 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 	
 	free(name);
 	
+	if (showActiveModel)
+	{
+		ImGui::Begin("active model", NULL);
+		static float anglex = 0.0f;
+		static float angley = 0.0f;
+		static float anglez = 0.0f;
+		static int e = 0;
+
+		ImGui::RadioButton("Scale", &e, 0); ImGui::SameLine();
+		ImGui::RadioButton("Move", &e, 1); ImGui::SameLine();
+		ImGui::RadioButton("Rotate", &e, 2);
+		
+
+		ImGui::SliderAngle("X", &anglex);
+		if (ImGui::Button("reset"))
+		{
+			anglex = 0.0f;
+		}
+		ImGui::SliderAngle("Y", &angley); 
+		if (ImGui::Button("reset"))
+		{
+			angley = 0.0f;
+		}
+		ImGui::SliderAngle("Z", &anglez);
+		if (ImGui::Button("reset"))
+		{
+			anglez = 0.0f;
+		}
+		ImGui::Text("tt");
+		
+		
+		ImGui::End();
+	}
+
 }

@@ -92,27 +92,32 @@ glm::vec3 Utils::Homogeneous4to3(const glm::vec4 source)
 	return glm::vec3(source[0] / source[3], source[1] / source[3], source[2] / source[3]);
 }
 
-glm::mat4x4 Utils::TranslationMatrix(const glm::vec3 translation)
+glm::mat4 Utils::TranslationMatrix(const glm::vec3 translation)
 {
-	return glm::mat4x4(
+	return glm::mat4(
 		1.0f, 0, 0, translation.x,
 		0, 1.0f, 0, translation.y,
 		0, 0, 1.0f, translation.z,
 		0, 0, 0, 1.0f);
 }
 
-glm::mat4 scaleMat(glm::vec3 scale)
+glm::mat4 Utils::scaleMat(glm::vec3 scale)
 {
-	return glm::mat4(scale.x, 0, 0, 0,
-		0, scale.y, 0, 0,
-		0, 0, scale.y, 0,
-		0, 0, 0, 1
-	);
+	return glm::mat4(scale.x, 0, 0, 0, 0, scale.y, 0, 0, 0, 0, scale.y, 0, 0, 0, 0, 1);
 
 }
-glm::mat4 rotateMat(glm::vec3 rotations)
+glm::mat4 Utils::rotateMat(float angle, char axies)
 {
-
+	if (axies == 'x') {
+		return glm::mat4(1, 0, 0, 0, 0, cosf(angle), -sinf(angle), 0, 0, sinf(angle), cosf(angle), 0, 0, 0, 0, 1);
+	}
+	if (axies == 'y') {
+		return glm::mat4(cosf(angle), 0, sinf(angle), 0, 0, 1, 0, 0, -sinf(angle), 0, cosf(angle), 0, 0, 0, 0, 1);
+	}
+	if (axies == 'z') {
+		return glm::mat4(1, 0, 0, 0, 0, cosf(angle), -sinf(angle), 0, 0, sinf(angle), cosf(angle), 0, 0, 0, 0, 1);
+	}
+	return glm::mat4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1);
 }
 
 std::string Utils::GetFileName(const std::string& filePath)
