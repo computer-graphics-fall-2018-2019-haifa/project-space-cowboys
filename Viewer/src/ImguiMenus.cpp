@@ -253,8 +253,8 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		static float angley = 0.0f;
 		static float anglez = 0.0f;
 		static float movex = 0.0f;
-		static float movey = 2.0f;
-		static float movez = 3.0f;
+		static float movey = 0.0f;
+		static float movez = 0.0f;
 		static int e = 0;
 		static int w = 0;
 		static float scale[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
