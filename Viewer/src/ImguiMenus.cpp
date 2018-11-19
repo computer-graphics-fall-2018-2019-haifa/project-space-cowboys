@@ -252,48 +252,106 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		static float anglex = 0.0f;
 		static float angley = 0.0f;
 		static float anglez = 0.0f;
+		static float movex = 0.0f;
+		static float movey = 2.0f;
+		static float movez = 3.0f;
 		static int e = 0;
-		static float vec4f[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+		static int w = 0;
+		static float scale[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+		static int mSensitivity = 1;
+		
+		ImGui::Text("");
+		ImGui::RadioButton("World", &w, 0); ImGui::SameLine();
+		ImGui::RadioButton("Local", &w, 1);
 
+		ImGui::Separator();
 		ImGui::RadioButton("Scale", &e, 0); ImGui::SameLine();
 		ImGui::RadioButton("Move", &e, 1); ImGui::SameLine();
 		ImGui::RadioButton("Rotate", &e, 2);
+		ImGui::Separator();
+		ImGui::Text("");
 		if (e == 0) {
 
-			ImGui::DragFloat3("drag float3", vec4f, 0.1f, -10.0f, 10.0f);
+			ImGui::DragFloat3("Scale by xyz", scale, 0.1f, -10.0f, 10.0f);
 
 		}
 		if (e == 1) {
-			
-			ImGui::DragFloat3("drag float3", vec4f, 0.1f, -10.0f, 10.0f);
-			
+			ImGui::SliderInt("Sensitivity", &mSensitivity, 1, 100);
+			ImGui::Text("move on X"); 
+			if (ImGui::Button("x -  "))
+			{
+				movex -= 1* mSensitivity;
+			}
+			; ImGui::SameLine();
+			if (ImGui::Button("x +  "))
+			{
+				movex += 1 * mSensitivity;
+			} ImGui::SameLine();
+			ImGui::Text(":  %d", (int)movex);
+
+			ImGui::Text("move on Y");
+			if (ImGui::Button("y -  "))
+			{
+				movey -= 1 * mSensitivity;
+			}
+			; ImGui::SameLine();
+			if (ImGui::Button("y +  "))
+			{
+				movey += 1 * mSensitivity;
+			}ImGui::SameLine();
+			ImGui::Text(":  %d", (int)movey);
+
+			ImGui::Text("move on Z");
+			if (ImGui::Button("z -  "))
+			{
+				movez -= 1 * mSensitivity;
+			}
+			; ImGui::SameLine();
+			if (ImGui::Button("z +  "))
+			{
+				movez += 1 * mSensitivity;
+			}ImGui::SameLine();
+			ImGui::Text(":  %d", (int)movez);
 		}
 		if (e == 2) {
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 1.0f, 0.0f, 0.0f, 0.8 });
 			ImGui::Text("rotate x"); ImGui::SameLine();
 			ImGui::SliderAngle("x", &anglex); ImGui::SameLine();
-			
+			ImGui::PopStyleColor(1);
+			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
 			if (ImGui::Button("reset x"))
 			{
 				anglex = 0.0f;
 			}
-			ImGui::PopStyleColor(1);
+			ImGui::PopStyleColor(3);
+
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 0.0f, 1.0f, 0.0f, 0.8 });
 			ImGui::Text("rotate y"); ImGui::SameLine();
 			ImGui::SliderAngle("y", &angley); ImGui::SameLine();
 			ImGui::PopStyleColor(1);
+			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
 			if (ImGui::Button("reset y"))
 			{
 				angley = 0.0f;
 			}
+			ImGui::PopStyleColor(3);
+
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 0.0f, 0.0f, 1.0f, 0.8 });
 			ImGui::Text("rotate z"); ImGui::SameLine();
 			ImGui::SliderAngle("z", &anglez); ImGui::SameLine();
 			ImGui::PopStyleColor(1);
+			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
 			if (ImGui::Button("reset z"))
 			{
 				anglez = 0.0f;
 			}
+			ImGui::PopStyleColor(3);
 		}
 		ImGui::Text("");
 		
