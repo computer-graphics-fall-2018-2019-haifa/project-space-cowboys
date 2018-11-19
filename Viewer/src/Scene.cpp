@@ -114,10 +114,10 @@ const int Scene::GetActiveModelIndex() const
 	return activeModelIndex;
 }
 
-//const MeshModel Scene::getActiveModel()
-//{
-//	return *models[activeModelIndex];
-//}
+const std::shared_ptr<MeshModel> Scene::getActiveModel() const
+{
+	return models.at(activeModelIndex);
+}
 
 const std::vector<std::shared_ptr<MeshModel>>& Scene::GetAllModels() const
 {

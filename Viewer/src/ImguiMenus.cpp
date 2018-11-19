@@ -29,7 +29,12 @@ const glm::vec4& GetClearColor()
 }
 
 void DrawImguiMenus(ImGuiIO& io, Scene& scene)
-{
+{	
+	std::shared_ptr<MeshModel> activeModel;
+	if (scene.GetModelCount() > 0)
+	{
+		activeModel = scene.getActiveModel();
+	}
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	if (showDemoWindow)
 	{
@@ -134,7 +139,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				ImGui::EndMenu();
 			}
 
-			if (ImGui::BeginMenu("What on screen"))
+			if (ImGui::BeginMenu("Models and Cameras"))
 			{
 				if (ImGui::BeginMenu("Models"))
 				{

@@ -15,7 +15,7 @@ private:
 	std::vector<Face> faces;
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec3> normals;
-	glm::mat4x4 worldTransform;
+	glm::mat4 worldTransform;
 	glm::vec4 color;
 	glm::vec4 normColor;
 	glm::vec4 boxColor;
@@ -23,6 +23,9 @@ private:
 	glm::vec4 centerPoint = glm::vec4(0, 0, 0, 0);
 	glm::vec3 minimums;
 	glm::vec3 maximums;
+	glm::vec3 scale;
+	glm::vec3 rotate;
+	glm::vec3 translate;
 	float minX = std::numeric_limits<float>::max();
 	float minY = std::numeric_limits<float>::max();
 	float minZ = std::numeric_limits<float>::max();
@@ -36,7 +39,7 @@ public:
 	MeshModel(const MeshModel &copy);
 	virtual ~MeshModel();
 
-	void SetWorldTransformation(const glm::mat4x4& worldTransform);
+	void SetWorldTransformation();
 	const glm::mat4x4& GetWorldTransformation() const;
 
 	const glm::vec4& GetColor() const;
@@ -69,6 +72,18 @@ public:
 	const glm::vec4 & GetNormColor() const;
 
 	const glm::vec4 & GetBoxColor() const;
+
+	const glm::vec3 & Getscale() const;
+
+	const glm::vec3 & Getrotate() const;
+
+	const glm::vec3 & Gettranslate() const;
+
+	void Setscale(const glm::vec3 & scale);
+
+	void Setrotate(const glm::vec3 & scale);
+
+	void Settranslate(const glm::vec3 & scale);
 
 	void SetCenterPoint();
 

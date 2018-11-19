@@ -4,6 +4,7 @@
 #include <string>
 #include "MeshModel.h"
 
+#define PI 3.14159265 / 180
 /*
  * Utils class.
  * This class is consisted of static helper methods that can have many clients across the code.
@@ -27,9 +28,9 @@ public:
 	/************************************************************************/
 
 	static glm::mat4 TranslationMatrix(const glm::vec3 translation);
-	static glm::mat4 scaleMat(glm::vec3 scale);
-	static glm::mat4 rotateMat(glm::vec3 angle);
-	glm::mat4 setFullTransformMat(glm::vec3 translation, glm::vec3 scale, glm::vec3 angle);
+	static glm::mat4 scaleMat(const glm::vec3 scale);
+	static glm::mat4 rotateMat(const glm::vec3 angle);
+	static glm::mat4 setFullTransformMat(const glm::vec3 translation, const glm::vec3 scale, const glm::vec3 angle);
 private:
 	static std::string GetFileName(const std::string& filePath);
 };

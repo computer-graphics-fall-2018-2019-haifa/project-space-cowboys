@@ -17,9 +17,12 @@ MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3
 	isCamera = camera;
 	if (!normals.empty()|| isCamera)
 		this->normals = std::vector<glm::vec3>(normals);
-	//else
-	//	calcNormals();
+	else
+		calcNormals();
 
+	this->scale = { 0,0,0 };
+	this->rotate = { 0,0,0 };
+	this->translate = { 0,0,0 };
 	this->modelName = modelName;		
 	this->boxColor = { 0,0,0,0 };
 	this->normColor = { 0,0,1,0 };
@@ -66,12 +69,12 @@ MeshModel::~MeshModel()
 }
 
 
-void MeshModel::SetWorldTransformation(const glm::mat4x4& worldTransform)
+void MeshModel::SetWorldTransformation()
 {
-	this->worldTransform = worldTransform;
+	this->worldTransform = Utils::setFullTransformMat(this->translate, this->scale, this->rotate);
 }
 
-const glm::mat4x4& MeshModel::GetWorldTransformation() const
+const glm::mat4& MeshModel::GetWorldTransformation() const
 {
 	return this->worldTransform;
 }
@@ -201,4 +204,28 @@ const glm::vec4& MeshModel::GetNormColor() const
 const glm::vec4& MeshModel::GetBoxColor() const
 {
 	return this->boxColor;
+}
+const glm::vec3& MeshModel::Getscale() const
+{
+	return this->scale;
+}
+const glm::vec3& MeshModel::Getrotate() const
+{
+	return this->rotate;
+}
+const glm::vec3& MeshModel::Gettranslate() const
+{
+	return this->translate;
+}
+void MeshModel::Setscale(const glm::vec3& scale)
+{
+	this->scale = scale;
+}
+void MeshModel::Setrotate(const glm::vec3& scale)
+{
+	this->rotate = rotate;
+}
+void MeshModel::Settranslate(const glm::vec3& scale)
+{
+	this->translate = translate;
 }
