@@ -126,6 +126,12 @@ glm::mat4 Utils::setFullTransformMat(const glm::vec3 translation, const glm::vec
 	return TranslationMatrix(translation)*rotateMat(angle)*scaleMat(scale);
 }
 
+glm::mat4 Utils::setFinallTransformMat(glm::mat4 worldTrans, glm::mat4 localTrans, glm::mat4 cameraTrans) {
+
+	return worldTrans * localTrans* glm::inverse(cameraTrans);
+}
+
+
 std::string Utils::GetFileName(const std::string& filePath)
 {
 	if (filePath.empty()) {
