@@ -30,11 +30,8 @@ const glm::vec4& GetClearColor()
 
 void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 {	
-	std::shared_ptr<MeshModel> activeModel;
-	if (scene.GetModelCount() > 0)
-	{
-		activeModel = scene.getActiveModel();
-	}
+	;
+	
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	if (showDemoWindow)
 	{
@@ -254,15 +251,14 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 	if (showActiveModel)
 	{
 		ImGui::Begin("active model", NULL);
-		static float anglex = 0.0f;
-		static float angley = 0.0f;
-		static float anglez = 0.0f;
-		static float movex = 0.0f;
-		static float movey = 0.0f;
-		static float movez = 0.0f;
+		
+		std::shared_ptr<MeshModel> activeModel = scene.getActiveModel();
+		
+		
 		static int e = 0;
 		static int w = 0;
-		static float scale[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+		static float *scale[4] = { &(activeModel->scale.x), &(activeModel->scale.y), &(activeModel->scale.z), NULL };
+
 		static int mSensitivity = 1;
 		
 		ImGui::Text("");
@@ -277,7 +273,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::Text("");
 		if (e == 0) {
 
-			ImGui::DragFloat3("Scale by xyz", scale, 0.1f, -10.0f, 10.0f);
+			//ImGui::DragFloat3("Scale by xyz", scale, 0.1f, -10.0f, 10.0f);
 
 		}
 		if (e == 1) {
@@ -285,76 +281,76 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::Text("move on X"); 
 			if (ImGui::Button("x -  "))
 			{
-				movex -= 1* mSensitivity;
+				activeModel->translate.x -= 1 * mSensitivity;
 			}
 			; ImGui::SameLine();
 			if (ImGui::Button("x +  "))
 			{
-				movex += 1 * mSensitivity;
+				activeModel->translate.x += 1 * mSensitivity;
 			} ImGui::SameLine();
-			ImGui::Text(":  %d", (int)movex);
+			ImGui::Text(":  %d", (int)activeModel->translate.x);
 
 			ImGui::Text("move on Y");
 			if (ImGui::Button("y -  "))
 			{
-				movey -= 1 * mSensitivity;
+				activeModel->translate.y -= 1 * mSensitivity;
 			}
 			; ImGui::SameLine();
 			if (ImGui::Button("y +  "))
 			{
-				movey += 1 * mSensitivity;
+				activeModel->translate.y += 1 * mSensitivity;
 			}ImGui::SameLine();
-			ImGui::Text(":  %d", (int)movey);
+			ImGui::Text(":  %d", (int)activeModel->translate.y);
 
 			ImGui::Text("move on Z");
 			if (ImGui::Button("z -  "))
 			{
-				movez -= 1 * mSensitivity;
+				activeModel->translate.z -= 1 * mSensitivity;
 			}
 			; ImGui::SameLine();
 			if (ImGui::Button("z +  "))
 			{
-				movez += 1 * mSensitivity;
+				activeModel->translate.z += 1 * mSensitivity;
 			}ImGui::SameLine();
-			ImGui::Text(":  %d", (int)movez);
+			ImGui::Text(":  %d", (int)activeModel->translate.z);
 		}
 		if (e == 2) {
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 1.0f, 0.0f, 0.0f, 0.8 });
 			ImGui::Text("rotate x"); ImGui::SameLine();
-			ImGui::SliderAngle("x", &anglex); ImGui::SameLine();
+			ImGui::SliderAngle("x", &(activeModel->rotate.x)); ImGui::SameLine();
 			ImGui::PopStyleColor(1);
 			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
 			if (ImGui::Button("reset x"))
 			{
-				anglex = 0.0f;
+				activeModel->rotate.x = 0.0f;
 			}
 			ImGui::PopStyleColor(3);
 
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 0.0f, 1.0f, 0.0f, 0.8 });
 			ImGui::Text("rotate y"); ImGui::SameLine();
-			ImGui::SliderAngle("y", &angley); ImGui::SameLine();
+			ImGui::SliderAngle("y", &(activeModel->rotate.y)); ImGui::SameLine();
 			ImGui::PopStyleColor(1);
 			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
 			if (ImGui::Button("reset y"))
 			{
-				angley = 0.0f;
+				activeModel->rotate.y = 0.0f;
 			}
 			ImGui::PopStyleColor(3);
 
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 0.0f, 0.0f, 1.0f, 0.8 });
 			ImGui::Text("rotate z"); ImGui::SameLine();
-			ImGui::SliderAngle("z", &anglez); ImGui::SameLine();
+			ImGui::SliderAngle("z", &(activeModel->rotate.z)); ImGui::SameLine();
 			ImGui::PopStyleColor(1);
 			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
 			if (ImGui::Button("reset z"))
 			{
-				anglez = 0.0f;
+				activeModel->rotate.z = 0.0f;
 			}
 			ImGui::PopStyleColor(3);
 		}

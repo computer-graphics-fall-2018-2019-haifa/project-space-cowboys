@@ -23,9 +23,7 @@ private:
 	glm::vec4 centerPoint = glm::vec4(0, 0, 0, 0);
 	glm::vec3 minimums;
 	glm::vec3 maximums;
-	glm::vec3 scale;
-	glm::vec3 rotate;
-	glm::vec3 translate;
+	
 	float minX = std::numeric_limits<float>::max();
 	float minY = std::numeric_limits<float>::max();
 	float minZ = std::numeric_limits<float>::max();
@@ -34,6 +32,9 @@ private:
 	float maxZ = std::numeric_limits<float>::min();
 	bool isCamera;
 public:
+	glm::vec3 scale;
+	glm::vec3 rotate;
+	glm::vec3 translate;
 
 	MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, bool camera, const std::string& modelName = ""  );
 	MeshModel(const MeshModel &copy);
@@ -72,18 +73,6 @@ public:
 	const glm::vec4 & GetNormColor() const;
 
 	const glm::vec4 & GetBoxColor() const;
-
-	const glm::vec3 & Getscale() const;
-
-	const glm::vec3 & Getrotate() const;
-
-	const glm::vec3 & Gettranslate() const;
-
-	void Setscale(const glm::vec3 & scale);
-
-	void Setrotate(const glm::vec3 & scale);
-
-	void Settranslate(const glm::vec3 & scale);
 
 	void SetCenterPoint();
 
