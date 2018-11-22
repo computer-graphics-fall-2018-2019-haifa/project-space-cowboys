@@ -38,13 +38,13 @@ void Renderer::putPixel(int i, int j, const glm::vec3& color)
 /**
  * Draws a line using the (basic) Bresenham Algorithm.
  */
-void Renderer::DrawLine(const Line& line, Camera& camera, const glm::vec4& color)
+void Renderer::DrawLine(const Line& line, const glm::vec4& color)
 {
 
-	float ax = (Utils::Homogeneous3to4(line.GetPointA()) * camera.GetTransformation()).x * camera.getZoom();
-	float ay = (Utils::Homogeneous3to4(line.GetPointA()) * camera.GetTransformation()).y * camera.getZoom();
-	float bx = (Utils::Homogeneous3to4(line.GetPointB()) * camera.GetTransformation()).x * camera.getZoom();
-	float by = (Utils::Homogeneous3to4(line.GetPointB()) * camera.GetTransformation()).y * camera.getZoom();	
+	float ax = line.GetPointA().x;
+	float ay = line.GetPointA().y;
+	float bx = line.GetPointB().x;
+	float by = line.GetPointB().y;	
 
 	bool aOver1 = line.GetInclination() > 1;
 	if (aOver1)
@@ -98,15 +98,15 @@ void Renderer::DrawLine(const Line& line, Camera& camera, const glm::vec4& color
 	}
 }
 
-void Renderer::DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color, Camera & camera)
+void Renderer::DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color)
 {
-	DrawLine(Line::Line(vertices[0], vertices[1]), camera, color);
-	DrawLine(Line::Line(vertices[1], vertices[2]), camera, color);
-	DrawLine(Line::Line(vertices[2], vertices[0]), camera, color);	
+	DrawLine(Line::Line(vertices[0], vertices[1]), color);
+	DrawLine(Line::Line(vertices[1], vertices[2]), color);
+	DrawLine(Line::Line(vertices[2], vertices[0]), color);	
 }
 void Renderer::DrawNormals(const glm::vec3& faceCenter, const glm::vec3& normal, const glm::vec4& color, Camera & camera)
 {
-	DrawLine(Line::Line(faceCenter, normal), camera, color);
+	DrawLine(Line::Line(faceCenter, normal), color);
 }
 void Renderer::createBuffers(int viewportWidth, int viewportHeight)
 {
@@ -185,63 +185,65 @@ void Renderer::Render(Scene & scene)
 
 void Renderer::DrawBoundingBox(MeshModel& model, Camera& camera)
 {
-	//Lower Square
-	DrawLine(Line::Line(
-		glm::vec3(model.MinX(), model.MinY(), model.MinZ()),
-		glm::vec3(model.MaxX(), model.MinY(), model.MinZ())
-	), camera, model.GetColor());
-	DrawLine(Line::Line(
-		glm::vec3(model.MinX(), model.MinY(), model.MinZ()),
-		glm::vec3(model.MinX(), model.MinY(), model.MaxZ())
-	), camera, model.GetColor());
-	DrawLine(Line::Line(
-		glm::vec3(model.MinX(), model.MinY(), model.MaxZ()),
-		glm::vec3(model.MaxX(), model.MinY(), model.MaxZ())
-	), camera, model.GetColor());
-	DrawLine(Line::Line(
-		glm::vec3(model.MaxX(), model.MinY(), model.MaxZ()),
-		glm::vec3(model.MaxX(), model.MinY(), model.MinZ())
-	), camera, model.GetColor());
+	// need to redo
 
-	//Upper Square
-	DrawLine(Line::Line(
-		glm::vec3(model.MinX(), model.MaxY(), model.MinZ()),
-		glm::vec3(model.MaxX(), model.MaxY(), model.MinZ())
-	), camera, model.GetColor());
-	DrawLine(Line::Line(
-		glm::vec3(model.MinX(), model.MaxY(), model.MinZ()),
-		glm::vec3(model.MinX(), model.MaxY(), model.MaxZ())
-	), camera, model.GetColor());
-	DrawLine(Line::Line(
-		glm::vec3(model.MinX(), model.MaxY(), model.MaxZ()),
-		glm::vec3(model.MaxX(), model.MaxY(), model.MaxZ())
-	), camera, model.GetColor());
-	DrawLine(Line::Line(
-		glm::vec3(model.MaxX(), model.MaxY(), model.MaxZ()),
-		glm::vec3(model.MaxX(), model.MaxY(), model.MinZ())
-	), camera, model.GetColor());
+	////Lower Square
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MinX(), model.MinY(), model.MinZ()),
+	//	glm::vec3(model.MaxX(), model.MinY(), model.MinZ())
+	//), camera, model.GetColor());
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MinX(), model.MinY(), model.MinZ()),
+	//	glm::vec3(model.MinX(), model.MinY(), model.MaxZ())
+	//), camera, model.GetColor());
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MinX(), model.MinY(), model.MaxZ()),
+	//	glm::vec3(model.MaxX(), model.MinY(), model.MaxZ())
+	//), camera, model.GetColor());
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MaxX(), model.MinY(), model.MaxZ()),
+	//	glm::vec3(model.MaxX(), model.MinY(), model.MinZ())
+	//), camera, model.GetColor());
 
-	//Pillars
+	////Upper Square
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MinX(), model.MaxY(), model.MinZ()),
+	//	glm::vec3(model.MaxX(), model.MaxY(), model.MinZ())
+	//), camera, model.GetColor());
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MinX(), model.MaxY(), model.MinZ()),
+	//	glm::vec3(model.MinX(), model.MaxY(), model.MaxZ())
+	//), camera, model.GetColor());
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MinX(), model.MaxY(), model.MaxZ()),
+	//	glm::vec3(model.MaxX(), model.MaxY(), model.MaxZ())
+	//), camera, model.GetColor());
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MaxX(), model.MaxY(), model.MaxZ()),
+	//	glm::vec3(model.MaxX(), model.MaxY(), model.MinZ())
+	//), camera, model.GetColor());
 
-	DrawLine(Line::Line(
-		glm::vec3(model.MinX(), model.MinY(), model.MinZ()),
-		glm::vec3(model.MinX(), model.MaxY(), model.MinZ())
-	), camera, model.GetColor());
+	////Pillars
 
-	DrawLine(Line::Line(
-		glm::vec3(model.MaxX(), model.MinY(), model.MinZ()),
-		glm::vec3(model.MaxX(), model.MaxY(), model.MinZ())
-	), camera, model.GetColor());
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MinX(), model.MinY(), model.MinZ()),
+	//	glm::vec3(model.MinX(), model.MaxY(), model.MinZ())
+	//), camera, model.GetColor());
 
-	DrawLine(Line::Line(
-		glm::vec3(model.MaxX(), model.MinY(), model.MaxZ()),
-		glm::vec3(model.MaxX(), model.MaxY(), model.MaxZ())
-	), camera, model.GetColor());
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MaxX(), model.MinY(), model.MinZ()),
+	//	glm::vec3(model.MaxX(), model.MaxY(), model.MinZ())
+	//), camera, model.GetColor());
 
-	DrawLine(Line::Line(
-		glm::vec3(model.MinX(), model.MinY(), model.MaxZ()),
-		glm::vec3(model.MinX(), model.MaxY(), model.MaxZ())
-	), camera, model.GetColor());
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MaxX(), model.MinY(), model.MaxZ()),
+	//	glm::vec3(model.MaxX(), model.MaxY(), model.MaxZ())
+	//), camera, model.GetColor());
+
+	//DrawLine(Line::Line(
+	//	glm::vec3(model.MinX(), model.MinY(), model.MaxZ()),
+	//	glm::vec3(model.MinX(), model.MaxY(), model.MaxZ())
+	//), camera, model.GetColor());
 }
 
 //##############################
