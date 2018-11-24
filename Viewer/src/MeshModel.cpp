@@ -20,9 +20,12 @@ MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3
 	/*else
 		calcNormals();*/
 
-	this->scale = { 1,1,1 };
-	this->rotate = { 0,0,0 };
-	this->translate = { 0,0,0 };
+	this->scale[0] = { 1,1,1 };
+	this->scale[1] = { 1,1,1 };
+	this->rotate[0] = { 0,0,0 };
+	this->rotate[1] = { 0,0,0 };
+	this->translate[0] = { 0,0,0 };
+	this->translate[1] = { 0,0,0 };
 	this->modelName = modelName;		
 	this->boxColor = { 0,0,0,0 };
 	this->normColor = { 0,0,1,0 };
@@ -61,9 +64,12 @@ MeshModel::MeshModel(const MeshModel &copy)
 	this->maxX = copy.maxX;
 	this->maxY = copy.maxY;
 	this->maxZ = copy.maxZ;
-	this->scale = copy.scale;
-	this->rotate = copy.rotate;
-	this->translate = copy.translate;
+	this->scale[0] = copy.scale[0];
+	this->scale[1] = copy.scale[1];
+	this->rotate[0] = copy.rotate[0];
+	this->rotate[1] = copy.rotate[1];
+	this->translate[0] = copy.translate[0];
+	this->translate[1] = copy.translate[1];
 }
 
 MeshModel::~MeshModel()
@@ -74,7 +80,7 @@ MeshModel::~MeshModel()
 
 void MeshModel::SetWorldTransformation()
 {
-	this->worldTransform = Utils::setFullTransformMat(this->translate, this->scale, this->rotate);
+	this->worldTransform = Utils::setFullTransformMat(this->translate[0], this->scale[0], this->rotate[0]);
 }
 
 const glm::mat4& MeshModel::GetWorldTransformation() const

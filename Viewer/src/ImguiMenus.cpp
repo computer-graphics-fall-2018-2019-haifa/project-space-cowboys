@@ -260,85 +260,85 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::Text("");
 		if (e == 0) {
 
-			ImGui::DragFloat("Scale x", &(activeModel->scale.x), 0.1f);
-			ImGui::DragFloat("Scale y", &(activeModel->scale.y), 0.1f);
-			ImGui::DragFloat("Scale z", &(activeModel->scale.z), 0.1f);
+			ImGui::DragFloat("Scale x", &(activeModel->scale[w].x), 0.1f);
+			ImGui::DragFloat("Scale y", &(activeModel->scale[w].y), 0.1f);
+			ImGui::DragFloat("Scale z", &(activeModel->scale[w].z), 0.1f);
 		}
 		if (e == 1) {
 			ImGui::SliderInt("Sensitivity", &mSensitivity, 1, 100);
 			ImGui::Text("Move on X"); 
 			if (ImGui::Button("x -  "))
 			{
-				activeModel->translate.x -= 1 * mSensitivity;
+				activeModel->translate[w].x -= 1 * mSensitivity;
 			}
 			; ImGui::SameLine();
 			if (ImGui::Button("x +  "))
 			{
-				activeModel->translate.x += 1 * mSensitivity;
+				activeModel->translate[w].x += 1 * mSensitivity;
 			} ImGui::SameLine();
-			ImGui::Text(":  %d", (int)activeModel->translate.x);
+			ImGui::Text(":  %d", (int)activeModel->translate[w].x);
 
 			ImGui::Text("Move on Y");
 			if (ImGui::Button("y -  "))
 			{
-				activeModel->translate.y -= 1 * mSensitivity;
+				activeModel->translate[w].y -= 1 * mSensitivity;
 			}
 			; ImGui::SameLine();
 			if (ImGui::Button("y +  "))
 			{
-				activeModel->translate.y += 1 * mSensitivity;
+				activeModel->translate[w].y += 1 * mSensitivity;
 			}ImGui::SameLine();
-			ImGui::Text(":  %d", (int)activeModel->translate.y);
+			ImGui::Text(":  %d", (int)activeModel->translate[w].y);
 
 			ImGui::Text("Move on Z");
 			if (ImGui::Button("z -  "))
 			{
-				activeModel->translate.z -= 1 * mSensitivity;
+				activeModel->translate[w].z -= 1 * mSensitivity;
 			}
 			; ImGui::SameLine();
 			if (ImGui::Button("z +  "))
 			{
-				activeModel->translate.z += 1 * mSensitivity;
+				activeModel->translate[w].z += 1 * mSensitivity;
 			}ImGui::SameLine();
-			ImGui::Text(":  %d", (int)activeModel->translate.z);
+			ImGui::Text(":  %d", (int)activeModel->translate[w].z);
 		}
 		if (e == 2) {
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 1.0f, 0.0f, 0.0f, 0.8 });
 			ImGui::Text("Rotate x"); ImGui::SameLine();
-			ImGui::SliderAngle("x", &(activeModel->rotate.x)); ImGui::SameLine();
+			ImGui::SliderAngle("x", &(activeModel->rotate[w].x)); ImGui::SameLine();
 			ImGui::PopStyleColor(1);
 			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
 			if (ImGui::Button("Reset x"))
 			{
-				activeModel->rotate.x = 0.0f;
+				activeModel->rotate[w].x = 0.0f;
 			}
 			ImGui::PopStyleColor(3);
 
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 0.0f, 1.0f, 0.0f, 0.8 });
 			ImGui::Text("Rotate y"); ImGui::SameLine();
-			ImGui::SliderAngle("y", &(activeModel->rotate.y)); ImGui::SameLine();
+			ImGui::SliderAngle("y", &(activeModel->rotate[w].y)); ImGui::SameLine();
 			ImGui::PopStyleColor(1);
 			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
 			if (ImGui::Button("Reset y"))
 			{
-				activeModel->rotate.y = 0.0f;
+				activeModel->rotate[w].y = 0.0f;
 			}
 			ImGui::PopStyleColor(3);
 
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 0.0f, 0.0f, 1.0f, 0.8 });
 			ImGui::Text("Rotate z"); ImGui::SameLine();
-			ImGui::SliderAngle("z", &(activeModel->rotate.z)); ImGui::SameLine();
+			ImGui::SliderAngle("z", &(activeModel->rotate[w].z)); ImGui::SameLine();
 			ImGui::PopStyleColor(1);
 			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
 			if (ImGui::Button("Reset z"))
 			{
-				activeModel->rotate.z = 0.0f;
+				activeModel->rotate[w].z = 0.0f;
 			}
 			ImGui::PopStyleColor(3);
 		}

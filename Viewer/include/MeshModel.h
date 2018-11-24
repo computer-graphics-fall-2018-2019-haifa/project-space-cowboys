@@ -32,9 +32,9 @@ private:
 	float maxZ = std::numeric_limits<float>::min();
 	bool isCamera;
 public:
-	glm::vec3 scale;
-	glm::vec3 rotate;
-	glm::vec3 translate;
+	glm::vec3 scale[2];
+	glm::vec3 rotate[2];
+	glm::vec3 translate[2];
 
 	MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, bool camera, const std::string& modelName = ""  );
 	MeshModel(const MeshModel &copy);
