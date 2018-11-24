@@ -16,6 +16,7 @@ private:
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec3> normals;
 	glm::mat4 worldTransform;
+	glm::mat4 localTransform;
 	glm::vec4 color;
 	glm::vec4 normColor;
 	glm::vec4 boxColor;
@@ -42,6 +43,9 @@ public:
 
 	void SetWorldTransformation();
 	const glm::mat4x4& GetWorldTransformation() const;
+
+	void SetLocalTransformation();
+	const glm::mat4x4& GetLocalTransformation() const;
 
 	const glm::vec4& GetColor() const;
 	void SetColor(const glm::vec4& color);

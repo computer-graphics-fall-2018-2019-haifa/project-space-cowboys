@@ -9,7 +9,8 @@
 
 MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals,  bool camera ,const std::string& modelName) :
 	modelName(modelName),
-	worldTransform(glm::mat4x4(1))
+	worldTransform(glm::mat4x4(1)),
+	localTransform(glm::mat4x4(1))
 {
 	this->faces = std::vector<Face>(faces);
 	this->vertices = std::vector<glm::vec3>(vertices);
@@ -53,6 +54,7 @@ MeshModel::MeshModel(const MeshModel &copy)
 	this->vertices = copy.vertices;
 	this->normals = copy.normals;
 	this->worldTransform = copy.worldTransform;
+	this->localTransform = copy.localTransform;
 	this->color = copy.color;
 	this->modelName = copy.modelName;
 	this->centerPoint = copy.centerPoint;
@@ -86,6 +88,16 @@ void MeshModel::SetWorldTransformation()
 const glm::mat4& MeshModel::GetWorldTransformation() const
 {
 	return this->worldTransform;
+}
+
+void MeshModel::SetLocalTransformation()
+{
+
+}
+
+const glm::mat4x4 & MeshModel::GetLocalTransformation() const
+{
+	return this->localTransform;
 }
 
 void MeshModel::SetColor(const glm::vec4& color)
