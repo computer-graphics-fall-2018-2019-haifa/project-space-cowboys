@@ -157,7 +157,8 @@ void Renderer::Render(Scene & scene)
 		for (auto face : model->GetAllFaces())
 		{
 			std::vector<int> vertices = face.GetVertexIndices();
-			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, *model), model->GetColor(), activeCamera);			
+			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, *model), model->GetColor()
+			);			
 		}
 		if (scene.settings.showBoundingBox)
 		{
