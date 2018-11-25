@@ -130,6 +130,11 @@ glm::mat4 Utils::setFinallTransformMat(glm::mat4 worldTrans, glm::mat4 localTran
 
 	return worldTrans * localTrans* glm::inverse(cameraTrans);
 }
+glm::vec3 transformVertic(const glm::vec3 vertic, glm::mat4 transformMetrix) {
+	glm::vec4 temp = Utils::Homogeneous3to4(vertic);
+	temp = transformMetrix * temp;
+	return Utils::Homogeneous4to3(temp);
+}
 
 
 std::string Utils::GetFileName(const std::string& filePath)

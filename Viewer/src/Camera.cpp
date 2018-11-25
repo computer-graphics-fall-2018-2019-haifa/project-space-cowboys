@@ -26,15 +26,18 @@ const glm::mat4x4 Camera::GetTransformation() const
 	return viewTransformation;
 }
 
-void Camera::SetCameraLookAt(const glm::vec3& eye,
-	const glm::vec3& at,
-	const glm::vec3& up)
+void Camera::SetCameraLookAt(const glm::vec4& eye, const glm::vec4 at, const glm::vec4& up)
 {
-	auto z = glm::normalize(eye - at);
-	auto x = glm::normalize(cross(up, z));
-	auto y = glm::normalize(cross(x, z));
-	glm::mat4x4 t = Utils::TranslationMatrix(eye);
-	this->SetTransformation(t);
+	glm::vec4 z = glm::normalize(eye - at);
+	
+	glm::vec3 tempx =  glm::cross(glm::vec3(up.x,up.y,up.z) ,glm::vec3(z.x,z.y,z.z));
+	glm::vec4 x = glm::normalize(glm::vec4(tempx.x, tempx.y, tempx.z,0 ));
+
+	glm::vec3 tempy = glm::cross(glm::vec3(z.x, z.y, z.z), glm::vec3(x.x, x.y, x.z));
+	glm::vec4 y = glm::normalize(glm::vec4(tempy.x, tempy.y, tempy.z, 0));
+	glm::vec4 t = { 0.0f,0.0f,0.0f,1.0f };
+	glm::mat4 c = glm::mat4(x, y, z, t);
+	this->SetTransformation(c * Utils::TranslationMatrix(glm::vec3 (-eye.x, -eye.y, -eye.z)));
 }
 
 void Camera::SetOrthographicProjection(

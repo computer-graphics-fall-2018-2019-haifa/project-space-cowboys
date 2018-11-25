@@ -27,10 +27,7 @@ public:
 	void SetTransformation(const glm::mat4x4& transform);
 	const glm::mat4x4 GetTransformation() const;
 
-	void SetCameraLookAt(
-		const glm::vec3& eye,
-		const glm::vec3& at,
-		const glm::vec3& up);
+	void SetCameraLookAt(const glm::vec4& eye, const glm::vec4 at, const glm::vec4& up);
 
 	void SetOrthographicProjection(
 		const float height,
