@@ -22,7 +22,7 @@ public:
 	/************************************************************************/
 	static glm::vec4 Homogeneous3to4(const glm::vec3 source);
 	static glm::vec3 Homogeneous4to3(const glm::vec4 source);
-
+	static glm::vec3 transformVertic(const glm::vec3 vertic, glm::mat4 transformMetrix);
 	/************************************************************************/
 	/* Matrices                                                           */
 	/************************************************************************/
@@ -31,7 +31,7 @@ public:
 	static glm::mat4 scaleMat(const glm::vec3 scale);
 	static glm::mat4 rotateMat(const glm::vec3 angle);
 	static glm::mat4 setFullTransformMat(const glm::vec3 translation, const glm::vec3 scale, const glm::vec3 angle);
-	glm::mat4 setFinallTransformMat(glm::mat4 worldTrans, glm::mat4 localTrans, glm::mat4 cameraTrans);
+	static glm::mat4 setFinallTransformMat(glm::mat4 worldTrans, glm::mat4 localTrans, glm::mat4 cameraTrans);
 private:
 	static std::string GetFileName(const std::string& filePath);
 };

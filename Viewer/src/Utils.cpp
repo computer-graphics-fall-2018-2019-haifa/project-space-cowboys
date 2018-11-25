@@ -92,6 +92,12 @@ glm::vec3 Utils::Homogeneous4to3(const glm::vec4 source)
 	return glm::vec3(source[0] / source[3], source[1] / source[3], source[2] / source[3]);
 }
 
+glm::vec3 Utils::transformVertic(const glm::vec3 vertic, glm::mat4 transformMetrix) {
+	glm::vec4 temp = Utils::Homogeneous3to4(vertic);
+	glm::vec4 temp2 = transformMetrix * temp;
+	return Utils::Homogeneous4to3(temp2);
+}
+
 glm::mat4 Utils::TranslationMatrix(const glm::vec3 translation)
 {
 	return glm::mat4(
@@ -130,11 +136,7 @@ glm::mat4 Utils::setFinallTransformMat(glm::mat4 worldTrans, glm::mat4 localTran
 
 	return worldTrans * localTrans* glm::inverse(cameraTrans);
 }
-glm::vec3 transformVertic(const glm::vec3 vertic, glm::mat4 transformMetrix) {
-	glm::vec4 temp = Utils::Homogeneous3to4(vertic);
-	temp = transformMetrix * temp;
-	return Utils::Homogeneous4to3(temp);
-}
+
 
 
 std::string Utils::GetFileName(const std::string& filePath)

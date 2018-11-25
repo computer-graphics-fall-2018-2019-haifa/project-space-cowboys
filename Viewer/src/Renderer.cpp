@@ -98,11 +98,11 @@ void Renderer::DrawLine(const Line& line, const glm::vec4& color)
 	}
 }
 
-void Renderer::DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color)
+void Renderer::DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color,glm::mat4 matrix)
 {
-	DrawLine(Line::Line(vertices[0], vertices[1]), color);
-	DrawLine(Line::Line(vertices[1], vertices[2]), color);
-	DrawLine(Line::Line(vertices[2], vertices[0]), color);	
+	DrawLine(Line::Line(Utils::transformVertic(vertices[0], matrix), Utils::transformVertic(vertices[1], matrix)), color);
+	DrawLine(Line::Line(Utils::transformVertic(vertices[1], matrix), Utils::transformVertic(vertices[2], matrix)), color);
+	DrawLine(Line::Line(Utils::transformVertic(vertices[2], matrix), Utils::transformVertic(vertices[0], matrix)), color);
 }
 void Renderer::DrawNormals(const glm::vec3& faceCenter, const glm::vec3& normal, const glm::vec4& color, Camera & camera)
 {
@@ -150,15 +150,18 @@ void Renderer::Render(Scene & scene)
 {
 	Camera activeCamera = scene.GetActiveCamera();
 	
+	glm::mat4 matrix;
 	auto models = scene.GetAllModels();
 	
 	for (auto model : models)
 	{
+		matrix = Utils::setFinallTransformMat(model->GetWorldTransformation(),
+											  model->GetLocalTransformation(),
+											  activeCamera.GetTransformation());
 		for (auto face : model->GetAllFaces())
 		{
 			std::vector<int> vertices = face.GetVertexIndices();
-			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, *model), model->GetColor()
-			);			
+			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, *model), model->GetColor(), matrix);
 		}
 		if (scene.settings.showBoundingBox)
 		{
@@ -178,7 +181,7 @@ void Renderer::Render(Scene & scene)
 		for (auto face : camera.GetAllFaces())
 		{
 			std::vector<int> vertices = face.GetVertexIndices();
-			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, camera), camera.GetColor());
+			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, camera), camera.GetColor(), matrix);
 		}
 		
 	}
