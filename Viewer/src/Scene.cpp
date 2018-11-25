@@ -16,6 +16,8 @@ Scene::Scene() :
 			glm::vec4(0, 0, 0, 0)
 		)
 	);
+	settings.showNormals = false;
+
 }
 /* adding a model to the sence and adding the name to the name vec without the .obj*/
 void Scene::AddModel(const std::shared_ptr<MeshModel>& model)

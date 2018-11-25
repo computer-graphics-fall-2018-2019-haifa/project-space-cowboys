@@ -176,10 +176,13 @@ void Renderer::Render(Scene & scene)
 			DrawNormals(face.getCenter(),face.getNorm(), models[scene.GetActiveModelIndex()]->GetNormColor(), activeCamera);
 	}
 	auto cameras = scene.GetAllCameras();
+	 
 	for (auto camera : cameras)
 	{
+		matrix = Utils::setFinallTransformMat(glm::mat4(1),camera.GetTransformation(),activeCamera.GetTransformation());
 		for (auto face : camera.GetAllFaces())
 		{
+
 			std::vector<int> vertices = face.GetVertexIndices();
 			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, camera), camera.GetColor(), matrix);
 		}
