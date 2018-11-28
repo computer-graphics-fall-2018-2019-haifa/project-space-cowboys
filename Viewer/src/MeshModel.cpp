@@ -103,12 +103,9 @@ const glm::mat4& MeshModel::GetWorldTransformation() const
 
 void MeshModel::SetLocalTransformation()
 {
-	glm::vec3 victor = { centerPoint.x,centerPoint.y, centerPoint.z };
-	glm::mat4 mat = Utils::TranslationMatrix(victor);
-	mat *= Utils::setFullTransformMat(this->translate[1], this->scale[1], this->rotate[1]);
-	victor *= -1;
-	mat *= Utils::TranslationMatrix(victor);
-	this->localTransform = mat;
+	glm::vec3 center = { centerPoint.x,centerPoint.y, centerPoint.z };
+		
+	this->localTransform = Utils::setFullTransformMat(this->translate[1], this->scale[1], this->rotate[1], center, true);
 }
 
 const glm::mat4x4 & MeshModel::GetLocalTransformation() const

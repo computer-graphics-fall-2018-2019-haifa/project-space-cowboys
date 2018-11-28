@@ -344,7 +344,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		}
 		ImGui::Text("");
 		
-		
+		activeModel->updateTransformations();
 		ImGui::End();
 	}
 

@@ -127,9 +127,14 @@ glm::mat4 Utils::rotateMat(const glm::vec3 angle)
 	return x * y * z;
 
 }
-glm::mat4 Utils::setFullTransformMat(const glm::vec3 translation, const glm::vec3 scale, const glm::vec3 angle)
+glm::mat4 Utils::setFullTransformMat(const glm::vec3 translation, const glm::vec3 scale, const glm::vec3 angle, glm::vec3 center, bool isLocal)
 {
-	return TranslationMatrix(translation)*rotateMat(angle)*scaleMat(scale);
+	if (isLocal) {
+		glm::mat4 localrotate = TranslationMatrix(center)*rotateMat(angle)*TranslationMatrix(-center);
+		return TranslationMatrix(translation)*localrotate*scaleMat(scale);
+	}
+	else
+		return TranslationMatrix(translation)*rotateMat(angle)*scaleMat(scale);
 }
 
 glm::mat4 Utils::setFinallTransformMat(glm::mat4 worldTrans, glm::mat4 localTrans, glm::mat4 cameraTrans) {
