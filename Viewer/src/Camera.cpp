@@ -6,9 +6,13 @@
 
 Camera::Camera(const glm::vec4 eye, const glm::vec4 at, const glm::vec4 up) : MeshModel(Utils::LoadMeshModel("C:\\Users\\Yanshul\\Documents\\GitHub\\project-space-cowboys\\Data\\camera.obj",true))
 {
+	this->eye = eye;
+	this->at = at;
+	this->up = up;
 	zoom = 1.0;
 	SetTransformation(glm::mat4x4(1.0f));
 	SetCameraLookAt(eye, at, up);
+	projection = false;
 }
 
 Camera::~Camera()
@@ -40,32 +44,26 @@ void Camera::SetCameraLookAt(const glm::vec4& eye, const glm::vec4 at, const glm
 	this->SetTransformation(c * Utils::TranslationMatrix(glm::vec3 (-eye.x, -eye.y, -eye.z)));
 }
 
-void Camera::SetOrthographicProjection(
-	const float height,
-	const float aspectRatio,
-	const float near,
-	const float far)
+//as shown in the viewing ppt slide 46
+void Camera::SetOrthographicProjection(float l, const float r, const float b, const float t, const float n, const float f)
 {
-
+	projectionTransformation = glm::mat4((2.0f / (r - l)), 0.0f, 0.0f, -((r + l) / (r - l)),
+										 0.0f, (2.0f / (t - b)), 0.0f, -((t + b) / (t - b)),
+										 0.0f, 0.0f, (2.0f /( n - f)), -((f + n) / (f - n)),
+										 0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void Camera::SetPerspectiveProjection(
-	const float fovy,
-	const float aspectRatio,
-	const float near,
-	const float far)
+void Camera::SetPerspectiveProjection(const float l, const float r, const float b, const float t,
+									  const float n, const float f)
 {
-
+	projectionTransformation = glm::mat4(((2*n) / (r - l)), 0.0f, ((r + l) / (r - l)), 0.0f,
+										 0.0f, ((2*n) / (t - b)), ((t + b) / (t - b)), 0.0f,
+										 0.0f, 0.0f, -((f + n) / (f - n)), -((2*f*n) / (f - n)),
+									     0.0f, 0.0f, -1.0f, 0.0f);
 }
 
-void Camera::SetFrustumProjection(
-	const float fovy,
-	const float aspect,
-	const float near,
-	const float far)
-{
 
-}
+
 
 void Camera::SetZoom(const float zoom)
 {
@@ -81,4 +79,24 @@ void Camera::Translate(glm::vec3 translation)
 {	
 	glm::mat4x4 transmat = Utils::TranslationMatrix(translation);
 	SetTransformation(GetTransformation() * transmat);	
+}
+
+const glm::mat4 Camera::getProjectionTransformation()
+{
+	return projectionTransformation;
+}
+
+void Camera::setProjectionTransformation(int width, int hight)
+{
+	float l = eye[0] - (width / 2);
+	float r = eye[0] + (width / 2);
+	float b = eye[1] - (hight / 2);
+	float t = eye[1] + (hight / 2);
+	float f = 300;
+	float n = 50;
+	
+	if(projection)
+		SetOrthographicProjection(l,r,b,t,n,f);
+	else
+		SetPerspectiveProjection(l, r, b, t, n, f);
 }
