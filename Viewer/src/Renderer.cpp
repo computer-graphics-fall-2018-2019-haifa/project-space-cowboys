@@ -155,6 +155,7 @@ void Renderer::Render(Scene & scene)
 	
 	for (auto model : models)
 	{
+		model->updateTransformations();
 		matrix = Utils::setFinallTransformMat(model->GetWorldTransformation(),
 											  model->GetLocalTransformation(),
 											  activeCamera.GetTransformation());

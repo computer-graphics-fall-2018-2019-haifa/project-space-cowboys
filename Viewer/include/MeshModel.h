@@ -46,7 +46,7 @@ public:
 
 	void SetLocalTransformation();
 	const glm::mat4x4& GetLocalTransformation() const;
-
+	void updateTransformations();
 	const glm::vec4& GetColor() const;
 	void SetColor(const glm::vec4& color);
 

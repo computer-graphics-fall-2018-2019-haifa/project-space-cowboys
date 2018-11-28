@@ -170,7 +170,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 		glm::vec4 eye = glm::vec4(eyeInput[0], eyeInput[1], eyeInput[2], 0);
 		glm::vec4 at = glm::vec4(0, 0, 0, 0);
-		glm::vec4 up = glm::vec4(0, 0, 0, 0);
+		glm::vec4 up = glm::vec4(0, 0, 1, 0);
 
 
 

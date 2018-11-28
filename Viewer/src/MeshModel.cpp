@@ -116,6 +116,12 @@ const glm::mat4x4 & MeshModel::GetLocalTransformation() const
 	return this->localTransform;
 }
 
+void MeshModel::updateTransformations()
+{
+	this->SetLocalTransformation();
+	this->SetWorldTransformation();
+}
+
 void MeshModel::SetColor(const glm::vec4& color)
 {
 	this->color = color;
