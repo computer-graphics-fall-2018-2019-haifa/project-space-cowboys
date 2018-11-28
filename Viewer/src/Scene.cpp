@@ -9,13 +9,8 @@ Scene::Scene() :
 	activeModelIndex(0)
 {
 	//Add default camera
-	AddCamera(
-		Camera::Camera(
-			glm::vec4(0, 0, 0, 0),
-			glm::vec4(0, 0, 0, 0),
-			glm::vec4(0, 0, 0, 0)
-		)
-	);
+	AddCamera(Camera::Camera(glm::vec4(0, 0, 0, 0),glm::vec4(0, 0, -10, 0),glm::vec4(0, 1, 0, 0)));
+	
 	settings.showNormals = false;
 
 }

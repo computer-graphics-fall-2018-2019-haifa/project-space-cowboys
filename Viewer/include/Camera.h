@@ -21,7 +21,7 @@ private:
 
 public:
 	
-	Camera(const glm::vec4& eye, const glm::vec4& at, const glm::vec4& up);
+	Camera(const glm::vec4 eye, const glm::vec4 at, const glm::vec4 up);
 	~Camera();
 
 	void SetTransformation(const glm::mat4x4& transform);

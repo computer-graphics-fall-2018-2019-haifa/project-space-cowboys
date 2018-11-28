@@ -12,10 +12,17 @@ MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3
 	worldTransform(glm::mat4x4(1)),
 	localTransform(glm::mat4x4(1))
 {
+	isCamera = camera;
 	this->faces = std::vector<Face>(faces);
 	this->vertices = std::vector<glm::vec3>(vertices);
+	if (!isCamera) {
+		for (int i=0 ; i< this->vertices.size();i++)
+		{
+			this->vertices[i].x += 640.0f;
+			this->vertices[i].y += 320.0f;
+		}
+	}
 	
-	isCamera = camera;
 	if (!normals.empty()|| isCamera)
 		this->normals = std::vector<glm::vec3>(normals);
 	/*else
@@ -30,7 +37,10 @@ MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3
 	this->modelName = modelName;		
 	this->boxColor = { 0,0,0,0 };
 	this->normColor = { 0,0,1,0 };
+	
+	
 	SetCenterPoint();
+	
 
 	for (glm::vec3 vertex : vertices)
 	{
