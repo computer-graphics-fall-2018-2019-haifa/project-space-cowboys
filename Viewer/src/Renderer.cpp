@@ -38,13 +38,13 @@ void Renderer::putPixel(int i, int j, const glm::vec3& color)
 /**
  * Draws a line using the (basic) Bresenham Algorithm.
  */
-void Renderer::DrawLine(const Line& line, const glm::vec4& color)
+void Renderer::DrawLine(const Line& line, const glm::vec4& color,const float zoom)
 {
 
 	float ax = line.GetPointA().x;
 	float ay = line.GetPointA().y;
 	float bx = line.GetPointB().x;
-	float by = line.GetPointB().y;	
+	float by = line.GetPointB().y;
 
 	bool aOver1 = line.GetInclination() > 1;
 	if (aOver1)
@@ -98,16 +98,19 @@ void Renderer::DrawLine(const Line& line, const glm::vec4& color)
 	}
 }
 
-void Renderer::DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color,glm::mat4 matrix)
-{
-	DrawLine(Line::Line(Utils::transformVertic(vertices[0], matrix), Utils::transformVertic(vertices[1], matrix)), color);
-	DrawLine(Line::Line(Utils::transformVertic(vertices[1], matrix), Utils::transformVertic(vertices[2], matrix)), color);
-	DrawLine(Line::Line(Utils::transformVertic(vertices[2], matrix), Utils::transformVertic(vertices[0], matrix)), color);
+void Renderer::DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color,glm::mat4 matrix,const float zoom)
+{ 
+	glm::vec3 v0 = Utils::transformVertic(vertices[0], matrix, viewportWidth/2, viewportHeight/2);
+	glm::vec3 v1 = Utils::transformVertic(vertices[1], matrix, viewportWidth / 2, viewportHeight / 2);
+	glm::vec3 v2 = Utils::transformVertic(vertices[2], matrix, viewportWidth / 2, viewportHeight / 2);
+	DrawLine(Line::Line(v0, v1), color, zoom);
+	DrawLine(Line::Line(v1, v2), color, zoom);
+	DrawLine(Line::Line(v2, v0), color, zoom);
 }
-void Renderer::DrawNormals(const glm::vec3& faceCenter, const glm::vec3& normal, const glm::vec4& color, Camera & camera)
-{
-	DrawLine(Line::Line(faceCenter, normal), color);
-}
+//void Renderer::DrawNormals(const glm::vec3& faceCenter, const glm::vec3& normal, const glm::vec4& color, Camera & camera)
+//{
+//	DrawLine(Line::Line(faceCenter, normal), color);
+//}
 void Renderer::createBuffers(int viewportWidth, int viewportHeight)
 {
 	if (colorBuffer)
@@ -152,17 +155,20 @@ void Renderer::Render(Scene & scene)
 	
 	glm::mat4 matrix;
 	auto models = scene.GetAllModels();
-	
+	activeCamera.setProjectionTransformation(viewportWidth, viewportHeight);
+	glm::mat4 cameraProj = activeCamera.getProjectionTransformation();
+	glm::mat4 cameraTrans = activeCamera.GetTransformation();
+	float zoom = activeCamera.getZoom();
 	for (auto model : models)
 	{
 		
 		matrix = Utils::setFinallTransformMat(model->GetWorldTransformation(),
 											  model->GetLocalTransformation(),
-											  activeCamera.GetTransformation());
+											  cameraTrans, cameraProj);
 		for (auto face : model->GetAllFaces())
 		{
 			std::vector<int> vertices = face.GetVertexIndices();
-			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, *model), model->GetColor(), matrix);
+			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, *model), model->GetColor(), matrix, zoom);
 		}
 		if (scene.settings.showBoundingBox)
 		{
@@ -171,21 +177,21 @@ void Renderer::Render(Scene & scene)
 		
 		
 	}
-	if (scene.settings.showNormals)
+	/*if (scene.settings.showNormals)
 	{
 		for(auto face : models[scene.GetActiveModelIndex()]->GetAllFaces())
 			DrawNormals(face.getCenter(),face.getNorm(), models[scene.GetActiveModelIndex()]->GetNormColor(), activeCamera);
-	}
+	}*/
 	auto cameras = scene.GetAllCameras();
 	 
 	for (auto camera : cameras)
 	{
-		matrix = Utils::setFinallTransformMat(glm::mat4(1),camera.GetTransformation(),activeCamera.GetTransformation());
+		matrix = Utils::setFinallTransformMat(glm::mat4(1),camera.GetTransformation(), cameraTrans, cameraProj);
 		for (auto face : camera.GetAllFaces())
 		{
 
 			std::vector<int> vertices = face.GetVertexIndices();
-			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, camera), camera.GetColor(), matrix);
+			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, camera), camera.GetColor(), matrix, zoom);
 		}
 		
 	}

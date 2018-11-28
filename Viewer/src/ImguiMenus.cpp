@@ -203,9 +203,10 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		static int k;
 		ImGui::RadioButton("Projection", &k, 0);
 		ImGui::RadioButton("Orthografic", &k, 1);
+		scene.GetActiveCamera().projection = k;
 		if (k == 0) 
 		{
-		
+			
 		}
 		else
 		{
@@ -233,7 +234,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		scene.settings.showBoundingBox = boundingBox;
 		scene.settings.showNormals = normals;
 		
-		static int e = 0;
+		static int e = 2;
 		static int w = 0;
 		
 
@@ -252,9 +253,11 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::Text("");
 		ImGui::Separator();
 		ImGui::Text("");
-		ImGui::RadioButton("Scale", &e, 0); ImGui::SameLine();
-		ImGui::RadioButton("Move", &e, 1); ImGui::SameLine();
-		ImGui::RadioButton("Rotate", &e, 2);
+		ImGui::RadioButton("Rotate", &e, 2); ImGui::SameLine();
+		if (w) {
+			ImGui::RadioButton("Scale", &e, 0); ImGui::SameLine();
+			ImGui::RadioButton("Move", &e, 1);
+		}
 		ImGui::Text("");
 		ImGui::Separator();
 		ImGui::Text("");

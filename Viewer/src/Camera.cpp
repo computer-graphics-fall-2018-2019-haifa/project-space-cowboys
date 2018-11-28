@@ -92,8 +92,8 @@ void Camera::setProjectionTransformation(int width, int hight)
 	float r = eye[0] + (width / 2);
 	float b = eye[1] - (hight / 2);
 	float t = eye[1] + (hight / 2);
-	float f = 300;
-	float n = 50;
+	float f = 200;
+	float n = 1;
 	
 	if(projection)
 		SetOrthographicProjection(l,r,b,t,n,f);

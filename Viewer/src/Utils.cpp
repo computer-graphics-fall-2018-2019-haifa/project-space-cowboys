@@ -92,10 +92,13 @@ glm::vec3 Utils::Homogeneous4to3(const glm::vec4 source)
 	return glm::vec3(source[0] / source[3], source[1] / source[3], source[2] / source[3]);
 }
 
-glm::vec3 Utils::transformVertic(const glm::vec3 vertic, glm::mat4 transformMetrix) {
+glm::vec3 Utils::transformVertic(const glm::vec3 vertic, glm::mat4 transformMetrix,int w,int h) {
 	glm::vec4 temp = Utils::Homogeneous3to4(vertic);
 	glm::vec4 temp2 = transformMetrix * temp;
-	return Utils::Homogeneous4to3(temp2);
+	glm::vec3 temp3 = Utils::Homogeneous4to3(temp2);
+	temp3.x = (temp3.x + 1)*w;
+	temp3.y = (temp3.y + 1)*h;
+	return temp3;
 }
 
 glm::mat4 Utils::TranslationMatrix(const glm::vec3 translation)
@@ -137,9 +140,9 @@ glm::mat4 Utils::setFullTransformMat(const glm::vec3 translation, const glm::vec
 		return TranslationMatrix(translation)*rotateMat(angle)*scaleMat(scale);
 }
 
-glm::mat4 Utils::setFinallTransformMat(glm::mat4 worldTrans, glm::mat4 localTrans, glm::mat4 cameraTrans) {
+glm::mat4 Utils::setFinallTransformMat(glm::mat4 worldTrans, glm::mat4 localTrans, glm::mat4 cameraTrans, glm::mat4 cameraProjection) {
 
-	return worldTrans * localTrans* glm::inverse(cameraTrans);
+	return cameraProjection*worldTrans * localTrans* glm::inverse(cameraTrans);
 }
 
 
