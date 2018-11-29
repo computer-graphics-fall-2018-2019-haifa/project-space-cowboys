@@ -152,10 +152,11 @@ void Renderer::SetViewport(int viewportWidth, int viewportHeight, int viewportX,
 void Renderer::Render(Scene & scene)
 {
 	Camera activeCamera = scene.GetActiveCamera();
-	
+	scene.settings.w = this->viewportWidth;
+	scene.settings.h = this->viewportHeight;
 	glm::mat4 matrix;
 	auto models = scene.GetAllModels();
-	activeCamera.setProjectionTransformation(viewportWidth, viewportHeight);
+		
 	glm::mat4 cameraProj = activeCamera.getProjectionTransformation();
 	glm::mat4 cameraTrans = activeCamera.GetTransformation();
 	float zoom = activeCamera.getZoom();

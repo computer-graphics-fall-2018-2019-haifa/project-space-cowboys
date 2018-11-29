@@ -30,6 +30,8 @@ public:
 	struct {
 		bool showBoundingBox;
 		bool showNormals;
+		int w;
+		int h;
 	} settings;
 
 	void AddModel(const std::shared_ptr<MeshModel>& model);

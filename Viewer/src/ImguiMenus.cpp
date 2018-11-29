@@ -200,17 +200,19 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 	{
 		ImGui::Begin(name, NULL);
 		static float zoom = 1.0f;
+		
+		
 		static int k;
 		ImGui::RadioButton("Projection", &k, 0);
 		ImGui::RadioButton("Orthografic", &k, 1);
 		scene.GetActiveCamera().projection = k;
 		if (k == 0) 
 		{
-			
+			cam.SetPerspectiveProjection(cam.fovy, cam.aspect, cam.zNear, cam.zFar);
 		}
 		else
 		{
-
+			cam.setProjectionTransformation(scene.settings.w, scene.settings.h);
 		}
 		if (ImGui::SliderFloat("Zoom", &zoom, 0, 500))
 		{

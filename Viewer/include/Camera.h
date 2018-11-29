@@ -17,12 +17,22 @@ class Camera :public MeshModel
 private:
 	glm::mat4x4 viewTransformation;
 	glm::mat4x4 projectionTransformation;
-	float zoom;
+	
 	glm::vec4 eye;
 	glm::vec4 at;
 	glm::vec4 up;
+	float zoom;
+	float left;
+	float right;
+	float bottom;
+	float top;
+	
 
 public:
+	float zNear;
+	float zFar;
+	float fovy;
+	float aspect;
 	bool projection;
 	Camera(const glm::vec4 eye, const glm::vec4 at, const glm::vec4 up);
 	~Camera();
@@ -35,8 +45,11 @@ public:
 	void SetOrthographicProjection(float l, const float r, const float b, const float t, const float n, const float f);
 
 
-	void SetPerspectiveProjection(const float l, const float r, const float b, const float t,
-									const float n, const float f);
+	void SetPerspectiveProjection(
+		const float fovy,
+		const float aspect,
+		const float near,
+		const float far);
 	
 	void SetZoom(const float zoom);
 
