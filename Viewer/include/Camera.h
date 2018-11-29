@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include "MeshModel.h"
 #include "Global.h"
-
+#define PI 3.14159265 / 180
 /*
  * Camera class. This class takes care of all the camera transformations and manipulations.
  *

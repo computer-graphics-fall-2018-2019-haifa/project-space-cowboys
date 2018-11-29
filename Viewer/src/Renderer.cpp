@@ -200,7 +200,7 @@ void Renderer::Render(Scene & scene)
 
 void Renderer::DrawBoundingBox(MeshModel& model, Camera& camera)
 {
-	// need to redo
+	
 
 	////Lower Square
 	//DrawLine(Line::Line(

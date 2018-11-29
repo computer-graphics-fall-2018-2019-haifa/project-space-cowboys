@@ -9,7 +9,7 @@ Scene::Scene() :
 	activeModelIndex(0)
 {
 	//Add default camera
-	AddCamera(Camera::Camera(glm::vec4(0, 0, 0, 0),glm::vec4(0, 0, -10, 0),glm::vec4(0, 1, 0, 0)));
+	AddCamera(Camera::Camera(glm::vec4(0, 0, 10, 0),glm::vec4(0, 0, -1, 0),glm::vec4(0, 1, 0, 0)));
 	
 	settings.showNormals = false;
 
@@ -68,7 +68,7 @@ void Scene::SetActiveCameraIndex(int index)
 		activeCameraIndex = index;
 		int i = GetActiveCameraIndex();
 		cameras[i].SetColor({ 1,0,0,0 });
-		activeModelIndex = index;
+		activeCameraIndex = index;
 		cameras[index].SetColor({ 0,1,0,0 });
 	}
 }

@@ -162,27 +162,27 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 	{
 		ImGui::Begin("Camera Properties", &showCameraPropWindow);
 		ImGui::Text("please select the new camera properties");
-		static float eyeInput[4] = { 0, 0, 0, 0 };
-		static float atInput[4] = { 0, 0, 0, 0 };
-		static float upInput[4] = { 0, 0, 0, 0 };
+		static float eyeInput[4] = { 0, 0, 5, 0 };
+		static float atInput[4] = { 0, 0, -10, 0 };
+		static float upInput[4] = { 0, 0, 1, 0 };
 
 		ImGui::InputFloat3("Camera Position", eyeInput);
+		ImGui::InputFloat3("look At Position", atInput);
+		ImGui::InputFloat3("Up Position", atInput);
 
 		glm::vec4 eye = glm::vec4(eyeInput[0], eyeInput[1], eyeInput[2], 0);
-		glm::vec4 at = glm::vec4(0, 0, 0, 0);
-		glm::vec4 up = glm::vec4(0, 0, 1, 0);
+		glm::vec4 at = glm::vec4(atInput[0], atInput[1], atInput[2], 0);
+		glm::vec4 up = glm::vec4(upInput[0], upInput[1], upInput[2], 0);
+		glm::vec4 zero;
 
 
-
-
-		if (ImGui::Button("create"))
-		{
-
-			Camera camera = Camera(eye, at, up);
-			scene.AddCamera(camera);
-			showCameraPropWindow = false;
+		if (!(at == zero || up == zero)) {
+			if (ImGui::Button("create"))
+			{
+				scene.AddCamera(Camera::Camera(eye, at, up));
+				showCameraPropWindow = false;
+			}
 		}
-
 
 		ImGui::End();
 	}

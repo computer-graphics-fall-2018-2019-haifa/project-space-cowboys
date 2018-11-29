@@ -70,6 +70,7 @@ MeshModel Utils::LoadMeshModel(const std::string& filePath, bool camera)
 	return MeshModel(faces, vertices, normals,camera, Utils::GetFileName(filePath));
 }
 
+
 std::vector<glm::vec3> Utils::TriangleFromVertexIndices(const std::vector<int>& vertices, MeshModel& model)
 {
 	glm::vec3 a = model.GetVertex(vertices[0]);
@@ -92,12 +93,15 @@ glm::vec3 Utils::Homogeneous4to3(const glm::vec4 source)
 	return glm::vec3(source[0] / source[3], source[1] / source[3], source[2] / source[3]);
 }
 
+/* calculate the post transformetion and prespective view points
+	w and h are half of the hight and width of the current screen
+*/
 glm::vec3 Utils::transformVertic(const glm::vec3 vertic, glm::mat4 transformMetrix,int w,int h) {
 	glm::vec4 temp = Utils::Homogeneous3to4(vertic);
 	glm::vec4 temp2 = transformMetrix * temp;
 	glm::vec3 temp3 = Utils::Homogeneous4to3(temp2);
-	temp3.x = (temp3.x + 1)*w;
-	temp3.y = (temp3.y + 1)*h;
+	//temp3.x = (temp3.x + 1)*w; *bug
+	//temp3.y = (temp3.y + 1)*h; *bug
 	return temp3;
 }
 
@@ -141,8 +145,8 @@ glm::mat4 Utils::setFullTransformMat(const glm::vec3 translation, const glm::vec
 }
 
 glm::mat4 Utils::setFinallTransformMat(glm::mat4 worldTrans, glm::mat4 localTrans, glm::mat4 cameraTrans, glm::mat4 cameraProjection) {
-
-	return cameraProjection*worldTrans * localTrans* glm::inverse(cameraTrans);
+	// cameraProjection *bug
+	return   worldTrans * localTrans * glm::inverse(cameraTrans);
 }
 
 

@@ -69,7 +69,7 @@ void Camera::SetPerspectiveProjection(
 	const float near,
 	const float far)
 {
-	float top = zNear * tan(fovy * M_PI / 180.0);
+	float top = zNear * tan(fovy * PI);
 	
 	
 	projectionTransformation = glm::mat4(
