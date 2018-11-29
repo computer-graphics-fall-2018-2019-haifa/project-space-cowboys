@@ -256,9 +256,16 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::Separator();
 		ImGui::Text("");
 		ImGui::RadioButton("Rotate", &e, 2); ImGui::SameLine();
-		if (w) {
+		
+		if (w) 
+		{
+
 			ImGui::RadioButton("Scale", &e, 0); ImGui::SameLine();
 			ImGui::RadioButton("Move", &e, 1);
+		}
+		else 
+		{
+			e = 2;
 		}
 		ImGui::Text("");
 		ImGui::Separator();
