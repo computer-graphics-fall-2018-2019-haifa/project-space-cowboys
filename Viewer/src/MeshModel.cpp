@@ -92,8 +92,9 @@ MeshModel::~MeshModel()
 
 void MeshModel::SetWorldTransformation()
 {
-	//this->worldTransform = Utils::setFullTransformMat(this->translate[0], this->scale[0], this->rotate[0]);
-	this->worldTransform = Utils::rotateMat(rotate[0]);
+	glm::vec3 center = { centerPoint.x,centerPoint.y, centerPoint.z };
+	this->worldTransform = Utils::setFullTransformMat(this->translate[0], this->scale[0], this->rotate[0],center,false);
+	//this->worldTransform = Utils::rotateMat(rotate[0]);
 }
 
 const glm::mat4& MeshModel::GetWorldTransformation() const
