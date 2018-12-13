@@ -39,6 +39,7 @@ public:
 
 	MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, bool camera, const std::string& modelName = ""  );
 	MeshModel(const MeshModel &copy);
+	MeshModel(const int type);
 	virtual ~MeshModel();
 
 	void SetWorldTransformation();
@@ -79,5 +80,6 @@ public:
 	const glm::vec4 & GetBoxColor() const;
 
 	void SetCenterPoint();
+	void createPol();
 
 };

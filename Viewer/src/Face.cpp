@@ -39,6 +39,11 @@ Face::Face(std::istream& issLine)
 	
 }
 
+Face::Face(std::vector<int> vertexIndices)
+{
+	this-> vertexIndices = vertexIndices;
+}
+
 Face::~Face()
 {
 

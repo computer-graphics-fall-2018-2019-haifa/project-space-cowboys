@@ -84,6 +84,17 @@ MeshModel::MeshModel(const MeshModel &copy)
 	this->translate[1] = copy.translate[1];
 }
 
+MeshModel::MeshModel(const int type)
+{
+	switch (type)
+	{
+	case 0:
+		createPol();
+	default:
+		break;
+	}
+}
+
 MeshModel::~MeshModel()
 {
 
@@ -202,6 +213,8 @@ void MeshModel::SetCenterPoint()
 	centerPoint = glm::vec4((x / size), (y / size), (z / size), 0);
 }
 
+
+
 const glm::vec4 & MeshModel::GetCenterPoint() const
 {
 	return this->centerPoint;
@@ -245,4 +258,49 @@ const glm::vec4& MeshModel::GetNormColor() const
 const glm::vec4& MeshModel::GetBoxColor() const
 {
 	return this->boxColor;
+}
+
+void MeshModel::createPol(){
+
+	this->worldTransform = glm::mat4x4(1);
+	this->localTransform = glm::mat4x4(1);
+	this->modelName = "poligon.obj";
+	glm::vec3 v0 = { 123.0f,122.0f,-10.0f };
+	glm::vec3 v1 = { 61.0f,0.0f,-10.0f };
+	glm::vec3 v2 = { 1.0f,122.0f,-10.0f };
+	this->vertices.push_back(v0);
+	this->vertices.push_back(v1);
+	this->vertices.push_back(v2);
+	
+	Face f = Face({ 1, 2, 3 });
+	this->faces.push_back(f);
+	
+	this->scale[0] = { 1,1,1 };
+	this->scale[1] = { 1,1,1 };
+	this->rotate[0] = { 0,0,0 };
+	this->rotate[1] = { 0,0,0 };
+	this->translate[0] = { 0,0,0 };
+	this->translate[1] = { 0,0,0 };
+	this->boxColor = { 0,0,0,0 };
+	this->normColor = { 0,0,1,0 };
+
+
+	SetCenterPoint();
+
+
+	for (glm::vec3 vertex : vertices)
+	{
+		minX = std::fmin(minX, vertex.x);
+		maxX = std::fmax(maxX, vertex.x);
+
+		minY = std::fmin(minY, vertex.y);
+		maxY = std::fmax(maxY, vertex.y);
+
+		minZ = std::fmin(minZ, vertex.z);
+		maxZ = std::fmin(maxZ, vertex.z);
+	}
+
+	minimums = glm::vec3(minX, minY, minZ);
+	maximums = glm::vec3(maxX, maxY, maxZ);
+
 }

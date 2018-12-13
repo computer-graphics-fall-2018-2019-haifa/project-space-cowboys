@@ -92,7 +92,22 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				}
 				ImGui::EndMenu();
 			}
+			if (ImGui::BeginMenu("Add Primitives"))
+			{
+				if (ImGui::MenuItem("Add Poly"))
+				{
+					scene.AddModel(std::make_shared<MeshModel>(MeshModel(0)));
+						
+					showActiveModel = true;
+					
 
+				}
+				if (ImGui::MenuItem("Add box"))
+				{
+					
+				}
+				ImGui::EndMenu();
+			}
 			if (ImGui::BeginMenu("Models and Cameras"))
 			{
 				if (ImGui::BeginMenu("Models"))
@@ -286,7 +301,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			; ImGui::SameLine();
 			if (ImGui::Button("x +  "))
 			{
-				activeModel->translate[w].x += 1 * mSensitivity;
+				activeModel->translate[w].x += 1.0 * mSensitivity;
 			} ImGui::SameLine();
 			ImGui::Text(":  %d", (int)activeModel->translate[w].x);
 
