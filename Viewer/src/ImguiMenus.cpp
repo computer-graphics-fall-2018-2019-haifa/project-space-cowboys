@@ -280,7 +280,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		}
 		else 
 		{
-			//e = 2;
+			
 		}
 		ImGui::Text("");
 		ImGui::Separator();

@@ -99,7 +99,7 @@ glm::vec3 Utils::Homogeneous4to3(const glm::vec4 source)
 */
 glm::vec3 Utils::transformVertic(const glm::vec3 vertic, glm::mat4 transformMetrix,int w,int h) {
 	glm::vec4 temp = Utils::Homogeneous3to4(vertic);
-	glm::vec4 temp2 = transformMetrix * temp;
+	glm::vec4 temp2 = temp * transformMetrix  ;
 	glm::vec3 temp3 = Utils::Homogeneous4to3(temp2);
 	//temp3.x = (temp3.x + 1)*w; *bug
 	//temp3.y = (temp3.y + 1)*h; *bug

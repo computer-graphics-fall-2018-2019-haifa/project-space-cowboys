@@ -11,6 +11,7 @@ Camera::Camera(const glm::vec4 eye, const glm::vec4 at, const glm::vec4 up) : Me
 	this->up = up;
 	zoom = 1.0;
 	SetTransformation(glm::mat4x4(1.0f));
+	this->projectionTransformation = glm::mat4x4(1.0f);
 	SetCameraLookAt(eye, at, up);
 	projection = false;
 	
