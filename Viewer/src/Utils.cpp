@@ -138,12 +138,14 @@ glm::mat4 Utils::rotateMat(const glm::vec3 angle)
 glm::mat4 Utils::setFullTransformMat(const glm::vec3 translation, const glm::vec3 scale, const glm::vec3 angle, glm::vec3 center, bool isLocal)
 {
 	if (isLocal) {
-		glm::mat4 rot = TranslationMatrix(center)*rotateMat(angle)*TranslationMatrix(-center);
+
+		/*glm::mat4 rot = TranslationMatrix(center)*rotateMat(angle)*TranslationMatrix(-center);
 		glm::mat4 sca1 = scaleMat(scale);
 		glm::mat4 sca = TranslationMatrix(center)*sca1*TranslationMatrix(-center);
 		glm::mat4 trans = TranslationMatrix(translation);
 		glm::mat4 toreturn = trans * rot*sca;
-		return toreturn;
+		return toreturn;*/
+		return TranslationMatrix(center)*TranslationMatrix(translation)*scaleMat(scale)*rotateMat(angle)*TranslationMatrix(-center);
 		 
 	}
 	else
