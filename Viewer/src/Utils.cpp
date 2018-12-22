@@ -129,7 +129,7 @@ glm::mat4 Utils::rotateMat(const glm::vec3 angle)
 	glm::mat4 y = glm::mat4(cosf(angle.y), 0, sinf(angle.y), 0, 0, 1, 0, 0, -sinf(angle.y), 0, cosf(angle.y), 0, 0, 0, 0, 1);
 	
 	
-	glm::mat4 z = glm::mat4(1, 0, 0, 0, 0, cosf(angle.z), -sinf(angle.z), 0, 0, sinf(angle.z), cosf(angle.z), 0, 0, 0, 0, 1);
+	glm::mat4 z = glm::mat4(cosf(angle.z), -sinf(angle.z),0, 0, sinf(angle.z), cosf(angle.z), 0, 0, 0, 0, 1,   0, 0, 0, 0, 1);
 	
 	
 	return x * y * z;
@@ -139,13 +139,13 @@ glm::mat4 Utils::setFullTransformMat(const glm::vec3 translation, const glm::vec
 {
 	if (isLocal) {
 
-		/*glm::mat4 rot = TranslationMatrix(center)*rotateMat(angle)*TranslationMatrix(-center);
+		/*glm::mat4 rot = TranslationMatrix(-center)*rotateMat(angle)*TranslationMatrix(center);
 		glm::mat4 sca1 = scaleMat(scale);
-		glm::mat4 sca = TranslationMatrix(center)*sca1*TranslationMatrix(-center);
+		glm::mat4 sca = TranslationMatrix(-center)*sca1*TranslationMatrix(center);
 		glm::mat4 trans = TranslationMatrix(translation);
 		glm::mat4 toreturn = trans * rot*sca;
 		return toreturn;*/
-		return TranslationMatrix(center)*TranslationMatrix(translation)*scaleMat(scale)*rotateMat(angle)*TranslationMatrix(-center);
+		return TranslationMatrix(-center)*rotateMat(angle)*scaleMat(scale)*TranslationMatrix(translation)*TranslationMatrix(center);
 		 
 	}
 	else
