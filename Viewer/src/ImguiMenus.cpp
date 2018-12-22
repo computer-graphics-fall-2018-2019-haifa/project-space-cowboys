@@ -287,9 +287,21 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::Text("");
 		if (e == 0) {
 
-			ImGui::DragFloat("Scale x", &(activeModel->scale[w].x), 0.1f);
-			ImGui::DragFloat("Scale y", &(activeModel->scale[w].y), 0.1f);
-			ImGui::DragFloat("Scale z", &(activeModel->scale[w].z), 0.1f);
+			ImGui::DragFloat("Scale x  ", &(activeModel->scale[w].x), 0.1f); ImGui::SameLine();
+			if (ImGui::Button("Reset x"))
+			{
+				activeModel->scale[w].x = 1.0f;
+			}
+			ImGui::DragFloat("Scale y  ", &(activeModel->scale[w].y), 0.1f);
+			if (ImGui::Button("Reset y"))
+			{
+				activeModel->scale[w].y = 1.0f;
+			}
+			ImGui::DragFloat("Scale z  ", &(activeModel->scale[w].z), 0.1f);
+			if (ImGui::Button("Reset z"))
+			{
+				activeModel->scale[w].y = 1.0f;
+			}
 		}
 		if (e == 1) {
 			ImGui::SliderInt("Sensitivity", &mSensitivity, 1, 100);
