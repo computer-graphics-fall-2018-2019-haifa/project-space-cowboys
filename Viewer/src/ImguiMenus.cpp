@@ -255,7 +255,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		static int w = 0;
 		
 
-		static int mSensitivity = 1;
+		static int mSensitivity = 50;
 		if (ImGui::Checkbox("Show Bounding Box", &boundingBox))
 		{
 			scene.settings.showBoundingBox = boundingBox;
@@ -300,7 +300,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::DragFloat("Scale z  ", &(activeModel->scale[w].z), 0.1f); ImGui::SameLine();
 			if (ImGui::Button("Reset z"))
 			{
-				activeModel->scale[w].y = 1.0f;
+				activeModel->scale[w].z = 1.0f;
 			}
 		}
 		if (e == 1) {
