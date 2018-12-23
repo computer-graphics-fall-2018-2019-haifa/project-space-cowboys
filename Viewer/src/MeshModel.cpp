@@ -15,18 +15,18 @@ MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3
 	isCamera = camera;
 	this->faces = std::vector<Face>(faces);
 	this->vertices = std::vector<glm::vec3>(vertices);
-	if (!isCamera) {
+	/*if (!isCamera) {
 		for (int i=0 ; i< this->vertices.size();i++)
 		{
 			this->vertices[i].x += 640.0f;
 			this->vertices[i].y += 320.0f;
 		}
-	}
+	}*/
 	
 	if (!normals.empty()|| isCamera)
 		this->normals = std::vector<glm::vec3>(normals);
-	/*else
-		calcNormals();*/
+	else
+		calcNormals();
 
 	this->scale[0] = { 1,1,1 };
 	this->scale[1] = { 1,1,1 };
@@ -40,22 +40,8 @@ MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3
 	
 	
 	SetCenterPoint();
-	
+	calcBoxPoints();
 
-	for (glm::vec3 vertex : vertices)
-	{
-		minX = std::fmin(minX, vertex.x);
-		maxX = std::fmax(maxX, vertex.x);
-
-		minY = std::fmin(minY, vertex.y);
-		maxY = std::fmax(maxY, vertex.y);
-
-		minZ = std::fmin(minZ, vertex.z);
-		maxZ = std::fmin(maxZ, vertex.z);
-	}
-
-	minimums = glm::vec3(minX, minY, minZ);
-	maximums = glm::vec3(maxX, maxY, maxZ);
 }
 MeshModel::MeshModel(const MeshModel &copy)
 {
@@ -70,12 +56,6 @@ MeshModel::MeshModel(const MeshModel &copy)
 	this->centerPoint = copy.centerPoint;
 	this->minimums = copy.minimums;
 	this->maximums = copy.maximums;
-	this->minX = copy.minX;
-	this->minY = copy.minY;
-	this->minZ = copy.minZ;
-	this->maxX = copy.maxX;
-	this->maxY = copy.maxY;
-	this->maxZ = copy.maxZ;
 	this->scale[0] = copy.scale[0];
 	this->scale[1] = copy.scale[1];
 	this->rotate[0] = copy.rotate[0];
@@ -166,34 +146,40 @@ const std::vector<glm::vec3> MeshModel::GetNormals() const
 	return this->normals;
 }
 
-const float MeshModel::MinX()
+
+
+const glm::vec3 MeshModel::getMaximus() const
 {
-	return minX;
+	return maximums;
 }
 
-const float MeshModel::MaxX()
+const glm::vec3 MeshModel::getMinmums() const
 {
-	return maxX;
+	return minimums;
 }
 
-const float MeshModel::MinY()
+void MeshModel::calcBoxPoints()
 {
-	return minY;
-}
+	float minX = vertices[0].x;
+	float minY = vertices[0].y;
+	float minZ = vertices[0].z;
+	float maxX = vertices[0].x;
+	float maxY = vertices[0].y;
+	float maxZ = vertices[0].z;
+	for (glm::vec3 vertex : vertices)
+	{
+		minX = std::fmin(minX, vertex.x);
+		maxX = std::fmax(maxX, vertex.x);
 
-const float MeshModel::MaxY()
-{
-	return maxY;
-}
+		minY = std::fmin(minY, vertex.y);
+		maxY = std::fmax(maxY, vertex.y);
 
-const float MeshModel::MinZ()
-{
-	return minZ;
-}
+		minZ = std::fmin(minZ, vertex.z);
+		maxZ = std::fmax(maxZ, vertex.z);
+	}
 
-const float MeshModel::MaxZ()
-{
-	return maxZ;
+	minimums = glm::vec3(minX, minY, minZ);
+	maximums = glm::vec3(maxX, maxY, maxZ);
 }
 
 
@@ -222,24 +208,24 @@ const glm::vec4 & MeshModel::GetCenterPoint() const
 
 void MeshModel::calcNormals() 
 {
-	
-	for (auto face : faces)
+	size_t size = faces.size();
+	for (size_t i=0 ;i< size;i++)
 	{
 		
-		int ver0Index = face.GetVertexIndex(0);
-		int ver1Index = face.GetVertexIndex(1);
-		int ver2Index = face.GetVertexIndex(2);
+		int ver0Index = faces[i].GetVertexIndex(0);
+		int ver1Index = faces[i].GetVertexIndex(1);
+		int ver2Index = faces[i].GetVertexIndex(2);
 
-		glm::vec3 v0 = vertices[ver0Index];
-		glm::vec3 v1 = vertices[ver1Index];
-		glm::vec3 v2 = vertices[ver2Index];
+		glm::vec3 v0 = vertices[ver0Index-1];
+		glm::vec3 v1 = vertices[ver1Index-1];
+		glm::vec3 v2 = vertices[ver2Index-1];
 		glm::vec3 center = v0 + v1 + v2;
-		center.x /= 3;
-		center.y /= 3;
-		center.z /= 3;
-		//glm::vec3 normalEnd = glm::normalize(glm::cross((v0 - v1), (v0 - v2)));
-		face.setNorm(glm::normalize(glm::cross((v0 - v1), (v0 - v2))));
-		face.setCenter(center);
+		center.x /= 3.0f;
+		center.y /= 3.0f;
+		center.z /= 3.0f;
+		glm::vec3 normalEnd = glm::normalize(glm::cross((v0 - v1), (v0 - v2)));
+		faces[i].setNorm((20.0f*normalEnd)+center);
+		faces[i].setCenter(center);
 		
 	}
 }
@@ -265,8 +251,8 @@ void MeshModel::createPol(){
 	this->worldTransform = glm::mat4x4(1);
 	this->localTransform = glm::mat4x4(1);
 	this->modelName = "poligon.obj";
-	glm::vec3 v0 = { 123.0f,122.0f,-10.0f };
-	glm::vec3 v1 = { 61.0f,0.0f,-10.0f };
+	glm::vec3 v0 = { 123.0f,122.0f,-30.0f };
+	glm::vec3 v1 = { 61.0f,0.0f,-5.0f };
 	glm::vec3 v2 = { 1.0f,122.0f,-10.0f };
 	this->vertices.push_back(v0);
 	this->vertices.push_back(v1);
@@ -284,23 +270,7 @@ void MeshModel::createPol(){
 	this->boxColor = { 0,0,0,0 };
 	this->normColor = { 0,0,1,0 };
 
-
 	SetCenterPoint();
-
-
-	for (glm::vec3 vertex : vertices)
-	{
-		minX = std::fmin(minX, vertex.x);
-		maxX = std::fmax(maxX, vertex.x);
-
-		minY = std::fmin(minY, vertex.y);
-		maxY = std::fmax(maxY, vertex.y);
-
-		minZ = std::fmin(minZ, vertex.z);
-		maxZ = std::fmin(maxZ, vertex.z);
-	}
-
-	minimums = glm::vec3(minX, minY, minZ);
-	maximums = glm::vec3(maxX, maxY, maxZ);
-
+	calcBoxPoints();
+	calcNormals();
 }

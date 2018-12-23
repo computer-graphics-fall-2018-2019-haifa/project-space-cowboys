@@ -25,12 +25,7 @@ private:
 	glm::vec3 minimums;
 	glm::vec3 maximums;
 	
-	float minX = std::numeric_limits<float>::max();
-	float minY = std::numeric_limits<float>::max();
-	float minZ = std::numeric_limits<float>::max();
-	float maxX = std::numeric_limits<float>::min();
-	float maxY = std::numeric_limits<float>::min();
-	float maxZ = std::numeric_limits<float>::min();
+
 	bool isCamera;
 public:
 	glm::vec3 scale[2];
@@ -57,15 +52,9 @@ public:
 	const std::vector<glm::vec3> GetVertices() const;
 	const std::vector<glm::vec3> GetNormals() const;
 
-	const float MinX();
-	const float MaxX();
-
-	const float MinY();
-	const float MaxY();
-
-	const float MinZ();
-	const float MaxZ();
-
+	const glm::vec3 getMaximus() const;
+	const glm::vec3 getMinmums() const;
+	void calcBoxPoints();
 	const glm::vec3 GetVertex(int index) const;
 	const glm::vec4& GetCenterPoint() const;
 

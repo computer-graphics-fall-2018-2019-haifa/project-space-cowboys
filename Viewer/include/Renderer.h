@@ -41,6 +41,6 @@ public:
 	void SetViewport(int viewportWidth, int viewportHeight, int viewportX = 0, int viewportY = 0);
 	void DrawLine(const Line& line, const glm::vec4& color, const float zoom);
 	void DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color, glm::mat4 matrix, const float zoom);
-	void Renderer::DrawNormals(const glm::vec3& faceCenter, const glm::vec3& normal, const glm::vec4& color, Camera & camera);
-	void DrawBoundingBox(MeshModel& model, Camera& camera);
+	
+	void DrawBoundingBox(glm::vec3 max, glm::vec3 min, glm::vec4 color, float zoom);
 };
