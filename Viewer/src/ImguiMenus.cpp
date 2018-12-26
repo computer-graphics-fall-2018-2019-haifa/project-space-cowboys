@@ -259,11 +259,15 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		if (ImGui::Checkbox("Show Bounding Box", &boundingBox))
 		{
 			scene.settings.showBoundingBox = boundingBox;
-		}
+		}ImGui::SameLine();
+		ImGui::ColorEdit4("Box color", (float*)&activeModel->boxColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel );
 		if (ImGui::Checkbox("Show normals", &normals))
 		{
 			scene.settings.showNormals = normals;
-		}
+		}ImGui::SameLine();
+		ImGui::ColorEdit4("Morm Color", (float*)&activeModel->normColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel );
+
+
 		ImGui::Text("");
 		ImGui::RadioButton("World", &w, 0); ImGui::SameLine();
 		ImGui::RadioButton("Local", &w, 1);

@@ -267,9 +267,9 @@ void MeshModel::createPol(){
 	this->rotate[1] = { 0,0,0 };
 	this->translate[0] = { 0,0,0 };
 	this->translate[1] = { 0,0,0 };
-	this->boxColor = { 0,0,0,0 };
+	this->boxColor = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
 	this->normColor = { 0,0,1,0 };
-
+	this->isCamera = false;
 	SetCenterPoint();
 	calcBoxPoints();
 	calcNormals();

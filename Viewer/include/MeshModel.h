@@ -18,8 +18,8 @@ private:
 	glm::mat4 worldTransform;
 	glm::mat4 localTransform;
 	glm::vec4 color;
-	glm::vec4 normColor;
-	glm::vec4 boxColor;
+	
+	
 	std::string modelName;
 	glm::vec4 centerPoint = glm::vec4(0, 0, 0, 0);
 	glm::vec3 minimums;
@@ -31,6 +31,8 @@ public:
 	glm::vec3 scale[2];
 	glm::vec3 rotate[2];
 	glm::vec3 translate[2];
+	glm::vec4 boxColor;
+	glm::vec4 normColor;
 
 	MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, bool camera, const std::string& modelName = ""  );
 	MeshModel(const MeshModel &copy);
