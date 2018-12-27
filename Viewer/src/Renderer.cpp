@@ -175,23 +175,18 @@ void Renderer::Render(Scene & scene)
 		}
 		if (scene.settings.showBoundingBox)
 		{
-			glm::vec3 max = Utils::transformVertic(model->getMaximus(), matrix, viewportWidth / 2, viewportHeight / 2);
-			glm::vec3 min = Utils::transformVertic(model->getMinmums(), matrix, viewportWidth / 2, viewportHeight / 2);
-			DrawBoundingBox(max,min,model->GetBoxColor(),zoom);
+			glm::vec3 max = model->getMaximus(); 
+			glm::vec3 min = model->getMinmums(); 
+			DrawBoundingBox(max,min,model->GetBoxColor(),zoom, matrix);
 
 		}
 		
 		
 	}
-	/*if (scene.settings.showNormals)
-	{
-		for(auto face : models[scene.GetActiveModelIndex()]->GetAllFaces())
-			DrawNormals(face.getCenter(),face.getNorm(), models[scene.GetActiveModelIndex()]->GetNormColor(), activeCamera);
-	}*/
-	auto cameras = scene.GetAllCameras();
+	
+	/*auto cameras = scene.GetAllCameras();
 	 
-	for (auto camera : cameras)
-	{
+	for (auto camera : cameras)	{
 		matrix = Utils::setFinallTransformMat(glm::mat4(1),camera.GetTransformation(), cameraTrans, cameraProj);
 		for (auto face : camera.GetAllFaces())
 		{
@@ -200,19 +195,20 @@ void Renderer::Render(Scene & scene)
 			DrawTriangle(Utils::TriangleFromVertexIndices(vertices, camera), camera.GetColor(), matrix, zoom);
 		}
 		
-	}
+	}*/
 }
 
-void Renderer::DrawBoundingBox(glm::vec3 max, glm::vec3 min, glm::vec4 color, float zoom)
+void Renderer::DrawBoundingBox(glm::vec3 max, glm::vec3 min, glm::vec4 color, float zoom, glm::mat4 matrix)
 {
-	glm::vec3 l1 = { min.x, min.y, max.z };
-	glm::vec3 l2 = min;
-	glm::vec3 l3 = { max.x, min.y ,min.z };
-	glm::vec3 l4 = { max.x, min.y, max.z };
-	glm::vec3 u1 = { min.x, max.y, max.z };
-	glm::vec3 u2 = { min.x, max.y, min.z };
-	glm::vec3 u3 = { max.x, max.y, min.z };
-	glm::vec3 u4 = max;
+	
+	glm::vec3 l1 = Utils::transformVertic(glm::vec3(min.x, min.y, max.z), matrix, viewportWidth / 2, viewportHeight / 2);
+	glm::vec3 l2 = Utils::transformVertic(min, matrix, viewportWidth / 2, viewportHeight / 2);
+	glm::vec3 l3 = Utils::transformVertic(glm::vec3(max.x, min.y, min.z), matrix, viewportWidth / 2, viewportHeight / 2);
+	glm::vec3 l4 = Utils::transformVertic(glm::vec3(max.x, min.y, max.z), matrix, viewportWidth / 2, viewportHeight / 2);
+	glm::vec3 u1 = Utils::transformVertic(glm::vec3(min.x, max.y, max.z), matrix, viewportWidth / 2, viewportHeight / 2);
+	glm::vec3 u2 = Utils::transformVertic(glm::vec3(min.x, max.y, min.z), matrix, viewportWidth / 2, viewportHeight / 2);
+	glm::vec3 u3 = Utils::transformVertic(glm::vec3(max.x, max.y, min.z), matrix, viewportWidth / 2, viewportHeight / 2);;
+	glm::vec3 u4 = Utils::transformVertic(max, matrix, viewportWidth / 2, viewportHeight / 2);;
 
 
 

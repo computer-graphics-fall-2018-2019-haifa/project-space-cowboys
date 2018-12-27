@@ -42,5 +42,5 @@ public:
 	void DrawLine(const Line& line, const glm::vec4& color, const float zoom);
 	void DrawTriangle(std::vector<glm::vec3>& vertices, const glm::vec4& color, glm::mat4 matrix, const float zoom);
 	
-	void DrawBoundingBox(glm::vec3 max, glm::vec3 min, glm::vec4 color, float zoom);
+	void DrawBoundingBox(glm::vec3 max, glm::vec3 min, glm::vec4 color, float zoom, glm::mat4 matrix);
 };

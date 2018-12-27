@@ -43,12 +43,11 @@ const int Scene::GetModelCount() const
 void Scene::AddCamera( Camera camera)
 {
 	cameras.push_back(camera);
-	
-	/*char *name = new char[(camera.GetModelName()).length() + 1];
-	strcpy(name, (camera.GetModelName()).c_str());
+	std::string camer= "camera.obj";
+	char *name = new char[(camer).length() + 1];
+	strcpy(name, (camer).c_str());
 	char * end = strstr(name, "obj");
-	*end = '\0';*/
-	char *name = "camera ";
+	*end = '\0';
 	std::string cameraNum = std::to_string(cameras.size());
 	strcat(name, cameraNum.c_str());
 	camerasNames.push_back(name);

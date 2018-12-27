@@ -18,7 +18,7 @@ bool showAnotherWindow = false;
 bool showCameraPropWindow = false;
 bool showActiveCamera = true;
 bool showActiveModel = false;
-Camera cam;
+
 std::shared_ptr<MeshModel> activeModel ;
 glm::vec4 clearColor = glm::vec4(0.8f, 0.8f, 0.8f, 1.00f);
 glm::vec2 offset = glm::vec2(0, 0);
@@ -31,7 +31,7 @@ const glm::vec4& GetClearColor()
 
 void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 {	
-	cam = scene.GetActiveCamera();
+	Camera cam = scene.GetActiveCamera();
 	
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	if (showDemoWindow)
@@ -237,7 +237,8 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::Text("tt");
 		if (ImGui::Button("focus on active model")) {
 			cam.at = activeModel->superCenterPoint;
-			cam.SetCameraLookAt(cam.eye, activeModel->superCenterPoint, cam.up);
+			
+			cam.updateLookAt();
 		}
 
 		

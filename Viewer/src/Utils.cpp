@@ -148,7 +148,7 @@ glm::mat4 Utils::setFullTransformMat(const glm::vec3 translation, const glm::vec
 
 glm::mat4 Utils::setFinallTransformMat(glm::mat4 worldTrans, glm::mat4 localTrans, glm::mat4 cameraTrans, glm::mat4 cameraProjection) {
 	// cameraProjection *bug
-	return   localTrans * worldTrans ;//* glm::inverse(cameraTrans);
+	return   localTrans * worldTrans *glm::inverse(cameraTrans); ;
 }
 
 
