@@ -21,7 +21,7 @@ private:
 	
 	
 	std::string modelName;
-	glm::vec4 centerPoint = glm::vec4(0, 0, 0, 0);
+	glm::vec4 centerPoint = glm::vec4(0, 0, 0, 1);
 	glm::vec3 minimums;
 	glm::vec3 maximums;
 	
@@ -33,7 +33,7 @@ public:
 	glm::vec3 translate[2];
 	glm::vec4 boxColor;
 	glm::vec4 normColor;
-
+	glm::vec4 superCenterPoint;
 	MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, bool camera, const std::string& modelName = ""  );
 	MeshModel(const MeshModel &copy);
 	MeshModel(const int type);
@@ -44,7 +44,7 @@ public:
 
 	void SetLocalTransformation();
 	const glm::mat4x4& GetLocalTransformation() const;
-	void updateTransformations();
+	void updateTransformations(int x, int y);
 	const glm::vec4& GetColor() const;
 	void SetColor(const glm::vec4& color);
 
@@ -72,5 +72,7 @@ public:
 
 	void SetCenterPoint();
 	void createPol();
-
+	void updateSuperCenterPoint(int x,int y);
 };
+
+

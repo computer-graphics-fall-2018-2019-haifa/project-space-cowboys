@@ -139,12 +139,6 @@ glm::mat4 Utils::setFullTransformMat(const glm::vec3 translation, const glm::vec
 {
 	if (isLocal) {
 
-		/*glm::mat4 rot = TranslationMatrix(-center)*rotateMat(angle)*TranslationMatrix(center);
-		glm::mat4 sca1 = scaleMat(scale);
-		glm::mat4 sca = TranslationMatrix(-center)*sca1*TranslationMatrix(center);
-		glm::mat4 trans = TranslationMatrix(translation);
-		glm::mat4 toreturn = trans * rot*sca;
-		return toreturn;*/
 		return TranslationMatrix(-center)*rotateMat(angle)*scaleMat(scale)*TranslationMatrix(translation)*TranslationMatrix(center);
 		 
 	}
@@ -154,7 +148,7 @@ glm::mat4 Utils::setFullTransformMat(const glm::vec3 translation, const glm::vec
 
 glm::mat4 Utils::setFinallTransformMat(glm::mat4 worldTrans, glm::mat4 localTrans, glm::mat4 cameraTrans, glm::mat4 cameraProjection) {
 	// cameraProjection *bug
-	return   worldTrans * localTrans;//* glm::inverse(cameraTrans);
+	return   localTrans * worldTrans ;//* glm::inverse(cameraTrans);
 }
 
 

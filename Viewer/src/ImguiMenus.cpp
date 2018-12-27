@@ -18,7 +18,8 @@ bool showAnotherWindow = false;
 bool showCameraPropWindow = false;
 bool showActiveCamera = true;
 bool showActiveModel = false;
-
+Camera cam;
+std::shared_ptr<MeshModel> activeModel ;
 glm::vec4 clearColor = glm::vec4(0.8f, 0.8f, 0.8f, 1.00f);
 glm::vec2 offset = glm::vec2(0, 0);
 float scalar = 1;
@@ -30,7 +31,7 @@ const glm::vec4& GetClearColor()
 
 void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 {	
-	;
+	cam = scene.GetActiveCamera();
 	
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	if (showDemoWindow)
@@ -79,6 +80,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 						scene.AddModel(std::make_shared<MeshModel>(Utils::LoadMeshModel(outPath, false)));
 						free(outPath);
 						showActiveModel = true;
+						activeModel = scene.getActiveModel();
 					}
 					else if (result == NFD_CANCEL) {
 					}
@@ -97,9 +99,9 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				if (ImGui::MenuItem("Add Poly"))
 				{
 					scene.AddModel(std::make_shared<MeshModel>(MeshModel(0)));
-						
+					activeModel = scene.getActiveModel();
 					showActiveModel = true;
-					
+					cam.SetCameraLookAt(cam.eye, activeModel->superCenterPoint, cam.up);
 
 				}
 				if (ImGui::MenuItem("Add box"))
@@ -127,6 +129,8 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 							if (ImGui::MenuItem(names[i]))
 							{
 								scene.SetActiveModelIndex(i);
+								activeModel = scene.getActiveModel();
+
 							}
 						}
 					}
@@ -205,14 +209,13 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 
 
-	Camera cam = scene.GetActiveCamera();
+	
 	char* name;
 	name = (char*)malloc(sizeof(char) * 25);
 	strcpy(name, scene.getActiveCameraName());
 	strcat(name, " Properties");
 
-	if (showActiveCamera)
-	{
+	if (showActiveCamera) {
 		ImGui::Begin(name, NULL);
 		static float zoom = 1.0f;
 		
@@ -221,29 +224,31 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::RadioButton("Projection", &k, 0);
 		ImGui::RadioButton("Orthografic", &k, 1);
 		scene.GetActiveCamera().projection = k;
-		if (k == 0) 
-		{
+		if (k == 0) {
 			cam.SetPerspectiveProjection(cam.fovy, cam.aspect, cam.zNear, cam.zFar);
 		}
-		else
-		{
+		else {
 			cam.setProjectionTransformation(scene.settings.w, scene.settings.h);
 		}
-		if (ImGui::SliderFloat("Zoom", &zoom, 0, 500))
-		{
+		if (ImGui::SliderFloat("Zoom", &zoom, 1, 10)){
 			scene.GetActiveCamera().SetZoom(zoom);
 		}
 		ImGui::Separator();
 		ImGui::Text("tt");
+		if (ImGui::Button("focus on active model")) {
+			cam.at = activeModel->superCenterPoint;
+			cam.SetCameraLookAt(cam.eye, activeModel->superCenterPoint, cam.up);
+		}
+
+		
 		ImGui::End();
 	}
 	
 	free(name);
 	
-	if (showActiveModel)
-	{
-		std::shared_ptr<MeshModel> activeModel = scene.getActiveModel();
-
+	if (showActiveModel) {
+		
+		
 		ImGui::Begin("active model", NULL);
 		
 		static bool boundingBox = false;
@@ -256,13 +261,11 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		
 
 		static int mSensitivity = 50;
-		if (ImGui::Checkbox("Show Bounding Box", &boundingBox))
-		{
+		if (ImGui::Checkbox("Show Bounding Box", &boundingBox)) {
 			scene.settings.showBoundingBox = boundingBox;
 		}ImGui::SameLine();
 		ImGui::ColorEdit4("Box color", (float*)&activeModel->boxColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel );
-		if (ImGui::Checkbox("Show normals", &normals))
-		{
+		if (ImGui::Checkbox("Show normals", &normals)) {
 			scene.settings.showNormals = normals;
 		}ImGui::SameLine();
 		ImGui::ColorEdit4("Morm Color", (float*)&activeModel->normColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel );
@@ -277,13 +280,11 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::RadioButton("Rotate", &e, 2); ImGui::SameLine();
 		ImGui::RadioButton("Scale", &e, 0); ImGui::SameLine();
 		ImGui::RadioButton("Move", &e, 1);
-		if (w) 
-		{
+		if (w) {
 
 			
 		}
-		else 
-		{
+		else {
 			
 		}
 		ImGui::Text("");
@@ -292,55 +293,46 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		if (e == 0) {
 
 			ImGui::DragFloat("Scale x  ", &(activeModel->scale[w].x), 0.1f); ImGui::SameLine();
-			if (ImGui::Button("Reset x"))
-			{
+			if (ImGui::Button("Reset x")){
 				activeModel->scale[w].x = 1.0f;
 			}
 			ImGui::DragFloat("Scale y  ", &(activeModel->scale[w].y), 0.1f); ImGui::SameLine();
-			if (ImGui::Button("Reset y"))
-			{
+			if (ImGui::Button("Reset y")){
 				activeModel->scale[w].y = 1.0f;
 			}
 			ImGui::DragFloat("Scale z  ", &(activeModel->scale[w].z), 0.1f); ImGui::SameLine();
-			if (ImGui::Button("Reset z"))
-			{
+			if (ImGui::Button("Reset z")){
 				activeModel->scale[w].z = 1.0f;
 			}
 		}
 		if (e == 1) {
 			ImGui::SliderInt("Sensitivity", &mSensitivity, 1, 100);
 			ImGui::Text("Move on X"); 
-			if (ImGui::Button("x -  "))
-			{
+			if (ImGui::Button("x -  ")){
 				activeModel->translate[w].x -= 1 * mSensitivity;
 			}
 			; ImGui::SameLine();
-			if (ImGui::Button("x +  "))
-			{
+			if (ImGui::Button("x +  ")){
 				activeModel->translate[w].x += 1.0 * mSensitivity;
 			} ImGui::SameLine();
 			ImGui::Text(":  %d", (int)activeModel->translate[w].x);
 
 			ImGui::Text("Move on Y");
-			if (ImGui::Button("y -  "))
-			{
+			if (ImGui::Button("y -  ")){
 				activeModel->translate[w].y -= 1 * mSensitivity;
 			}
 			; ImGui::SameLine();
-			if (ImGui::Button("y +  "))
-			{
+			if (ImGui::Button("y +  ")){
 				activeModel->translate[w].y += 1 * mSensitivity;
 			}ImGui::SameLine();
 			ImGui::Text(":  %d", (int)activeModel->translate[w].y);
 
 			ImGui::Text("Move on Z");
-			if (ImGui::Button("z -  "))
-			{
+			if (ImGui::Button("z -  ")){
 				activeModel->translate[w].z -= 1 * mSensitivity;
 			}
 			; ImGui::SameLine();
-			if (ImGui::Button("z +  "))
-			{
+			if (ImGui::Button("z +  ")){
 				activeModel->translate[w].z += 1 * mSensitivity;
 			}ImGui::SameLine();
 			ImGui::Text(":  %d", (int)activeModel->translate[w].z);
@@ -353,8 +345,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
-			if (ImGui::Button("Reset x"))
-			{
+			if (ImGui::Button("Reset x")){
 				activeModel->rotate[w].x = 0.0f;
 			}
 			ImGui::PopStyleColor(3);
@@ -366,8 +357,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
-			if (ImGui::Button("Reset y"))
-			{
+			if (ImGui::Button("Reset y")){
 				activeModel->rotate[w].y = 0.0f;
 			}
 			ImGui::PopStyleColor(3);
@@ -379,15 +369,14 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
-			if (ImGui::Button("Reset z"))
-			{
+			if (ImGui::Button("Reset z")){
 				activeModel->rotate[w].z = 0.0f;
 			}
 			ImGui::PopStyleColor(3);
 		}
 		ImGui::Text("");
 		
-		activeModel->updateTransformations();
+		activeModel->updateTransformations(scene.settings.w, scene.settings.h);
 		ImGui::End();
 	}
 

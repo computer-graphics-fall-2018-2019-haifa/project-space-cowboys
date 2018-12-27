@@ -40,6 +40,7 @@ MeshModel::MeshModel(const std::vector<Face>& faces, const std::vector<glm::vec3
 	
 	
 	SetCenterPoint();
+	superCenterPoint = centerPoint;
 	calcBoxPoints();
 
 }
@@ -105,10 +106,11 @@ const glm::mat4x4 & MeshModel::GetLocalTransformation() const
 	return this->localTransform;
 }
 
-void MeshModel::updateTransformations()
+void MeshModel::updateTransformations(int x,int y)
 {
 	this->SetLocalTransformation();
 	this->SetWorldTransformation();
+	this->updateSuperCenterPoint(x, y);
 }
 
 void MeshModel::SetColor(const glm::vec4& color)
@@ -196,7 +198,7 @@ void MeshModel::SetCenterPoint()
 		z += vertices[i].z;
 	}
 	
-	centerPoint = glm::vec4((x / size), (y / size), (z / size), 0);
+	centerPoint = glm::vec4((x / size), (y / size), (z / size), 1);
 }
 
 
@@ -271,6 +273,13 @@ void MeshModel::createPol(){
 	this->normColor = { 0,0,1,0 };
 	this->isCamera = false;
 	SetCenterPoint();
+	superCenterPoint = centerPoint; //glm::vec3(centerPoint.x, centerPoint.y, centerPoint.z);
 	calcBoxPoints();
 	calcNormals();
+}
+void MeshModel::updateSuperCenterPoint(int x, int y) {
+	glm::vec4 v = this->centerPoint* this->localTransform*this->worldTransform;
+	this->superCenterPoint.x = v.x / v.w;
+	this->superCenterPoint.y = v.y / v.w;
+	this->superCenterPoint.z = v.z / v.w;
 }

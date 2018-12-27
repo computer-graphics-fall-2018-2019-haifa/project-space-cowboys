@@ -44,10 +44,11 @@ void Scene::AddCamera( Camera camera)
 {
 	cameras.push_back(camera);
 	
-	char *name = new char[(camera.GetModelName()).length() + 1];
+	/*char *name = new char[(camera.GetModelName()).length() + 1];
 	strcpy(name, (camera.GetModelName()).c_str());
 	char * end = strstr(name, "obj");
-	*end = '\0';
+	*end = '\0';*/
+	char *name = "camera ";
 	std::string cameraNum = std::to_string(cameras.size());
 	strcat(name, cameraNum.c_str());
 	camerasNames.push_back(name);
@@ -67,9 +68,9 @@ void Scene::SetActiveCameraIndex(int index)
 	{
 		activeCameraIndex = index;
 		int i = GetActiveCameraIndex();
-		cameras[i].SetColor({ 1,0,0,0 });
+		//cameras[i].SetColor({ 1,0,0,0 });
 		activeCameraIndex = index;
-		cameras[index].SetColor({ 0,1,0,0 });
+		//cameras[index].SetColor({ 0,1,0,0 });
 	}
 }
 

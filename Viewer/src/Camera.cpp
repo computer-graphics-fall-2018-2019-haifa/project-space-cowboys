@@ -4,7 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-Camera::Camera(const glm::vec4 eye, const glm::vec4 at, const glm::vec4 up) : MeshModel(Utils::LoadMeshModel("C:\\Users\\Yanshul\\Documents\\GitHub\\project-space-cowboys\\Data\\camera.obj",true))
+Camera::Camera(const glm::vec4 eye, const glm::vec4 at, const glm::vec4 up) //: MeshModel(Utils::LoadMeshModel("C:\\Users\\Yanshul\\Documents\\GitHub\\project-space-cowboys\\Data\\camera.obj",true))
 {
 	this->eye = eye;
 	this->at = at;
@@ -116,4 +116,8 @@ void Camera::setProjectionTransformation(int width, int hight)
 	
 		SetOrthographicProjection(l,r,b,t,n,f);
 	
+}
+void Camera::updateLookAt() {
+	SetCameraLookAt(eye, at, up);
+
 }
