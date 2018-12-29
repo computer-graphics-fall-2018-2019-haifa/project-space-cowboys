@@ -14,8 +14,8 @@ Camera::Camera(const glm::vec4 eye, const glm::vec4 at, const glm::vec4 up) //: 
 	this->projectionTransformation = glm::mat4x4(1.0f);
 	SetCameraLookAt(eye, at, up);
 	projection = false;
-	
-
+	this->translate ={ 0, 0, 0 };
+	this->rotate = { 0, 0, 0 };
 	this->left = -1;
 	this->right = 1;
 	this->bottom = -1;
@@ -120,4 +120,11 @@ void Camera::setProjectionTransformation(int width, int hight)
 void Camera::updateLookAt() {
 	SetCameraLookAt(eye, at, up);
 
+}
+
+void Camera::updateEye()
+{
+	glm::mat4 mat = Utils::setFullTransformMat(translate, { 1,1,1 }, rotate, at, true);
+	eye = eye * mat;
+	SetCameraLookAt(eye, at, up);
 }

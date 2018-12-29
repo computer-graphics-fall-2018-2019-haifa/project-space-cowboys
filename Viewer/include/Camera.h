@@ -35,6 +35,8 @@ public:
 	float fovy;
 	float aspect;
 	bool projection;
+	glm::vec3 rotate;
+	glm::vec3 translate;
 	Camera(const glm::vec4 eye, const glm::vec4 at, const glm::vec4 up);
 	~Camera();
 
@@ -60,4 +62,5 @@ public:
 	const glm::mat4 getProjectionTransformation();
 	void setProjectionTransformation(int width,int hight);
 	void updateLookAt();
+	void updateEye();
 };

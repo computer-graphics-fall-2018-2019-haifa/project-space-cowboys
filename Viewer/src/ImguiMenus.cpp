@@ -18,7 +18,7 @@ bool showAnotherWindow = false;
 bool showCameraPropWindow = false;
 bool showActiveCamera = true;
 bool showActiveModel = false;
-
+Camera *cam;
 std::shared_ptr<MeshModel> activeModel ;
 glm::vec4 clearColor = glm::vec4(0.8f, 0.8f, 0.8f, 1.00f);
 glm::vec2 offset = glm::vec2(0, 0);
@@ -31,7 +31,7 @@ const glm::vec4& GetClearColor()
 
 void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 {	
-	Camera cam = scene.GetActiveCamera();
+	 cam = &scene.GetActiveCamera();
 	
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	if (showDemoWindow)
@@ -101,7 +101,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 					scene.AddModel(std::make_shared<MeshModel>(MeshModel(0)));
 					activeModel = scene.getActiveModel();
 					showActiveModel = true;
-					cam.SetCameraLookAt(cam.eye, activeModel->superCenterPoint, cam.up);
+					cam->SetCameraLookAt(cam->eye, activeModel->superCenterPoint, cam->up);
 
 				}
 				if (ImGui::MenuItem("Add box"))
@@ -225,10 +225,10 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::RadioButton("Orthografic", &k, 1);
 		scene.GetActiveCamera().projection = k;
 		if (k == 0) {
-			cam.SetPerspectiveProjection(cam.fovy, cam.aspect, cam.zNear, cam.zFar);
+			cam->SetPerspectiveProjection(cam->fovy, cam->aspect, cam->zNear, cam->zFar);
 		}
 		else {
-			cam.setProjectionTransformation(scene.settings.w, scene.settings.h);
+			cam->setProjectionTransformation(scene.settings.w, scene.settings.h);
 		}
 		if (ImGui::SliderFloat("Zoom", &zoom, 1, 10)){
 			scene.GetActiveCamera().SetZoom(zoom);
@@ -236,12 +236,56 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::Separator();
 		ImGui::Text("tt");
 		if (ImGui::Button("focus on active model")) {
-			cam.at = activeModel->superCenterPoint;
+			cam->at = activeModel->superCenterPoint;
 			
-			cam.updateLookAt();
+			cam->updateLookAt();
 		}
+		static int c = 0;
+		ImGui::RadioButton("Cmaera Rotation", &c, 0); ImGui::SameLine();
+		ImGui::RadioButton("Cmaera Pan", &c, 1);
+		if (c == 0) {
+			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 1.0f, 0.0f, 0.0f, 0.8 });
+			ImGui::Text("Rotate x"); ImGui::SameLine();
+			ImGui::SliderAngle("x", &(cam->rotate.x)); ImGui::SameLine();
+			ImGui::PopStyleColor(1);
+			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
+			if (ImGui::Button("Reset x")) {
+				cam->rotate.x = 0.0f;
+			}
+			ImGui::PopStyleColor(3);
 
-		
+			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 0.0f, 1.0f, 0.0f, 0.8 });
+			ImGui::Text("Rotate y"); ImGui::SameLine();
+			ImGui::SliderAngle("y", &(cam->rotate.y)); ImGui::SameLine();
+			ImGui::PopStyleColor(1);
+			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
+			if (ImGui::Button("Reset y")) {
+				cam->rotate.y = 0.0f;
+			}
+			ImGui::PopStyleColor(3);
+
+			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 0.0f, 0.0f, 1.0f, 0.8 });
+			ImGui::Text("Rotate z"); ImGui::SameLine();
+			ImGui::SliderAngle("z", &(cam->rotate.z)); ImGui::SameLine();
+			ImGui::PopStyleColor(1);
+			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0 / 7.0f, 0.8f, 0.8f));
+			if (ImGui::Button("Reset z")) {
+				cam->rotate.z = 0.0f;
+			}
+			ImGui::PopStyleColor(3);
+		}
+		if (c == 1) {
+			ImGui::SliderFloat("Pan X", &(cam->translate.x), -1000.0f, 1000.0f);
+			ImGui::SliderFloat("Pan Y", &(cam->translate.y), -1000.0f, 1000.0f);
+			ImGui::SliderFloat("Pan Z", &(cam->translate.z), -1000.0f, 1000.0f);
+		}
+		cam->updateEye();
 		ImGui::End();
 	}
 	
