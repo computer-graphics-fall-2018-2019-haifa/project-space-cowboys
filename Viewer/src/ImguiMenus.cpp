@@ -188,7 +188,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 		ImGui::InputFloat3("Camera Position", eyeInput);
 		ImGui::InputFloat3("look At Position", atInput);
-		ImGui::InputFloat3("Up Position", atInput);
+		ImGui::InputFloat3("Up Position", upInput);
 
 		glm::vec4 eye = glm::vec4(eyeInput[0], eyeInput[1], eyeInput[2], 0);
 		glm::vec4 at = glm::vec4(atInput[0], atInput[1], atInput[2], 0);
