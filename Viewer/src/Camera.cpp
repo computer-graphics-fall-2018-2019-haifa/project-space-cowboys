@@ -52,7 +52,7 @@ void Camera::SetCameraLookAt(const glm::vec4& eye, const glm::vec4 at, const glm
 	glm::vec4 y = glm::normalize(glm::vec4(tempy.x, tempy.y, tempy.z, 0));
 	glm::vec4 t = { 0.0f,0.0f,0.0f,1.0f };
 	glm::mat4 c = glm::mat4(x, y, z, t);
-	this->SetTransformation(c * Utils::TranslationMatrix(glm::vec3 (-eye.x, -eye.y, -eye.z)));
+	this->SetTransformation( Utils::TranslationMatrix(glm::vec3 (-eye.x, -eye.y, -eye.z))*c);
 }
 
 //as shown in the viewing ppt slide 46
@@ -124,7 +124,7 @@ void Camera::updateLookAt() {
 
 void Camera::updateEye()
 {
-	glm::mat4 mat = Utils::setFullTransformMat(translate, { 1,1,1 }, rotate, at, true);
-	eye = eye * mat;
-	SetCameraLookAt(eye, at, up);
+	glm::mat4 mat = Utils::setFullTransformMat(translate, { 1,1,1 }, rotate, -at, true);
+	//eye = ;
+	SetCameraLookAt(eye * mat, at, up);
 }

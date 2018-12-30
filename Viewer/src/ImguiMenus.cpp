@@ -101,7 +101,8 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 					scene.AddModel(std::make_shared<MeshModel>(MeshModel(0)));
 					activeModel = scene.getActiveModel();
 					showActiveModel = true;
-					cam->SetCameraLookAt(cam->eye, activeModel->superCenterPoint, cam->up);
+					cam->at = activeModel->GetCenterPoint();
+					cam->SetCameraLookAt(cam->eye, cam->at, cam->up);
 
 				}
 				if (ImGui::MenuItem("Add box"))
@@ -236,13 +237,13 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::Separator();
 		ImGui::Text("tt");
 		if (ImGui::Button("focus on active model")) {
-			cam->at = activeModel->superCenterPoint;
+			cam->at = activeModel->superCenterPoint; //GetCenterPoint();
 			
 			cam->updateLookAt();
 		}
 		static int c = 0;
-		ImGui::RadioButton("Cmaera Rotation", &c, 0); ImGui::SameLine();
-		ImGui::RadioButton("Cmaera Pan", &c, 1);
+		ImGui::RadioButton("Camera Rotation", &c, 0); ImGui::SameLine();
+		ImGui::RadioButton("Camera Pan", &c, 1);
 		if (c == 0) {
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, { 1.0f, 0.0f, 0.0f, 0.8 });
 			ImGui::Text("Rotate x"); ImGui::SameLine();
